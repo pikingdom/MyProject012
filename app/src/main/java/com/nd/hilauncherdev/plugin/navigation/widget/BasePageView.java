@@ -5,8 +5,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-public class BasePageView extends RelativeLayout implements
-		NavigationForLauncherInvoker {
+import java.util.List;
+
+public class BasePageView extends RelativeLayout implements NavigationLauncherInterface {
 
 	public BasePageView(Context context) {
 		super(context);
@@ -16,54 +17,24 @@ public class BasePageView extends RelativeLayout implements
 		super(context, attrs);
 	}
 
+
 	@Override
-	public void onLauncherLocation() {
+	public void init(String channel) {
 
 	}
 
 	@Override
-	public void onSnapToWorkspace() {
+	public void initSohuFragment() {
 
 	}
 
 	@Override
-	public void onSnapToNavigation() {
+	public void setThemeChoose(int position) {
 
 	}
 
 	@Override
-	public void onLauncherStart(String pkgName, int channelType,
-                                String countryCode) {
-
-	}
-
-	@Override
-	public void onShow() {
-
-	}
-
-	@Override
-	public void onLauncherOnStart() {
-
-	}
-
-	@Override
-	public void onBackKeyDown() {
-
-	}
-
-	@Override
-	public void setActivity(Activity activity) {
-
-	}
-
-	@Override
-	public void refreshTypeface() {
-
-	}
-
-	@Override
-	public void handleBackKeyToNavigation() {
+	public void jumpToPage(int which) {
 
 	}
 
@@ -73,7 +44,82 @@ public class BasePageView extends RelativeLayout implements
 	}
 
 	@Override
-	public void jumpToPage(int which) {
+	public void setCUID(String CUID) {
+
+	}
+
+	@Override
+	public void setHotWordView(List<Object> list) {
+
+	}
+
+	@Override
+	public void upgradePlugin(String url, int ver, boolean isWifiAutoDownload) {
+
+	}
+
+	@Override
+	public void onShowingNavigationView() {
+
+	}
+
+	@Override
+	public void onLeavingNavigation() {
+
+	}
+
+	@Override
+	public void setActivity(Activity activity) {
+
+	}
+
+	@Override
+	public void handleNavigationWhenLauncherOnPause() {
+
+	}
+
+	@Override
+	public void handleBackKeyToNavigation() {
+
+	}
+
+	@Override
+	public void handleNavigationWhenLauncherOnResume() {
+
+	}
+
+	@Override
+	public void onBackKeyDown() {
+
+	}
+
+	@Override
+	public void hideVideoView() {
+
+	}
+
+	@Override
+	public void onLauncherStart() {
+
+	}
+
+	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void refreshPaintAndView() {
+
+	}
+
+	@Override
+	public void unregisterReceiver() {
+
+	}
+
+	@Override
+	public void updateAndRefreshSiteDetail() {
 
 	}
 }
