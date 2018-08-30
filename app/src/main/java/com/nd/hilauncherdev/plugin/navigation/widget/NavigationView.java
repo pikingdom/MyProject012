@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,7 +171,8 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void handleBackKeyToNavigation() {
-		mViewPager.setCurrentItem(NAVI_INDEX);
+		Log.e("zhenghonglin","handleBackKeyToNavigation:"+mViewPager.getCurrentItem());
+		mViewPager.setCurrentItem(INFO_INDEX);
 	}
 
 	@Override
@@ -181,6 +183,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void onBackKeyDown() {
 //		setToInfoView();
+		Log.e("zhenghonglin","onBackKeyDown:"+mViewPager.getCurrentItem());
 	}
 
 	@Override
