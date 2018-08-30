@@ -46,6 +46,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 		mViewContainer.add(navigationPageView);
 		mViewContainer.add(infoPageView);
 		initViewPager();
+		setToInfoView();
 	}
 
 	private void initViewPager() {
@@ -179,7 +180,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void onBackKeyDown() {
-		setToInfoView();
+//		setToInfoView();
 	}
 
 	@Override

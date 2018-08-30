@@ -16,6 +16,6 @@ public class NavigationPageView extends BasePageView {
 
     public NavigationPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setBackgroundColor(Color.BLUE);
+        setBackgroundColor(Color.RED);
     }
 }
