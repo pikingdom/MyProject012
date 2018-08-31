@@ -12,7 +12,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
-import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
+import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.view.recyclerview.RecycleViewDivider;
 import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.LoadMoreWrapper;
 import com.nd.hilauncherdev.plugin.navigation.R;
 
@@ -44,12 +45,15 @@ public abstract class BaseFrameLayout extends FrameLayout implements SwipeRefres
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL,2,getContext().getResources().getColor(R.color.divide_color)));
+
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
         mRefreshLayout.setOnRefreshListener(this);
 
         mLoadMoreWrapper = new LoadMoreWrapper(getCommonAdapter());
         mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
+        mLoadMoreWrapper.setShowLoadMore(false);
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -69,10 +73,10 @@ public abstract class BaseFrameLayout extends FrameLayout implements SwipeRefres
     @Override
     public void onRefresh() {
         pageIndex = 1;
-        loadData();
+//        loadData();
     }
 
-    protected abstract CommonAdapter getCommonAdapter();
+    protected abstract MultiItemTypeAdapter getCommonAdapter();
 
     protected abstract void init();
 

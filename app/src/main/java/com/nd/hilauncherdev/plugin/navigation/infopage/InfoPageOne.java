@@ -5,14 +5,16 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.view.View;
 
 import com.felink.sdk.common.ThreadUtil;
-import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
-import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsBean;
+import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.plugin.navigation.activity.MainActivity;
+import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
+import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
+import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 
 public class InfoPageOne extends BaseFrameLayout{
-    protected List<NewsBean> data;
+    protected List<NewsInfo> data;
     private Handler handler = new Handler();
     public InfoPageOne(@NonNull Context context) {
         super(context);
@@ -37,17 +39,22 @@ public class InfoPageOne extends BaseFrameLayout{
     }
 
     @Override
-    protected CommonAdapter getCommonAdapter() {
+    protected MultiItemTypeAdapter getCommonAdapter() {
         if(data == null){
-            data = new ArrayList<NewsBean>();
+            data = new ArrayList<NewsInfo>();
         }
-        CommonAdapter adapter = new CommonAdapter<NewsBean>(getContext(),R.layout.item_grid,data) {
+        InvenoNewAdapter adapter = new InvenoNewAdapter(getContext(),data);
+        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
-            protected void convert(ViewHolder holder, NewsBean newsBean, int position) {
-                TextView tv = holder.getView(R.id.title);
-                tv.setText(newsBean.title);
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                LauncherCaller.openUrl(getContext().getApplicationContext(),data.get(position).origin_url);
             }
-        };
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
         return adapter;
     }
 
@@ -65,16 +72,12 @@ public class InfoPageOne extends BaseFrameLayout{
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                final List<NewsBean> list = new ArrayList<NewsBean>();
-                for(int i=0;i<5;i++){
-                    NewsBean bean = new NewsBean();
-                    bean.title = "1111111111"+i;
-                    list.add(bean);
-                }
+                final List<NewsInfo> list = MainActivity.parseInfo(getContext().getApplicationContext());
+
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -85,7 +88,7 @@ public class InfoPageOne extends BaseFrameLayout{
         });
     }
 
-    private void onSuccess(List<NewsBean> list){
+    private void onSuccess(List<NewsInfo> list){
         hasNext = true;
         if(pageIndex == 1){
             data.clear();

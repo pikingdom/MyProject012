@@ -13,51 +13,47 @@ import com.nd.hilauncherdev.framework.view.recyclerview.utils.WrapperUtils;
 /**
  * Created by zhy on 16/6/23.
  */
-public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-{
+public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int ITEM_TYPE_LOAD_MORE = Integer.MAX_VALUE - 2;
 
     private RecyclerView.Adapter mInnerAdapter;
     private View mLoadMoreView;
     private int mLoadMoreLayoutId;
+    private boolean showLoadMore = false;
 
-    public LoadMoreWrapper(RecyclerView.Adapter adapter)
-    {
+    public LoadMoreWrapper(RecyclerView.Adapter adapter) {
         mInnerAdapter = adapter;
     }
 
-    private boolean hasLoadMore()
-    {
-        return mLoadMoreView != null || mLoadMoreLayoutId != 0;
+    public void setShowLoadMore(boolean value){
+        this.showLoadMore = value;
+    }
+
+    private boolean hasLoadMore() {
+
+        return (mLoadMoreView != null || mLoadMoreLayoutId != 0) && showLoadMore;
     }
 
 
-    private boolean isShowLoadMore(int position)
-    {
+    private boolean isShowLoadMore(int position) {
         return hasLoadMore() && (position >= mInnerAdapter.getItemCount());
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
-        if (isShowLoadMore(position))
-        {
+    public int getItemViewType(int position) {
+        if (isShowLoadMore(position)) {
             return ITEM_TYPE_LOAD_MORE;
         }
         return mInnerAdapter.getItemViewType(position);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        if (viewType == ITEM_TYPE_LOAD_MORE)
-        {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE_LOAD_MORE) {
             ViewHolder holder;
-            if (mLoadMoreView != null)
-            {
+            if (mLoadMoreView != null) {
                 holder = ViewHolder.createViewHolder(parent.getContext(), mLoadMoreView);
-            } else
-            {
+            } else {
                 holder = ViewHolder.createViewHolder(parent.getContext(), parent, mLoadMoreLayoutId);
             }
             return holder;
@@ -66,12 +62,9 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
-    {
-        if (isShowLoadMore(position))
-        {
-            if (mOnLoadMoreListener != null)
-            {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (isShowLoadMore(position)) {
+            if (mOnLoadMoreListener != null) {
                 mOnLoadMoreListener.onLoadMoreRequested();
             }
             return;
@@ -80,19 +73,14 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView)
-    {
-        WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView, new WrapperUtils.SpanSizeCallback()
-        {
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView, new WrapperUtils.SpanSizeCallback() {
             @Override
-            public int getSpanSize(GridLayoutManager layoutManager, GridLayoutManager.SpanSizeLookup oldLookup, int position)
-            {
-                if (isShowLoadMore(position))
-                {
+            public int getSpanSize(GridLayoutManager layoutManager, GridLayoutManager.SpanSizeLookup oldLookup, int position) {
+                if (isShowLoadMore(position)) {
                     return layoutManager.getSpanCount();
                 }
-                if (oldLookup != null)
-                {
+                if (oldLookup != null) {
                     return oldLookup.getSpanSize(position);
                 }
                 return 1;
@@ -102,23 +90,19 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder)
-    {
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         mInnerAdapter.onViewAttachedToWindow(holder);
 
-        if (isShowLoadMore(holder.getLayoutPosition()))
-        {
+        if (isShowLoadMore(holder.getLayoutPosition())) {
             setFullSpan(holder);
         }
     }
 
-    private void setFullSpan(RecyclerView.ViewHolder holder)
-    {
+    private void setFullSpan(RecyclerView.ViewHolder holder) {
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
 
         if (lp != null
-                && lp instanceof StaggeredGridLayoutManager.LayoutParams)
-        {
+                && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
 
             p.setFullSpan(true);
@@ -126,41 +110,35 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mInnerAdapter.getItemCount() + (hasLoadMore() ? 1 : 0);
     }
 
 
-    public interface OnLoadMoreListener
-    {
+    public interface OnLoadMoreListener {
         void onLoadMoreRequested();
     }
 
     private OnLoadMoreListener mOnLoadMoreListener;
 
-    public LoadMoreWrapper setOnLoadMoreListener(OnLoadMoreListener loadMoreListener)
-    {
-        if (loadMoreListener != null)
-        {
+    public LoadMoreWrapper setOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        if (loadMoreListener != null) {
             mOnLoadMoreListener = loadMoreListener;
         }
         return this;
     }
 
-    public LoadMoreWrapper setLoadMoreView(View loadMoreView)
-    {
+    public LoadMoreWrapper setLoadMoreView(View loadMoreView) {
         mLoadMoreView = loadMoreView;
         return this;
     }
 
-    public LoadMoreWrapper setLoadMoreView(int layoutId)
-    {
+    public LoadMoreWrapper setLoadMoreView(int layoutId) {
         mLoadMoreLayoutId = layoutId;
         return this;
     }
 
-    public boolean isLoadMoreView(View view){
+    public boolean isLoadMoreView(View view) {
         return mLoadMoreView == view;
     }
 }

@@ -12,4 +12,26 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
+    <style name="inveno_news_item_summary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="inveno_news_item_source">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">#b3b3b3</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <declare-styleable name="ScaleImageView">
+        <attr name="adjustRatio" format="float" />
+    </declare-styleable>
 </resources>

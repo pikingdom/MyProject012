@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/summary"
+        android:text="河北3男子吃饭时与临桌起冲突 用凳子暴打女性"
+        style="@style/inveno_news_item_summary" />
+    <LinearLayout
+        android:id="@+id/list_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="2dp"
+            app:adjustRatio="0.67" />
+        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            app:adjustRatio="0.67" />
+        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="2dp"
+            app:adjustRatio="0.67" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/source"
+            android:text="好看"
+            style="@style/inveno_news_item_source" />
+        <TextView
+            android:id="@+id/publish_time"
+            android:text="11分钟前"
+            style="@style/inveno_news_item_source" />
+    </LinearLayout>
+</LinearLayout>

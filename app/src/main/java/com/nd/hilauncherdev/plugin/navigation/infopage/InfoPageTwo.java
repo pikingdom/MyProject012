@@ -53,7 +53,6 @@ public class InfoPageTwo extends BaseFrameLayout{
 
     @Override
     protected void init() {
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -86,7 +85,8 @@ public class InfoPageTwo extends BaseFrameLayout{
     }
 
     private void onSuccess(List<NewsBean> list){
-        hasNext = true;
+        hasNext = false;
+        mLoadMoreWrapper.setShowLoadMore(hasNext);
         if(pageIndex == 1){
             data.clear();
             hasLoad = true;

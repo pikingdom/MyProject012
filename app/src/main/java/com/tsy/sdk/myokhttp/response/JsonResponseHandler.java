@@ -68,8 +68,6 @@ public abstract class JsonResponseHandler implements IResponseHandler {
         }
     }
 
-    public void onSuccess(int statusCode, String response) {
-        LogUtils.w("onSuccess(int statusCode, JSONObject response) was not overriden, but callback was received");
-    }
+    public abstract void onSuccess(int statusCode, String response);
 
 }

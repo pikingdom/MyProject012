@@ -45,12 +45,6 @@ public class InfoPageView extends BasePageView {
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(mViewContainer.size());
-        int curr = 0;
-        mViewPager.setCurrentItem(curr);
-        BaseFrameLayout currentLayout = (BaseFrameLayout) mViewContainer.get(curr);
-        if(!currentLayout.hasLoad()){
-            currentLayout.loadData();
-        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -71,6 +65,13 @@ public class InfoPageView extends BasePageView {
 
             }
         });
+
+//        int curr = 0;
+//        mViewPager.setCurrentItem(curr);
+//        BaseFrameLayout currentLayout = (BaseFrameLayout) mViewContainer.get(curr);
+//        if(!currentLayout.hasLoad()){
+//            currentLayout.loadData();
+//        }
     }
 
     private void findViews() {
