@@ -3,6 +3,7 @@ package com.nd.hilauncherdev.framework.view.recyclerview.wrapper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +27,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setShowLoadMore(boolean value){
+        Log.e("zhenghonglin","setShowLoadMore:"+value);
         this.showLoadMore = value;
     }
 
@@ -111,6 +113,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
+        Log.e("zhenghonglin","navigation getItemCOunt"+getClass().getClassLoader().toString());
         return mInnerAdapter.getItemCount() + (hasLoadMore() ? 1 : 0);
     }
 

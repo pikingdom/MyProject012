@@ -3,10 +3,11 @@ package com.nd.hilauncherdev.plugin.navigation.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;
 import com.nd.hilauncherdev.plugin.navigation.widget.NavigationView;
@@ -30,8 +31,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyOkHttp.getInstance().setApplicationConext(getApplicationContext());
-        setContentView(new NavigationView(getApplicationContext()));
+        NavigationView navigationView = new NavigationView(this);
 //        setContentView(R.layout.navigation_activity_main);
+        setContentView(navigationView);
+        navigationView.onLauncherStart();
     }
 
     public void Test001(View view){
@@ -44,7 +47,7 @@ public class MainActivity extends Activity {
 
 //        String url = "http://opensdk.inveno.com/gate/api/list";
 //        String jsonParams = "latitude=26.113803&app_lan=zh_CN&language=zh_CN&mcc=460&platform=android&network=1&mode=1&uid=01011808212025247801001905839609&lacn=22790&request_time=1535676586&osv=8.1.0&content_type=0x00000003&scenario=0x010100&product_id=xoslauncher&model=Redmi+Note+5&brand=xiaomi&cell_id=134272260&longitude=119.236470&mnc=01&display=0x0000000f&count=10&link_type=0x00000003&api_ver=3.0.0&tk=14fc7dfbf8dd1ce0881b94e3ea1e1eeb&app_ver=1.0.15&imei=868773032475652&sdk_ver=3.0.4&aid=bfd8b2b15b1f3932&operation=1&promotion=openplatform&";
-        MyOkHttp.getInstance().post().url(url).enqueue(new JsonResponseHandler() {
+        MyOkHttp.getInstance().post().url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(1,10)).enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String response) {
 //                parseInfo();
@@ -55,10 +58,10 @@ public class MainActivity extends Activity {
 
             }
         });
-        List<NewsInfo> list = parseInfo(getApplicationContext());
-        if(list != null){
-            Log.e("zhenghonglin","size:"+list.size());
-        }
+//        List<NewsInfo> list = parseInfo(getApplicationContext());
+//        if(list != null){
+//            Log.e("zhenghonglin","size:"+list.size());
+//        }
     }
 
     public static List<NewsInfo> parseInfo(Context context) {
@@ -98,5 +101,43 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void Test002(View view){
+        String product_id = "7103d5e4f464";
+        String request_time = System.currentTimeMillis()/1000+"";
+        String url =  "http://uid.inveno.com/gate/getuid";
+        String jsonParam = "product_id=xoslauncher&promotion=7103d5e4f464&request_time=1527835981&tk=4" +
+                "14f81259e24ed1a55d2c2e551f05ffa&api_ver=3.0.0&aid=c549d7fafad988c3&imei=866693" +
+                "020470360&network=1&app_ver=1.0.8&brand=HUAWEI&model=HUAWEI%252BGRA-TL0" +
+                "0&platform=android&app_lan=zh_CN";
+        String url1 = String.format(url,product_id,request_time);
+        MyOkHttp.getInstance().post().url(url).jsonParams(InvenoHelper.getUidJsonParams()).enqueue(new JsonResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, String response) {
+                Log.e("zhenghonglin","1response:"+response+","+System.currentTimeMillis());
+            }
+
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+                Log.e("zhenghonglin","2response:"+error_msg);
+            }
+        });
+    }
+
+    public void Test003(View view){
+        String url = "http://uid.inveno.com/gate/getuid?latitude=26.019415&app_lan=zh_CN&language=zh_CN&mcc=460&platform=android&mac=52%3A3a%3Aa0%3A0f%3Aab%3A66%2C64%3A09%3A80%3A12%3A4d%3A62%2Cfc%3A7c%3A02%3A21%3A9a%3A60%2C64%3A09%3A80%3A12%3A4d%3A63%2C02%3A4b%3Af3%3A0c%3Af2%3A65&network=1&mode=1&lacn=22785&request_time=1535718838&osv=8.1.0&content_type=0x00000003&scenario=0x010100&product_id=xoslauncher&model=Redmi+Note+5&brand=xiaomi&cell_id=134456833&longitude=119.339398&mnc=01&display=0x0000000f&count=10&link_type=0x00000003&api_ver=3.0.0&tk=70a7b4ae6f7744e781c55f2946587314&app_ver=1.0.15&imei=868773032475652&sdk_ver=3.0.4&aid=bfd8b2b15b1f3932&operation=1&promotion=openplatform&";
+        MyOkHttp.getInstance().post().url(url).enqueue(new JsonResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, String response) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+
+            }
+        });
     }
 }

@@ -20,8 +20,12 @@ public abstract class JsonResponseHandler implements IResponseHandler {
     public final void onSuccess(final Response response) {
         ResponseBody responseBody = response.body();
         String responseBodyStr = "";
-
         try {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             responseBodyStr = responseBody.string();
         } catch (IOException e) {
             e.printStackTrace();

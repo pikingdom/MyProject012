@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	public NavigationView(Context context) {
 		super(context);
+		MyOkHttp.getInstance().setApplicationConext(context.getApplicationContext());
 		this.context = context;
 		initView();
 	}
@@ -193,7 +195,9 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void onLauncherStart() {
-
+		for (int i = 0; i < mViewContainer.size(); i++) {
+			((BasePageView) mViewContainer.get(i)).onLauncherStart();
+		}
 	}
 
 	@Override

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.infopage.BaseFrameLayout;
-import com.nd.hilauncherdev.plugin.navigation.infopage.InfoPageOne;
-import com.nd.hilauncherdev.plugin.navigation.infopage.InfoPageTwo;
+import com.nd.hilauncherdev.plugin.navigation.infopage.BaseRecyclerList;
+import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
+import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage2;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class InfoPageView extends BasePageView {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ArrayList<View> mViewContainer = new ArrayList<>();
-    private String[] titles = {"待审核","TAB2"};
+    private String[] titles = {"推荐","222"};
 
     public InfoPageView(Context context) {
         this(context,null);
@@ -38,8 +38,8 @@ public class InfoPageView extends BasePageView {
     }
 
     private void initData() {
-        mViewContainer.add(new InfoPageOne(getContext()));
-        mViewContainer.add(new InfoPageTwo(getContext()));
+        mViewContainer.add(new NewsPage(getContext()));
+        mViewContainer.add(new NewsPage2(getContext()));
 
         final InfoViewPagerAdapter adapter = new InfoViewPagerAdapter();
         mViewPager.setAdapter(adapter);
@@ -54,7 +54,7 @@ public class InfoPageView extends BasePageView {
 
             @Override
             public void onPageSelected(int position) {
-                BaseFrameLayout fragment = (BaseFrameLayout) mViewContainer.get(position);
+                BaseRecyclerList fragment = (BaseRecyclerList) mViewContainer.get(position);
                 if(!fragment.hasLoad()){
                     fragment.loadData();
                 }
@@ -66,17 +66,26 @@ public class InfoPageView extends BasePageView {
             }
         });
 
-//        int curr = 0;
-//        mViewPager.setCurrentItem(curr);
-//        BaseFrameLayout currentLayout = (BaseFrameLayout) mViewContainer.get(curr);
-//        if(!currentLayout.hasLoad()){
-//            currentLayout.loadData();
-//        }
     }
 
     private void findViews() {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+    }
+
+    @Override
+    public void onLauncherStart() {
+        super.onLauncherStart();
+        refreshCurrent();
+    }
+
+    private void refreshCurrent(){
+        int curr = 0;
+        mViewPager.setCurrentItem(curr);
+        BaseRecyclerList currentLayout = (BaseRecyclerList) mViewContainer.get(curr);
+        if(!currentLayout.hasLoad()){
+            currentLayout.loadData();
+        }
     }
 
     class InfoViewPagerAdapter extends PagerAdapter{
