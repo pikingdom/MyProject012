@@ -10,6 +10,7 @@ import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;
+import com.nd.hilauncherdev.plugin.navigation.widget.NavigationView;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
@@ -30,10 +31,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyOkHttp.getInstance().setApplicationConext(getApplicationContext());
-//        NavigationView navigationView = new NavigationView(this);
-//        setContentView(navigationView);
-//        navigationView.onLauncherStart();
-        setContentView(R.layout.navigation_activity_main);
+        NavigationView navigationView = new NavigationView(this);
+        setContentView(navigationView);
+        navigationView.onLauncherStart();
+//        setContentView(R.layout.navigation_activity_main);
 
     }
 

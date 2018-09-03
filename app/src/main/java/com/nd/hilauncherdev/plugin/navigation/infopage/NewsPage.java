@@ -10,6 +10,7 @@ import android.view.View;
 import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.plugin.navigation.activity.MainActivity;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
+import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -54,23 +55,40 @@ public class NewsPage extends BaseRecyclerList {
 
     @Override
     public void netRequest() {
-        MyOkHttp.getInstance().postH().tag(this).url("http://api.zlauncher.cn/action.ashx/commonaction/1").jsonParams("")
-                .enqueue(new JsonResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, String response) {
-                        List<NewsInfo> list = MainActivity.parseInfo(getContext().getApplicationContext());
-                        if(list!=null){
-                            onNetDataSuccess(list,true);
-                        } else {
-                            onNetDataFail("");
-                        }
-                    }
+        MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(pageIndex,pageSize)).enqueue(new JsonResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, String response) {
+                List<NewsInfo> list = InvenoHelper.parseInfo(response);
+                if(list!=null){
+                    onNetDataSuccess(list,true);
+                } else {
+                    onNetDataFail("");
+                }
+            }
 
-                    @Override
-                    public void onFailure(int statusCode, String error_msg) {
-                        onNetDataFail("");
-                    }
-                });
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+                onNetDataFail("");
+            }
+        });
+
+//        MyOkHttp.getInstance().postH().tag(this).url("http://api.zlauncher.cn/action.ashx/commonaction/1").jsonParams("")
+//                .enqueue(new JsonResponseHandler() {
+//                    @Override
+//                    public void onSuccess(int statusCode, String response) {
+//                        List<NewsInfo> list = MainActivity.parseInfo(getContext().getApplicationContext());
+//                        if(list!=null){
+//                            onNetDataSuccess(list,true);
+//                        } else {
+//                            onNetDataFail("");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, String error_msg) {
+//                        onNetDataFail("");
+//                    }
+//                });
     }
 
 

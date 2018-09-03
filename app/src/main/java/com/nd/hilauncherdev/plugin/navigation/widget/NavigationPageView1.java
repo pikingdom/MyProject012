@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
@@ -27,11 +28,11 @@ public class NavigationPageView1 extends BasePageView {
         webView = new WebView(getContext());
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         addView(webView,lp);
-
+//        WebSettings settings = webView.getSettings();
+//        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.setWebViewClient(new WebViewClient() {
-        });
+        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("http://www.jd.com");
 
     }

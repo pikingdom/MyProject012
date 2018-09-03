@@ -1,8 +1,17 @@
 package com.nd.hilauncherdev.plugin.navigation.infopage.help;
 
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
 
+import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.tsy.sdk.myokhttp.Common;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018\8\31 0031.
@@ -51,14 +60,55 @@ public class InvenoHelper {
         String ua = "android";
         builder .append("&uid=01011808212025247801001905839609")
                 .append("&scenario=0x010100")
-        .append("&content_type=0x00000001")
-        .append("&display=0x00000001")
-        .append("&display=0x00000001")
-        .append("&link_type=0x00000001")
+        .append("&content_type=0x00000003")
+        .append("&display=0x0000000f")
+//        .append("&display=0x00000001")
+        .append("&link_type=0x00000003")
         .append("&operation="+pageIndex)
         .append("&count="+pageCount)
         .append("&ua="+ua);
         return builder.toString();
 
+    }
+
+    public static List<NewsInfo> parseInfo(String infoTxt) {
+        if(TextUtils.isEmpty(infoTxt)){
+            return null;
+        }
+        //解析
+        try {
+            List<NewsInfo> list = new ArrayList<NewsInfo>();
+            JSONObject jsonObject = new JSONObject(infoTxt);
+            int code = jsonObject.getInt("code");
+            if(code == 200){
+                Log.e("zhenghonglin","code:"+code);
+                JSONArray dataArray = jsonObject.getJSONArray("data");
+                if(dataArray != null && dataArray.length()>0){
+                    for(int i=0;i<dataArray.length();i++){
+                        JSONObject itemJsonObject = dataArray.getJSONObject(i);
+                        NewsInfo newsInfo = new NewsInfo();
+                        newsInfo.origin_url = itemJsonObject.getString("origin_url");
+                        newsInfo.summary = itemJsonObject.getString("summary");
+                        newsInfo.source = itemJsonObject.getString("source");
+                        newsInfo.share_url = itemJsonObject.getString("share_url");
+                        newsInfo.display=itemJsonObject.getString("display");
+                        newsInfo.publish_time=itemJsonObject.getString("publish_time");
+                        JSONArray listImageArray = itemJsonObject.optJSONArray("list_images");
+                        if(listImageArray != null && listImageArray.length()>0){
+                            for(int j=0;j<listImageArray.length();j++){
+                                newsInfo.addImage2List(listImageArray.getJSONObject(j).getString("img_url"));
+                            }
+                        }
+                        list.add(newsInfo);
+                    }
+                }
+                return list;
+            } else {
+                return list;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
