@@ -200,7 +200,6 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         MyOkHttp.getInstance().cancel(this);
-        Glide.with(getContext()).pauseRequests();
     }
 
     //子类列表实现=======================

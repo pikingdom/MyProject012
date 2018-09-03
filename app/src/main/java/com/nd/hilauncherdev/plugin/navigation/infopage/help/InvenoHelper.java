@@ -20,9 +20,9 @@ public class InvenoHelper {
     public static final String promotion = "openplatform";
 
 
-    public static final String GET_UID_URL = "http://uid.inveno.com/gate/getuid";
+    public static final String GET_UID_URL = "https://uid.inveno.com/gate/getuid";
 
-    public static final String GET_LIST_URL = "http://opensdk.inveno.com/gate/api/list";
+    public static final String GET_LIST_URL = "https://opensdk.inveno.com/gate/api/list";
 
 
     public static String getUidJsonParams(){
@@ -47,7 +47,8 @@ public class InvenoHelper {
 
     public static String getListJsonParams(int pageIndex,int pageCount){
         StringBuilder builder = new StringBuilder(getUidJsonParams());
-        String ua = "Mozilla/5.0 (Linux; Android 7.0; STF-AL10 Build/HUAWEISTF-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043508 Safari/537.36 V1_AND_SQ_7.2.0_730_YYB_D QQ/7.2.0.3270 NetType/4G WebP/0.3.0 Pixel/1080";
+//        String ua = "Mozilla/5.0 (Linux; Android 7.0; STF-AL10 Build/HUAWEISTF-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043508 Safari/537.36 V1_AND_SQ_7.2.0_730_YYB_D QQ/7.2.0.3270 NetType/4G WebP/0.3.0 Pixel/1080";
+        String ua = "android";
         builder .append("&uid=01011808212025247801001905839609")
                 .append("&scenario=0x010100")
         .append("&content_type=0x00000001")

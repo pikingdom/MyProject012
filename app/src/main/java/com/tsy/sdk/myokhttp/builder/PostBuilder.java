@@ -1,5 +1,8 @@
 package com.tsy.sdk.myokhttp.builder;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import com.tsy.sdk.myokhttp.Common;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.callback.MyCallback;
@@ -24,12 +27,20 @@ import okhttp3.Response;
  */
 public class PostBuilder extends OkHttpRequestBuilderHasParam<PostBuilder> {
 
+    private String defaultContentType = "text/json; charset=utf-8";
     private String mJsonParams = "";
     private boolean addCommonHead = false;
 
     public PostBuilder(MyOkHttp myOkHttp,boolean addHead) {
         super(myOkHttp);
         this.addCommonHead = addHead;
+    }
+
+    public PostBuilder(MyOkHttp myOkHttp,boolean addHead,String contentType) {
+      this(myOkHttp,addHead);
+      if(!TextUtils.isEmpty(contentType)){
+          defaultContentType = contentType;
+      }
     }
 
     /**
@@ -92,14 +103,14 @@ public class PostBuilder extends OkHttpRequestBuilderHasParam<PostBuilder> {
         }
 
         if(mJsonParams.length() > 0) {      //上传json格式参数
-            RequestBody body = RequestBody.create(MediaType.parse("text/json; charset=utf-8"), mJsonParams);
+            RequestBody body = RequestBody.create(MediaType.parse(defaultContentType), mJsonParams);
             builder.post(body);
         } else {        //普通kv参数
 //                FormBody.Builder encodingBuilder = new FormBody.Builder();
 //                appendParams(encodingBuilder, mParams);
 //                builder.post(encodingBuilder.build());
             if(mParams == null){
-                RequestBody body = RequestBody.create(MediaType.parse("text/json; charset=utf-8"), "");
+                RequestBody body = RequestBody.create(MediaType.parse(defaultContentType), "");
                 builder.post(body);
             } else {
                 JSONObject jsonBody = new JSONObject();
@@ -107,7 +118,7 @@ public class PostBuilder extends OkHttpRequestBuilderHasParam<PostBuilder> {
                     jsonBody.put(entry.getKey(), entry.getValue());
                 }
                 mJsonParams = jsonBody.toString();
-                RequestBody body = RequestBody.create(MediaType.parse("text/json; charset=utf-8"), mJsonParams);
+                RequestBody body = RequestBody.create(MediaType.parse(defaultContentType), mJsonParams);
                 builder.post(body);
             }
 //                if(TextUtils.isEmpty(mJsonParams)){
