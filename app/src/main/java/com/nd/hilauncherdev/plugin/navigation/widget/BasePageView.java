@@ -5,9 +5,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
+
 import java.util.List;
 
-public class BasePageView extends RelativeLayout implements NavigationLauncherInterface {
+public class BasePageView extends RelativeLayout implements NavigationLauncherInterface ,ViewLife{
 
 	public BasePageView(Context context) {
 		super(context);
@@ -120,6 +122,21 @@ public class BasePageView extends RelativeLayout implements NavigationLauncherIn
 
 	@Override
 	public void updateAndRefreshSiteDetail() {
+
+	}
+
+	@Override
+	public void onResume() {
+
+	}
+
+	@Override
+	public void onPause() {
+
+	}
+
+	@Override
+	public void onDestroy() {
 
 	}
 }

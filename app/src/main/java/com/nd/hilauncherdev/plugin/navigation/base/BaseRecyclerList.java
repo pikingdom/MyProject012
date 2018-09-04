@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.infopage;
+package com.nd.hilauncherdev.plugin.navigation.base;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,12 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.bumptech.glide.Glide;
 import com.nd.hilauncherdev.framework.view.ProgressImageView;
 import com.nd.hilauncherdev.framework.view.recyclerview.RecycleViewDivider;
 import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.LoadMoreWrapper;
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
+import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import java.util.List;
  * Created by Administrator on 2018/8/29.
  */
 
-public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseListInterface<T>,BaseView{
+public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseListInterface<T>,BaseView,ViewLife{
 
     protected List<T> data;//不能先new
 
@@ -96,6 +95,17 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
             }
         });
         mRecyclerView.setAdapter(mLoadMoreWrapper);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    GlideUtil.resumeRequests(getContext());
+                } else {
+                    GlideUtil.pauseRequests(getContext());
+                }
+            }
+        });
     }
 
 
@@ -207,4 +217,20 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
 
     protected abstract RecyclerView.Adapter getAdapter();
     //子类列表实现=======================
+
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
 }

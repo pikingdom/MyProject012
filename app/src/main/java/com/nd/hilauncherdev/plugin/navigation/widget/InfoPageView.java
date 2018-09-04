@@ -5,14 +5,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.infopage.BaseRecyclerList;
+import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
+import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage2;
+import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,7 @@ public class InfoPageView extends BasePageView {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ArrayList<View> mViewContainer = new ArrayList<>();
-    private String[] titles = {"推荐","222"};
+    private String[] titles = {"推荐","国际"};
 
     public InfoPageView(Context context) {
         this(context,null);
@@ -38,8 +41,8 @@ public class InfoPageView extends BasePageView {
     }
 
     private void initData() {
-        mViewContainer.add(new NewsPage(getContext()));
-        mViewContainer.add(new NewsPage2(getContext()));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_RECOMMENT));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_GLOBAL));
 
         final InfoViewPagerAdapter adapter = new InfoViewPagerAdapter();
         mViewPager.setAdapter(adapter);
@@ -86,6 +89,45 @@ public class InfoPageView extends BasePageView {
         if(!currentLayout.hasLoad()){
             currentLayout.loadData();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mViewContainer !=null && mViewContainer.size()>0){
+            for(View view:mViewContainer){
+                ViewLife viewLife = (ViewLife) view;
+                viewLife.onResume();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mViewContainer !=null && mViewContainer.size()>0){
+            for(View view:mViewContainer){
+                ViewLife viewLife = (ViewLife) view;
+                viewLife.onPause();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mViewContainer !=null && mViewContainer.size()>0){
+            for(View view:mViewContainer){
+                ViewLife viewLife = (ViewLife) view;
+                viewLife.onDestroy();
+            }
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.e("zhenghonglin","infopage onDetachedFromWindow");
     }
 
     class InfoViewPagerAdapter extends PagerAdapter{

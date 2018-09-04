@@ -4,15 +4,19 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
-import com.nd.hilauncherdev.plugin.navigation.activity.MainActivity;
+import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
+import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
@@ -23,6 +27,9 @@ import java.util.List;
  */
 
 public class NewsPage extends BaseRecyclerList {
+
+    private String scenarioType = "";
+
     public NewsPage(@NonNull Context context) {
         super(context);
     }
@@ -33,6 +40,11 @@ public class NewsPage extends BaseRecyclerList {
 
     public NewsPage(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public NewsPage(@NonNull Context context,String scenarioType) {
+        super(context);
+        this.scenarioType = scenarioType;
     }
 
     @Override
@@ -55,7 +67,40 @@ public class NewsPage extends BaseRecyclerList {
 
     @Override
     public void netRequest() {
-        MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(pageIndex,pageSize)).enqueue(new JsonResponseHandler() {
+        SPUtil spUtil = new SPUtil();
+        String uid = spUtil.getString(SPConstant.INVENO_UID_KEY);
+        if(TextUtils.isEmpty(uid)){
+            requestUidAndList();
+        } else {
+            requestList();
+        }
+    }
+
+    private void requestUidAndList(){
+        MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_UID_URL).jsonParams(InvenoHelper.getUidJsonParams()).enqueue(new JsonResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, String response) {
+                Log.e("zhenghonglin","1response:"+response+","+System.currentTimeMillis());
+                InvenoHelper.parseUid(response);
+                SPUtil spUtil = new SPUtil();
+                String netUid = spUtil.getString(SPConstant.INVENO_UID_KEY);
+                if(TextUtils.isEmpty(netUid)){
+                    onNetDataFail("");
+                } else {
+                    requestList();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+                Log.e("zhenghonglin","2response:"+error_msg);
+                onNetDataFail("");
+            }
+        });
+    }
+
+    private void requestList(){
+        MyOkHttp.getInstance().postInveno().tag(this).url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(scenarioType,pageIndex,pageSize)).enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String response) {
                 List<NewsInfo> list = InvenoHelper.parseInfo(response);
@@ -71,26 +116,17 @@ public class NewsPage extends BaseRecyclerList {
                 onNetDataFail("");
             }
         });
-
-//        MyOkHttp.getInstance().postH().tag(this).url("http://api.zlauncher.cn/action.ashx/commonaction/1").jsonParams("")
-//                .enqueue(new JsonResponseHandler() {
-//                    @Override
-//                    public void onSuccess(int statusCode, String response) {
-//                        List<NewsInfo> list = MainActivity.parseInfo(getContext().getApplicationContext());
-//                        if(list!=null){
-//                            onNetDataSuccess(list,true);
-//                        } else {
-//                            onNetDataFail("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int statusCode, String error_msg) {
-//                        onNetDataFail("");
-//                    }
-//                });
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.e("zhenghonglin","newspage onDetachedFromWindow");
+    }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyOkHttp.getInstance().cancel(this);
+    }
 }

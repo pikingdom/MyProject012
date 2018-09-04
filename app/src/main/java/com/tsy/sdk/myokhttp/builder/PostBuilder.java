@@ -1,7 +1,6 @@
 package com.tsy.sdk.myokhttp.builder;
 
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.tsy.sdk.myokhttp.Common;
 import com.tsy.sdk.myokhttp.MyOkHttp;

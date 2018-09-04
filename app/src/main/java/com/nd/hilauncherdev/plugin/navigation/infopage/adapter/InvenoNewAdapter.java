@@ -4,12 +4,12 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.view.recyclerview.base.ItemViewDelegate;
 import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
+import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
             ScaleImageView imageView = (ScaleImageView)holder.getView(R.id.image);
             String url = newsInfo.getHeadUrl();
             if(!TextUtils.isEmpty(url)){
-                Glide.with(mContext).load(url).into(imageView);
+                GlideUtil.load(mContext,url,imageView);
             }
         }
     }
@@ -93,7 +93,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
                 String url = newsInfo.getUrl(i);
                 ScaleImageView imageView = (ScaleImageView) imageLL.getChildAt(i);
                 if(!TextUtils.isEmpty(url) && imageView !=null){
-                    Glide.with(mContext).load(url).into(imageView);
+                    GlideUtil.load(mContext,url,imageView);
                 }
             }
         }
@@ -118,7 +118,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
             ScaleImageView imageView = (ScaleImageView)holder.getView(R.id.image);
             String url = newsInfo.getHeadUrl();
             if(!TextUtils.isEmpty(url)){
-                Glide.with(mContext).load(url).into(imageView);
+                GlideUtil.load(mContext,url,imageView);
             }
         }
     }

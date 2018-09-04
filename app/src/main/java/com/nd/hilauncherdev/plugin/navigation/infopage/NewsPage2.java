@@ -5,20 +5,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.View;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.activity.MainActivity;
-import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
+import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsBean;
-import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
-import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.tsy.sdk.myokhttp.MyOkHttp;
-import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,4 +65,9 @@ public class NewsPage2 extends BaseRecyclerList {
     }
 
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.e("zhenghonglin","newspage2 onDetachedFromWindow");
+    }
 }

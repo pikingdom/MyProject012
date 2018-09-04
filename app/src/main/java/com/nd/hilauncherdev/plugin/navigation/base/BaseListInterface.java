@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.infopage;
+package com.nd.hilauncherdev.plugin.navigation.base;
 
 import java.util.List;
 

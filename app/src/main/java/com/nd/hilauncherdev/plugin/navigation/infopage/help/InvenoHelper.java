@@ -4,7 +4,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
+import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.tsy.sdk.myokhttp.Common;
 
 import org.json.JSONArray;
@@ -34,6 +36,10 @@ public class InvenoHelper {
     public static final String GET_LIST_URL = "https://opensdk.inveno.com/gate/api/list";
 
 
+    public static final String SCENARIO_RECOMMENT = "0x010100"; // 推荐
+    public static final String SCENARIO_GLOBAL = "0x010101"; // 国际
+
+
     public static String getUidJsonParams(){
         String request_time = (System.currentTimeMillis()/1000)+"";
         String tk = Common.md5Hex(AppSecret+":"+""+":"+request_time);
@@ -54,22 +60,41 @@ public class InvenoHelper {
         return builder.toString();
     }
 
-    public static String getListJsonParams(int pageIndex,int pageCount){
+    public static String getListJsonParams(String scenarioType,int pageIndex,int pageCount){
         StringBuilder builder = new StringBuilder(getUidJsonParams());
-//        String ua = "Mozilla/5.0 (Linux; Android 7.0; STF-AL10 Build/HUAWEISTF-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043508 Safari/537.36 V1_AND_SQ_7.2.0_730_YYB_D QQ/7.2.0.3270 NetType/4G WebP/0.3.0 Pixel/1080";
+        SPUtil spUtil = new SPUtil();
+        String uid = spUtil.getString(SPConstant.INVENO_UID_KEY,"");
         String ua = "android";
-        builder .append("&uid=01011808212025247801001905839609")
-                .append("&scenario=0x010100")
+        builder .append("&uid="+uid)
+                .append("&scenario="+scenarioType)
         .append("&content_type=0x00000003")
         .append("&display=0x0000000f")
-//        .append("&display=0x00000001")
         .append("&link_type=0x00000003")
         .append("&operation="+pageIndex)
         .append("&count="+pageCount)
         .append("&ua="+ua);
         return builder.toString();
-
     }
+
+    public static void parseUid(String infoTxt) {
+        if(TextUtils.isEmpty(infoTxt)){
+            return;
+        }
+        try {
+            JSONObject jsonObject = new JSONObject(infoTxt);
+            int code = jsonObject.getInt("code");
+            if(code == 200){
+                String uid = jsonObject.getString("uid");
+                if(!TextUtils.isEmpty(uid)){
+                    SPUtil spUtil = new SPUtil();
+                    spUtil.putString(SPConstant.INVENO_UID_KEY,uid);
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+
 
     public static List<NewsInfo> parseInfo(String infoTxt) {
         if(TextUtils.isEmpty(infoTxt)){

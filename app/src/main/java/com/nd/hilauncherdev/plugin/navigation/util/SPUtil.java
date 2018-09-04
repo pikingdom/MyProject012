@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.tsy.sdk.myokhttp.MyOkHttp;
+
 public class SPUtil {
 
     private SharedPreferences sp;
     private Editor editor;
     private final static String SP_NAME = "navigation_sp";
 
-    public SPUtil(Context context) {
-        sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+    public SPUtil() {
+        sp = MyOkHttp.getInstance().getApplicationConext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
     }
 
@@ -22,7 +24,7 @@ public class SPUtil {
 
     public String getString(String key) {
         String str = null;
-        str = sp.getString(key, null);
+        str = sp.getString(key, "");
         return str;
     }
 

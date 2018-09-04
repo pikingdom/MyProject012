@@ -35,7 +35,6 @@ public class MainActivity extends Activity {
         setContentView(navigationView);
         navigationView.onLauncherStart();
 //        setContentView(R.layout.navigation_activity_main);
-
     }
 
     public void Test001(View view){
@@ -48,7 +47,7 @@ public class MainActivity extends Activity {
 
 //        String url = "http://opensdk.inveno.com/gate/api/list";
 //        String jsonParams = "latitude=26.113803&app_lan=zh_CN&language=zh_CN&mcc=460&platform=android&network=1&mode=1&uid=01011808212025247801001905839609&lacn=22790&request_time=1535676586&osv=8.1.0&content_type=0x00000003&scenario=0x010100&product_id=xoslauncher&model=Redmi+Note+5&brand=xiaomi&cell_id=134272260&longitude=119.236470&mnc=01&display=0x0000000f&count=10&link_type=0x00000003&api_ver=3.0.0&tk=14fc7dfbf8dd1ce0881b94e3ea1e1eeb&app_ver=1.0.15&imei=868773032475652&sdk_ver=3.0.4&aid=bfd8b2b15b1f3932&operation=1&promotion=openplatform&";
-        MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(1,10)).enqueue(new JsonResponseHandler() {
+        MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_LIST_URL).jsonParams(InvenoHelper.getListJsonParams(InvenoHelper.SCENARIO_GLOBAL,1,10)).enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String response) {
 //                parseInfo();
@@ -138,4 +137,11 @@ public class MainActivity extends Activity {
                     }
                 });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("zhenghonglin","activity onDestroy");
+    }
+
 }

@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationView extends RelativeLayout implements NavigationLauncherInterface{
+public class NavigationView extends RelativeLayout implements NavigationLauncherInterface,ViewLife{
 
 	/** 0屏位置 **/
 	private static final int NAVI_INDEX = 0;
@@ -24,7 +25,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private static final int INFO_INDEX = 1;
 	private ViewPager mViewPager;
 
-	private NavigationPageView1 navigationPageView;
+	private NavigationPageView navigationPageView;
 	private InfoPageView infoPageView;
 
 	private Context context;
@@ -44,7 +45,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 	protected void initView() {
 		LayoutInflater.from(getContext()).inflate(R.layout.launcher_navigation_container, this);
-		navigationPageView = new NavigationPageView1(getContext());
+		navigationPageView = new NavigationPageView(getContext());
 		infoPageView = new InfoPageView(getContext());
 		mViewContainer.add(navigationPageView);
 		mViewContainer.add(infoPageView);
@@ -68,7 +69,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
-				View pageView = mViewContainer.get(position);
+				View pageView =  mViewContainer.get(position);
 				container.addView(pageView);
 				return pageView;
 			}
@@ -230,4 +231,36 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 //		PageCountSetter.getInstance().setAllPageCount(ctx, index);
 //	}
 	//===========================桌面反射方法结束==============================
+
+	//===========================自定义View生命周期 begin==============================
+	@Override
+	public void onResume() {
+		if(mViewContainer != null && mViewContainer.size() >0){
+			for(View view:mViewContainer){
+				ViewLife viewLife = (ViewLife) view;
+				viewLife.onResume();
+			}
+		}
+	}
+
+	@Override
+	public void onPause() {
+		if(mViewContainer != null && mViewContainer.size() >0){
+			for(View view:mViewContainer){
+				ViewLife viewLife = (ViewLife) view;
+				viewLife.onPause();
+			}
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		if(mViewContainer != null && mViewContainer.size() >0){
+			for(View view:mViewContainer){
+				ViewLife viewLife = (ViewLife) view;
+				viewLife.onDestroy();
+			}
+		}
+	}
+	//===========================自定义View生命周期 end==============================
 }
