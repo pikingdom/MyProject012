@@ -53,7 +53,11 @@ public class NewsPage extends BaseRecyclerList {
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                LauncherCaller.openUrl(getContext().getApplicationContext(),adapter.getDatas().get(position).origin_url);
+                NewsInfo newsInfo = adapter.getDatas().get(position);
+                if(newsInfo != null){
+                    submitClick(newsInfo);
+                    LauncherCaller.openUrl(getContext().getApplicationContext(),newsInfo.origin_url);
+                }
             }
 
             @Override
@@ -64,6 +68,22 @@ public class NewsPage extends BaseRecyclerList {
         return adapter;
     }
 
+    private void submitClick(NewsInfo newsInfo){
+        List<String> list = newsInfo.click_url;
+        if(list != null && list.size()>0){
+            MyOkHttp.getInstance().get().url(list.get(0)).tag(this).enqueue(new JsonResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, String response) {
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, String error_msg) {
+
+                }
+            });
+        }
+    }
 
     @Override
     public void netRequest() {

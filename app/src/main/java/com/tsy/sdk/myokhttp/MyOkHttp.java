@@ -98,6 +98,11 @@ public class MyOkHttp {
         return new GetBuilder(this,true);
     }
 
+//    public GetBuilder getInveno() {
+//        check();
+//        return new GetBuilder(this,false);
+//    }
+
     public PostBuilder post() {
         check();
         PostBuilder postBuilder = new PostBuilder(this,false);

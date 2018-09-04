@@ -106,7 +106,6 @@ public class InvenoHelper {
             JSONObject jsonObject = new JSONObject(infoTxt);
             int code = jsonObject.getInt("code");
             if(code == 200){
-                Log.e("zhenghonglin","code:"+code);
                 JSONArray dataArray = jsonObject.getJSONArray("data");
                 if(dataArray != null && dataArray.length()>0){
                     for(int i=0;i<dataArray.length();i++){
@@ -124,6 +123,20 @@ public class InvenoHelper {
                                 newsInfo.addImage2List(listImageArray.getJSONObject(j).getString("img_url"));
                             }
                         }
+                        JSONArray pv_urlArray = itemJsonObject.optJSONArray("pv_url");
+                        if(pv_urlArray != null && pv_urlArray.length() > 0){
+                            for(int k=0;k<pv_urlArray.length();k++){
+                                newsInfo.addPvUrl(pv_urlArray.getString(k));
+                            }
+                        }
+
+                        JSONArray click_urlArray = itemJsonObject.optJSONArray("click_url");
+                        if(click_urlArray != null && click_urlArray.length() > 0){
+                            for(int l=0;l<click_urlArray.length();l++){
+                                newsInfo.addClickUrl(click_urlArray.getString(l));
+                            }
+                        }
+
                         list.add(newsInfo);
                     }
                 }

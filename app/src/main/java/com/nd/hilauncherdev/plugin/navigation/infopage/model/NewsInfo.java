@@ -23,6 +23,28 @@ public class NewsInfo {
     public String share_url;
     public String publish_time;
     public List<String> list_images;
+    public List<String> pv_url;
+    public List<String> click_url;
+
+    public void addPvUrl(String str){
+        if(TextUtils.isEmpty(str)){
+            return;
+        }
+        if(pv_url == null){
+            pv_url = new ArrayList<String>();
+        }
+        pv_url.add(str);
+    }
+
+    public void addClickUrl(String str){
+        if(TextUtils.isEmpty(str)){
+            return;
+        }
+        if(click_url == null){
+            click_url = new ArrayList<String>();
+        }
+        click_url.add(str);
+    }
 
     public void addImage2List(String img_url){
         if(TextUtils.isEmpty(img_url)){
