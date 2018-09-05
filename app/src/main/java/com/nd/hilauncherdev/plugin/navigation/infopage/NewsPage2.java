@@ -47,6 +47,11 @@ public class NewsPage2 extends BaseRecyclerList {
         return adapter;
     }
 
+    @Override
+    protected void onScrollStateIdle() {
+
+    }
+
 
     @Override
     public void netRequest() {

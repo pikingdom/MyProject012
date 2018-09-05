@@ -32,6 +32,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     protected List<T> data;//不能先new
 
     protected RecyclerView mRecyclerView;
+    protected LinearLayoutManager linearLayoutManager;
     protected SwipeRefreshLayout mRefreshLayout;
     protected LoadMoreWrapper mLoadMoreWrapper;
     protected ProgressImageView ivLoading;
@@ -69,7 +70,8 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         viewError.setVisibility(View.GONE);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL,2,getContext().getResources().getColor(R.color.divide_color)));
 
@@ -95,11 +97,11 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
             }
         });
         mRecyclerView.setAdapter(mLoadMoreWrapper);
-
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    onScrollStateIdle();
                     GlideUtil.resumeRequests(getContext());
                 } else {
                     GlideUtil.pauseRequests(getContext());
@@ -206,6 +208,13 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         return getAdapter();
     }
 
+    protected T getItem(int position){
+        if(data == null || position >= data.size()){
+            return null;
+        }
+        return  data.get(position);
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -216,6 +225,8 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     protected abstract void netRequest();
 
     protected abstract RecyclerView.Adapter getAdapter();
+
+    protected abstract void onScrollStateIdle();
     //子类列表实现=======================
 
 

@@ -24,7 +24,7 @@ repositories{
 
 dependencies {
     compile files('libs/dynamicsdk.jar')
-    compile files('libs/felink_sdk_common_v1.2.jar')
+//    compile files('libs/felink_sdk_common_v1.2.jar')
     debugCompile files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
     releaseProvided files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
 

@@ -17,6 +17,7 @@ import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
+import com.nd.hilauncherdev.plugin.navigation.util.ThreadUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
@@ -68,21 +69,45 @@ public class NewsPage extends BaseRecyclerList {
         return adapter;
     }
 
-    private void submitClick(NewsInfo newsInfo){
-        List<String> list = newsInfo.click_url;
-        if(list != null && list.size()>0){
-            MyOkHttp.getInstance().get().url(list.get(0)).tag(this).enqueue(new JsonResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, String response) {
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, String error_msg) {
-
-                }
-            });
+    @Override
+    protected void onScrollStateIdle() {
+        //上报展示量
+        int firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+        for(int i=firstPosition;i<lastPosition;i++){
+            NewsInfo newsInfo = (NewsInfo) getItem(i);
+            if(newsInfo != null){
+                submitPv(newsInfo);
+            }
         }
+    }
+
+    private void submitPv(NewsInfo newsInfo){
+        final List<String> list = newsInfo.pv_url;
+        ThreadUtil.executeSubmit(new Runnable() {
+            @Override
+            public void run() {
+                if(list != null && list.size()>0){
+                    for(int i=0;i<list.size();i++){
+                        MyOkHttp.getInstance().get().url(list.get(i)).tag(NewsPage.this).execute();
+                    }
+                }
+            }
+        });
+    }
+
+    private void submitClick(NewsInfo newsInfo){
+        final List<String> list = newsInfo.click_url;
+        ThreadUtil.executeSubmit(new Runnable() {
+            @Override
+            public void run() {
+                if(list != null && list.size()>0){
+                    for(int i=0;i<list.size();i++){
+                        MyOkHttp.getInstance().get().url(list.get(i)).tag(NewsPage.this).execute();
+                    }
+                }
+            }
+        });
     }
 
     @Override

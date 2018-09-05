@@ -25,8 +25,9 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private static final int INFO_INDEX = 1;
 	private ViewPager mViewPager;
 
-	private NavigationPageView navigationPageView;
+	private NavigationWebView navigationPageView;
 	private InfoPageView infoPageView;
+	private NavigationSearchView navigationSearchView;
 
 	private Context context;
 
@@ -45,10 +46,12 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 	protected void initView() {
 		LayoutInflater.from(getContext()).inflate(R.layout.launcher_navigation_container, this);
-		navigationPageView = new NavigationPageView(getContext());
+		navigationPageView = new NavigationWebView(getContext());
 		infoPageView = new InfoPageView(getContext());
+		navigationSearchView = new NavigationSearchView(getContext());
 		mViewContainer.add(navigationPageView);
 		mViewContainer.add(infoPageView);
+		mViewContainer.add(navigationSearchView);
 		initViewPager();
 		setToInfoView();
 	}

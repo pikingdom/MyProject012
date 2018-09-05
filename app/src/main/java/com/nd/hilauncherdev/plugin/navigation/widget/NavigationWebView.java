@@ -14,14 +14,14 @@ import com.tencent.smtt.sdk.WebViewClient;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationPageView extends BasePageView {
+public class NavigationWebView extends BasePageView {
 
     private WebView webView;
-    public NavigationPageView(Context context) {
+    public NavigationWebView(Context context) {
         this(context,null);
     }
 
-    public NavigationPageView(Context context, AttributeSet attrs) {
+    public NavigationWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setBackgroundColor(Color.RED);
         webView = new WebView(getContext());
