@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
         MyOkHttp.getInstance().setApplicationConext(getApplicationContext());
         NavigationView navigationView = new NavigationView(this);
         setContentView(navigationView);
+        navigationView.setActivity(this);
         navigationView.onLauncherStart();
 //        setContentView(R.layout.navigation_activity_main);
     }

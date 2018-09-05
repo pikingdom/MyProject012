@@ -7,4 +7,9 @@ package com.nd.hilauncherdev.plugin.navigation.constant;
 public class SPConstant {
 
     public static final String INVENO_UID_KEY = "inveno_uid";
+
+    public static final String NAVIGATION_SITES_VER = "navigation_sites_ver";
+
+    public static final String NAVIGATION_SITES_JSON = "navigation_sites_json";
+
 }

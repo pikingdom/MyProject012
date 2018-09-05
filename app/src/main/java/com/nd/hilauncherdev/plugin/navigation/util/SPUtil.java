@@ -17,6 +17,11 @@ public class SPUtil {
         editor = sp.edit();
     }
 
+    public SPUtil(String spName) {
+        sp = MyOkHttp.getInstance().getApplicationConext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        editor = sp.edit();
+    }
+
     public boolean putString(String key, String value) {
         editor.putString(key, value);
         return editor.commit();

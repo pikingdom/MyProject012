@@ -2,7 +2,6 @@ package com.nd.hilauncherdev.plugin.navigation.util.reflect;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.nd.hilauncherdev.kitset.util.reflect.NavigationKeepForReflect;
 
@@ -26,6 +25,14 @@ public class ReflectInvoke {
             NavigationKeepForReflect.setNavigationViewChildIndex_V8198(launcher, index);
         } catch (Throwable t) {
             Reflect.on(launcher).call("setNavigationViewChildIndex", index);
+        }
+    }
+
+    public static String getBaseDirName(Activity activity) {
+        try {
+            return NavigationKeepForReflect.getBaseDirName_V8198(activity);
+        } catch (Throwable t) {
+            return Reflect.on("com.nd.hilauncherdev.launcher.navigation.NavigationView").call("getBaseDirName").get();
         }
     }
 }

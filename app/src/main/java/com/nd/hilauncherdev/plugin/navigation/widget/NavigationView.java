@@ -32,7 +32,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private Context context;
 
 	private ArrayList<View> mViewContainer = new ArrayList<>();
-	private Activity mLauncher;
+	private static Activity mLauncher;
 
 	public NavigationView(Context context, String pkgName, int channelType, String countryCode, String CUID, String channelId, ClassLoader loader, String appId, String baseDir) {
 	    this(context);
@@ -264,6 +264,17 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 				viewLife.onDestroy();
 			}
 		}
+		mLauncher = null;
 	}
 	//===========================自定义View生命周期 end==============================
+	public static Activity getLauncher(){
+		return mLauncher;
+	}
+
+	public static String getPkgName(){
+		if(mLauncher == null){
+			return "";
+		}
+		return mLauncher.getPackageName();
+	}
 }

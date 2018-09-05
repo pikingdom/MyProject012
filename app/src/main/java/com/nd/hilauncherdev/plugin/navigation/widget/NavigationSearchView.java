@@ -9,6 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
+import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
+import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
+import com.tsy.sdk.myokhttp.MyOkHttp;
+import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
+import com.tsy.sdk.myokhttp.util.MyOKhttpHeler;
+
+import org.json.JSONObject;
 
 
 /**
@@ -44,6 +52,48 @@ public class NavigationSearchView extends BasePageView {
     }
 
     public void loadData(){
+
+    }
+
+    @Override
+    public void onLauncherStart() {
+        super.onLauncherStart();
+        //从服务端获取数据 配置2
+        final SPUtil spUtil = new SPUtil();
+        int ver = spUtil.getInt(SPConstant.NAVIGATION_SITES_VER,0);
+        MyOkHttp.getInstance().postH().url(ZLauncherUrl.COMMONACTION_2)
+                .addParam("paramname","NavigationRecommendedSites")
+                .addParam("ver",ver+"")
+                .enqueue(new JsonResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, String response) {
+                        try {
+                            if(!MyOKhttpHeler.isEmpty(response)){
+                                JSONObject jsonObject = new JSONObject(response);
+                                String content = jsonObject.getString("content");
+                                spUtil.putString(SPConstant.NAVIGATION_SITES_JSON,content);
+                                spUtil.putInt(SPConstant.NAVIGATION_SITES_VER,jsonObject.getInt("currentversion"));
+                                onNetDataSuccess();
+                            } else {
+
+                            }
+                        }catch (Exception e){
+                            onNetDataFail();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, String error_msg) {
+                        onNetDataFail();
+                    }
+                });
+    }
+
+    private void onNetDataSuccess(){
+
+    }
+
+    private void onNetDataFail(){
 
     }
 
