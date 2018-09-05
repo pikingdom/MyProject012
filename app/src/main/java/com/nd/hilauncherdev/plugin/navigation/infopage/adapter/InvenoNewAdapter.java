@@ -29,6 +29,28 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         addItemViewDelegate(new NewDelagate008());
     }
 
+    private String parsePublish(String publishTime){
+        try {
+            long current = System.currentTimeMillis()/1000;
+            long publishL = Long.parseLong(publishTime);
+            long result = current - publishL;
+            int d_days = (int) (result/86400);
+            int d_hours = d_days/3600;
+            int d_minutes = d_hours/60;
+            if(d_days>0) {
+                return d_days+"天前";
+            }else if(d_days<=0 && d_hours>0){
+                return d_hours+"小时前";
+            }else if(d_hours<=0 && d_minutes>3){
+                return d_minutes+"分钟前";
+            } else {
+                return "刚刚";
+            }
+        }catch (Exception e){
+            return "刚刚";
+        }
+    }
+
     public class NewDelagate001 implements ItemViewDelegate<NewsInfo> {
 
         @Override
@@ -45,6 +67,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         public void convert(ViewHolder holder, NewsInfo newsInfo, int position) {
             holder.setText(R.id.summary, newsInfo.summary);
             holder.setText(R.id.source, newsInfo.source);
+            holder.setText(R.id.publish_time,parsePublish(newsInfo.publish_time));
         }
     }
 
@@ -64,6 +87,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         public void convert(ViewHolder holder, NewsInfo newsInfo, int position) {
             holder.setText(R.id.summary, newsInfo.summary);
             holder.setText(R.id.source, newsInfo.source);
+            holder.setText(R.id.publish_time,parsePublish(newsInfo.publish_time));
             ScaleImageView imageView = (ScaleImageView)holder.getView(R.id.image);
             String url = newsInfo.getHeadUrl();
             if(!TextUtils.isEmpty(url)){
@@ -88,6 +112,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         public void convert(ViewHolder holder, NewsInfo newsInfo, int position) {
             holder.setText(R.id.summary, newsInfo.summary);
             holder.setText(R.id.source, newsInfo.source);
+            holder.setText(R.id.publish_time,parsePublish(newsInfo.publish_time));
             LinearLayout imageLL = holder.getView(R.id.list_images);
             for (int i = 0; i < imageLL.getChildCount(); i++) {
                 String url = newsInfo.getUrl(i);
@@ -115,6 +140,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         public void convert(ViewHolder holder, NewsInfo newsInfo, int position) {
             holder.setText(R.id.summary, newsInfo.summary);
             holder.setText(R.id.source, newsInfo.source);
+            holder.setText(R.id.publish_time,parsePublish(newsInfo.publish_time));
             ScaleImageView imageView = (ScaleImageView)holder.getView(R.id.image);
             String url = newsInfo.getHeadUrl();
             if(!TextUtils.isEmpty(url)){

@@ -39,6 +39,7 @@
             <TextView
                 android:id="@+id/publish_time"
                 android:text="11分钟前"
+                android:layout_marginLeft="5dp"
                 style="@style/inveno_news_item_source" />
         </LinearLayout>
     </LinearLayout>
