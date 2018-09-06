@@ -1,10 +1,12 @@
 package com.nd.hilauncherdev.plugin.navigation.widget;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
+import com.nd.hilauncherdev.plugin.navigation.util.DensityUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.nd.hilauncherdev.plugin.navigation.widget.model.WebSiteItem;
@@ -56,11 +59,21 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
         search_img = (ImageView) findViewById(R.id.search_img);
         search_tv = (TextView) findViewById(R.id.search_tv);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),5);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int grid_margin = DensityUtil.dip2px(getContext(),3);
+                outRect.left = grid_margin;
+                outRect.right = grid_margin;
+                outRect.top = grid_margin;
+                outRect.bottom = grid_margin;            }
+        });
     }
 
     private void initData() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),5);
-        recyclerView.setLayoutManager(gridLayoutManager);
         data = new ArrayList<WebSiteItem>();
         CommonAdapter adapter = new CommonAdapter<WebSiteItem>(getContext(),R.layout.navigation_favorite_sites_item,data) {
              @Override

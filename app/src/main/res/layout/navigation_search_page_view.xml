@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:background="#0000ff"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/search_rl"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/navigation_search_bg"
         android:gravity="center_vertical">
@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/search_img"
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:textColor="#4bffffff"
+            android:textColor="#4b000000"
             android:textSize="16sp"
             android:text="AAAAAAAAA"/>
     </RelativeLayout>
