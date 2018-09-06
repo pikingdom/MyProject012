@@ -66,10 +66,12 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int grid_margin = DensityUtil.dip2px(getContext(),3);
-                outRect.left = grid_margin;
-                outRect.right = grid_margin;
+                int grid_margin1 = DensityUtil.dip2px(getContext(),5);
+                outRect.left = grid_margin1;
+                outRect.right = grid_margin1;
                 outRect.top = grid_margin;
-                outRect.bottom = grid_margin;            }
+                outRect.bottom = grid_margin;
+            }
         });
     }
 
@@ -84,6 +86,8 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
                  } else if(webSiteItem.iconType == WebSiteItem.TYPE_LOCAL_FILE_ICON){
                      GlideUtil.load(getContext(),webSiteItem.iconPath,icon_img);
                  }
+                 ImageView icon_img_mask = holder.getView(R.id.icon_img_mask);
+                 GlideUtil.load(getContext(),R.drawable.navigation_favorite_icon_mask,icon_img_mask);
                  TextView icon_tv = holder.getView(R.id.icon_tv);
                  icon_tv.setText(webSiteItem.name);
              }
