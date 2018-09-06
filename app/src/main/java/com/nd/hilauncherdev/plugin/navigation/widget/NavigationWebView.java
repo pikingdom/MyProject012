@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
@@ -14,7 +15,7 @@ import com.tencent.smtt.sdk.WebViewClient;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationWebView extends BasePageView {
+public class NavigationWebView extends BasePageView implements BasePageInterface {
 
     private WebView webView;
     public NavigationWebView(Context context) {
@@ -58,5 +59,18 @@ public class NavigationWebView extends BasePageView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void onNetDataFail(String msg) {
+
+    }
+
+    public void onNetDataSuccess() {
+
+    }
+
+    @Override
+    public void onPageSelected() {
+
     }
 }

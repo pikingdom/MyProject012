@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
 import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
-import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage2;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 
 import java.util.ArrayList;
@@ -23,11 +23,13 @@ import java.util.ArrayList;
  * Created by Administrator on 2018/8/29.
  */
 
-public class InfoPageView extends BasePageView {
+public class InfoPageView extends BasePageView implements BasePageInterface {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ArrayList<View> mViewContainer = new ArrayList<>();
     private String[] titles = {"推荐","国际"};
+
+    private boolean hasLoad = false;
 
     public InfoPageView(Context context) {
         this(context,null);
@@ -129,6 +131,16 @@ public class InfoPageView extends BasePageView {
         super.onDetachedFromWindow();
         Log.e("zhenghonglin","infopage onDetachedFromWindow");
     }
+
+
+    @Override
+    public void onPageSelected() {
+        BaseRecyclerList fragment = (BaseRecyclerList) mViewContainer.get(mViewPager.getCurrentItem());
+        if(!fragment.hasLoad()){
+            fragment.loadData();
+        }
+    }
+
 
     class InfoViewPagerAdapter extends PagerAdapter{
 

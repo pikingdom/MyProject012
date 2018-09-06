@@ -6,9 +6,11 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.SpHelper;
 import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
+import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.SystemUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.reflect.ReflectInvoke;
 import com.nd.hilauncherdev.plugin.navigation.widget.model.WebSiteItem;
@@ -68,7 +70,7 @@ public class NavigationLoader {
      * @return
      */
     public static List<WebSiteItem> getRecommendedSites(Context ctx, int totalCount) {
-        JSONArray favoriteArray = getAllDataFromLocalFile(RECOMMEND_PATH);// 从本地读取已经从服务器上获取到的数据
+        JSONArray favoriteArray = getAllDataFromLocalFile();// 从本地读取已经从服务器上获取到的数据
         List<WebSiteItem> list = null;
         if (favoriteArray != null && favoriteArray.length() > 0) {
             list = getRecommendedSitesFromJson(favoriteArray);
@@ -78,6 +80,10 @@ public class NavigationLoader {
 //            /** 已经添加本地图标，避免重复添加 */
 //            needLocal =false;
 //        }
+        if(list == null){
+            list = new ArrayList<WebSiteItem>();
+        }
+
         //获取定制版本数据
         List<WebSiteItem> customList = getRecommendSitesFroCustomLauncher(ctx);
         if(customList == null){
@@ -103,9 +109,10 @@ public class NavigationLoader {
      *
      * @return
      */
-    private static JSONArray getAllDataFromLocalFile(String path) {
+    private static JSONArray getAllDataFromLocalFile() {
         // 服务器返回说明已经是最新数据，则读取放FILES文件夹里面的数据
-        String localData = FileUtil.readFileContent(path);
+        SPUtil spUtil = new SPUtil();
+        String localData = spUtil.getString(SPConstant.NAVIGATION_SITES_JSON);
         if (TextUtils.isEmpty(localData)) {
             return null;
         }

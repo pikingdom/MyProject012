@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
+import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -89,6 +91,8 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 			@Override
 			public void onPageSelected(int position) {
 				PageCountSetter.getInstance().setPageIndex(mLauncher, position);
+				BasePageInterface fragment = (BasePageInterface) mViewContainer.get(position);
+				fragment.onPageSelected();
 			}
 
 			@Override
