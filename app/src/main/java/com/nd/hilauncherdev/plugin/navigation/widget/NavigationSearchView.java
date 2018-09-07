@@ -1,10 +1,13 @@
 package com.nd.hilauncherdev.plugin.navigation.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,14 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
+import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
+import com.nd.hilauncherdev.kitset.util.reflect.NavigationKeepForReflect;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
 import com.nd.hilauncherdev.plugin.navigation.util.DensityUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
+import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
+import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
+import com.nd.hilauncherdev.plugin.navigation.util.SystemUtil;
+import com.nd.hilauncherdev.plugin.navigation.util.ToastUtil;
 import com.nd.hilauncherdev.plugin.navigation.widget.model.WebSiteItem;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
@@ -78,21 +87,64 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     private void initData() {
         data = new ArrayList<WebSiteItem>();
         CommonAdapter adapter = new CommonAdapter<WebSiteItem>(getContext(),R.layout.navigation_favorite_sites_item,data) {
-             @Override
-             protected void convert(ViewHolder holder, WebSiteItem webSiteItem, int position) {
-                 ImageView icon_img = holder.getView(R.id.icon_img);
-                 if(webSiteItem.iconType == WebSiteItem.TYPE_SERVER_ICON){
-                     GlideUtil.load(getContext(),webSiteItem.iconURL,icon_img);
-                 } else if(webSiteItem.iconType == WebSiteItem.TYPE_LOCAL_FILE_ICON){
-                     GlideUtil.load(getContext(),webSiteItem.iconPath,icon_img);
-                 }
-                 ImageView icon_img_mask = holder.getView(R.id.icon_img_mask);
-                 GlideUtil.load(getContext(),R.drawable.navigation_favorite_icon_mask,icon_img_mask);
-                 TextView icon_tv = holder.getView(R.id.icon_tv);
-                 icon_tv.setText(webSiteItem.name);
-             }
+            @Override
+            protected void convert(ViewHolder holder, WebSiteItem webSiteItem, int position) {
+                ImageView icon_img = holder.getView(R.id.icon_img);
+                if(webSiteItem.iconType == WebSiteItem.TYPE_SERVER_ICON){
+                    GlideUtil.load(getContext(),webSiteItem.iconURL,icon_img);
+                } else if(webSiteItem.iconType == WebSiteItem.TYPE_LOCAL_FILE_ICON){
+                    GlideUtil.load(getContext(),webSiteItem.iconPath,icon_img);
+                }
+                ImageView icon_img_mask = holder.getView(R.id.icon_img_mask);
+                GlideUtil.load(getContext(),R.drawable.navigation_favorite_icon_mask,icon_img_mask);
+                TextView icon_tv = holder.getView(R.id.icon_tv);
+                icon_tv.setText(webSiteItem.name);
+            }
         };
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                WebSiteItem item = data.get(position);
+                if (null == item)
+                    return;
+                if(item.actionType == WebSiteItem.ACTION_TYPE_OPEN_APP){
+                    try {
+                        if(!SystemUtil.isApkInstalled(getContext(),item.appPkg)){
+                            ToastUtil.show(R.string.activity_not_found);
+                        }else{
+                            try {
+                                if(!NavigationKeepForReflect.processXiaoMi7OpenApp(Intent.parseUri(item.url,0))){
+                                    SystemUtil.startActivitySafely(getContext(),Intent.parseUri(item.url,0));
+                                }
+                            }catch (Throwable t){
+                                t.printStackTrace();
+                                SystemUtil.startActivitySafely(getContext(),Intent.parseUri(item.url,0));
+                            }
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+//                    CvAnalysis.submitClickEvent(mContext,CvAnalysisConstant.NAVIGATION_SCREEN_INTO,
+//                            positionId,resId,CvAnalysisConstant.RESTYPE_LINKS);
+                    if(LauncherBranchController.isNavigationForCustomLauncher()){
+                        NavigationKeepForReflect.eventNavigationApp_V8508(item.appPkg,position);
+                    }
+                }else{
+                    Log.e("clarkzheng","4444444444444444");
+                    if(!TextUtils.isEmpty(item.url)){
+                        LauncherCaller.openUrl(getContext().getApplicationContext(),item.url);
+                    }
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
     public void loadData(){

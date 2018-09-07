@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 
 /**
  * 网址
- * 
+ *
  * @author chenzhihong_9101910
- * 
+ *
  */
 public class WebSiteItem {
-	
+
 	//用于本地图标
 	public int iconId;
 	//用于服务器上图标
@@ -23,13 +23,13 @@ public class WebSiteItem {
 	public static final int TYPE_LOCAL_RES_ICON = 3;
 	public static final int TYPE_USE_APP_ICON = 4;
 	public int iconType = TYPE_SERVER_ICON;
-	
+
 	/** 文本资源ID **/
 	public String name;
-	
+
 	/** 链接地址 **/
 	public String url;
-	
+
 	public String siteId = null;
 
 	//618曝光统计：使用ID
@@ -54,7 +54,6 @@ public class WebSiteItem {
 	/** 点击图标时的动作类型 */
 	public static final int ACTION_TYPE_OPEN_URL = 0;
 	public static final int ACTION_TYPE_OPEN_APP = 1;
-	public static final int ACTION_TYPE_LOCAL_ACTION_SITE_DETAIL = 2;
 	public int actionType = ACTION_TYPE_OPEN_URL;
 	/** 点击时打开应用的包名 */
 	public String appPkg = "";
@@ -65,12 +64,12 @@ public class WebSiteItem {
 
 	public WebSiteItem(){
 	}
-	
+
 	public WebSiteItem(String name, String url){
 		this.name = name;
 		this.url = url;
 	}
-	
+
 	public WebSiteItem(String name, String url, String siteId){
 		this(name, url);
 		this.siteId = siteId;
