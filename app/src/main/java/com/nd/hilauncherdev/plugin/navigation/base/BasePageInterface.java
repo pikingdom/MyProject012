@@ -12,5 +12,9 @@ public interface BasePageInterface {
      */
     public void onPageSelected();
 
+    /**
+     * 离开页面的时候回调
+     */
+    public void onPageUnSelected();
 
 }

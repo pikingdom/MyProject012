@@ -14,8 +14,10 @@ import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
 import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
+import com.nd.hilauncherdev.plugin.navigation.helper.WebViewUrl;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ArrayList<View> mViewContainer = new ArrayList<>();
-    private String[] titles = {"推荐","国际"};
+    private String[] titles = {"推荐","国际","唯品会","爱阅读"};
 
     private boolean hasLoad = false;
 
@@ -45,6 +47,8 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
     private void initData() {
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_RECOMMENT));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_GLOBAL));
+        mViewContainer.add(new NavigationWebView(getContext(), WebViewUrl.VIP_URL));
+        mViewContainer.add(new NavigationWebView(getContext(), WebViewUrl.iyd_URL));
 
         final InfoViewPagerAdapter adapter = new InfoViewPagerAdapter();
         mViewPager.setAdapter(adapter);
@@ -59,10 +63,14 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
 
             @Override
             public void onPageSelected(int position) {
-                BaseRecyclerList fragment = (BaseRecyclerList) mViewContainer.get(position);
-                if(!fragment.hasLoad()){
-                    fragment.loadData();
-                }
+                final BasePageInterface fragment = (BasePageInterface) mViewContainer.get(position);
+                MyOkHttp.mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fragment.onPageSelected();
+                    }
+                },300);
+
             }
 
             @Override
@@ -135,10 +143,13 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
 
     @Override
     public void onPageSelected() {
-        BaseRecyclerList fragment = (BaseRecyclerList) mViewContainer.get(mViewPager.getCurrentItem());
-        if(!fragment.hasLoad()){
-            fragment.loadData();
-        }
+        BasePageInterface fragment = (BasePageInterface) mViewContainer.get(mViewPager.getCurrentItem());
+        fragment.onPageSelected();
+    }
+
+    @Override
+    public void onPageUnSelected() {
+
     }
 
 

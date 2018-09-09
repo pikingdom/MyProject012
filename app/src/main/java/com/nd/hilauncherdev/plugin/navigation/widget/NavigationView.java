@@ -1,4 +1,5 @@
 package com.nd.hilauncherdev.plugin.navigation.widget;
+
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -11,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
-import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -27,7 +27,6 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private static final int INFO_INDEX = 1;
 	private ViewPager mViewPager;
 
-	private NavigationWebView navigationPageView;
 	private InfoPageView infoPageView;
 	private NavigationSearchView navigationSearchView;
 
@@ -48,12 +47,10 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 	protected void initView() {
 		LayoutInflater.from(getContext()).inflate(R.layout.launcher_navigation_container, this);
-		navigationPageView = new NavigationWebView(getContext());
 		infoPageView = new InfoPageView(getContext());
 		navigationSearchView = new NavigationSearchView(getContext());
-		mViewContainer.add(navigationPageView);
-		mViewContainer.add(infoPageView);
 		mViewContainer.add(navigationSearchView);
+		mViewContainer.add(infoPageView);
 		initViewPager();
 		setToInfoView();
 	}
@@ -74,6 +71,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
+				Log.e("viewpager","instantiateItem:"+position);
 				View pageView =  mViewContainer.get(position);
 				container.addView(pageView);
 				return pageView;
@@ -81,6 +79,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 			@Override
 			public void destroyItem(ViewGroup container, int position, Object object) {
+				Log.e("viewpager","destroyItem:"+position);
 				container.removeView(mViewContainer.get(position));
 			}
 
@@ -91,8 +90,19 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 			@Override
 			public void onPageSelected(int position) {
 				PageCountSetter.getInstance().setPageIndex(mLauncher, position);
-				BasePageInterface fragment = (BasePageInterface) mViewContainer.get(position);
-				fragment.onPageSelected();
+				for(int i=0;i<mViewContainer.size();i++){
+					final BasePageInterface fragment = (BasePageInterface) mViewContainer.get(i);
+					if(i == position){
+						MyOkHttp.mHandler.postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								fragment.onPageSelected();
+							}
+						},300);
+					} else {
+						fragment.onPageUnSelected();
+					}
+				}
 			}
 
 			@Override
@@ -149,7 +159,9 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void setHotWordView(List<Object> list) {
-
+		if(navigationSearchView != null){
+			navigationSearchView.setHotWordView(list);
+		}
 	}
 
 	@Override

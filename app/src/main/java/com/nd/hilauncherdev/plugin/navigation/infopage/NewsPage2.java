@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
 import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
+import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsBean;
@@ -45,6 +46,11 @@ public class NewsPage2 extends BaseRecyclerList {
             }
         };
         return adapter;
+    }
+
+    @Override
+    protected void addHeaderAndFooter(HeaderAndFooterWrapper wrapper) {
+
     }
 
     @Override

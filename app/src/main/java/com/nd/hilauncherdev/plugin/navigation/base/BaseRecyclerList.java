@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.nd.hilauncherdev.framework.view.ProgressImageView;
 import com.nd.hilauncherdev.framework.view.recyclerview.RecycleViewDivider;
+import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.LoadMoreWrapper;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by Administrator on 2018/8/29.
  */
 
-public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseListInterface<T>,BaseView,ViewLife{
+public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseListInterface<T>,BaseView,ViewLife,BasePageInterface{
 
     protected List<T> data;//不能先new
 
@@ -35,6 +36,8 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     protected LinearLayoutManager linearLayoutManager;
     protected SwipeRefreshLayout mRefreshLayout;
     protected LoadMoreWrapper mLoadMoreWrapper;
+    protected HeaderAndFooterWrapper mHeaderAndFooterWrapper;
+
     protected ProgressImageView ivLoading;
     protected View viewLoading;
     protected View viewError;
@@ -81,7 +84,9 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
         mRefreshLayout.setOnRefreshListener(this);
 
-        mLoadMoreWrapper = new LoadMoreWrapper(getListAdapter());
+        mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(getListAdapter());
+        addHeaderAndFooter(mHeaderAndFooterWrapper);
+        mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
         mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
         mLoadMoreWrapper.setShowLoadMore(hasNext);
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
@@ -226,9 +231,25 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
 
     protected abstract RecyclerView.Adapter getAdapter();
 
+    protected  void addHeaderAndFooter(HeaderAndFooterWrapper wrapper){
+
+    }
+
     protected abstract void onScrollStateIdle();
     //子类列表实现=======================
 
+
+    @Override
+    public void onPageSelected() {
+        if(!hasLoad){
+            loadData();
+        }
+    }
+
+    @Override
+    public void onPageUnSelected() {
+
+    }
 
     @Override
     public void onResume() {

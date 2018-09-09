@@ -2,39 +2,33 @@ package com.nd.hilauncherdev.plugin.navigation.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
-import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
-import com.nd.hilauncherdev.kitset.util.reflect.NavigationKeepForReflect;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
-import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
-import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
-import com.nd.hilauncherdev.plugin.navigation.util.DensityUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
-import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
-import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
+import com.nd.hilauncherdev.plugin.navigation.bean.HotwordItemInfo;
+import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
+import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
+import com.nd.hilauncherdev.plugin.navigation.loader.NaviWordLoader;
 import com.nd.hilauncherdev.plugin.navigation.util.SystemUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.ToastUtil;
-import com.nd.hilauncherdev.plugin.navigation.widget.model.WebSiteItem;
-import com.tsy.sdk.myokhttp.MyOkHttp;
-import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
-import com.tsy.sdk.myokhttp.util.MyOKhttpHeler;
-
-import org.json.JSONObject;
+import com.nd.hilauncherdev.plugin.navigation.widget.search.hotword.ServerHotwordGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +38,34 @@ import java.util.List;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationSearchView extends BasePageView implements BasePageInterface {
+public class NavigationSearchView extends BasePageView implements BasePageInterface ,View.OnClickListener{
 
     private RelativeLayout search_rl;
     private ImageView search_img;
     private TextView search_tv;
-    private RecyclerView recyclerView;
-    private List<WebSiteItem> data;
+    private TextSwitcher search_ts;
+    private ServerHotwordGenerator hotwordGenerator;
+
+    private FrameLayout container;
+    private NavigationSitesView navigationSitesView;
+    private NewsPage newsPage;
     private boolean hasLoad = false;
+
+    private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
+
+        @Override
+        public View makeView() {
+            // Create a new TextView
+            TextView t = new TextView(getContext());
+            t.setTextColor(Color.parseColor("#88000000"));
+            t.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+            FrameLayout.LayoutParams lp= new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+            t.setLayoutParams(lp);
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+            return t;
+        }
+    };
+
     public NavigationSearchView(Context context) {
         this(context,null);
     }
@@ -67,130 +81,36 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
         search_rl = (RelativeLayout) findViewById(R.id.search_rl);
         search_img = (ImageView) findViewById(R.id.search_img);
         search_tv = (TextView) findViewById(R.id.search_tv);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        search_ts = (TextSwitcher) findViewById(R.id.search_ts);
+        search_ts.setFactory(mFactory);
+        search_rl.setOnClickListener(this);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),5);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                int grid_margin = DensityUtil.dip2px(getContext(),3);
-                int grid_margin1 = DensityUtil.dip2px(getContext(),5);
-                outRect.left = grid_margin1;
-                outRect.right = grid_margin1;
-                outRect.top = grid_margin;
-                outRect.bottom = grid_margin;
-            }
-        });
+        Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+        Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
+        search_ts.setInAnimation(in);
+        search_ts.setOutAnimation(out);
+        search_ts.setText(getContext().getString(R.string.navigation_search_default_key));
+
+        container = (FrameLayout) findViewById(R.id.container);
+        navigationSitesView = new NavigationSitesView(getContext());
+//        int widthMeasureSpec = MeasureSpec.makeMeasureSpec(900, MeasureSpec.EXACTLY);
+//        int heightMeasureSpec = MeasureSpec.makeMeasureSpec(400, MeasureSpec.EXACTLY);
+//        navigationSitesView.measure(widthMeasureSpec,heightMeasureSpec);
+        newsPage = new NewsPage.Builder().setScenarioType(InvenoHelper.SCENARIO_RECOMMENT).addHeadView(navigationSitesView).build(getContext());
+        container.addView(newsPage);
     }
 
     private void initData() {
-        data = new ArrayList<WebSiteItem>();
-        CommonAdapter adapter = new CommonAdapter<WebSiteItem>(getContext(),R.layout.navigation_favorite_sites_item,data) {
-            @Override
-            protected void convert(ViewHolder holder, WebSiteItem webSiteItem, int position) {
-                ImageView icon_img = holder.getView(R.id.icon_img);
-                if(webSiteItem.iconType == WebSiteItem.TYPE_SERVER_ICON){
-                    GlideUtil.load(getContext(),webSiteItem.iconURL,icon_img);
-                } else if(webSiteItem.iconType == WebSiteItem.TYPE_LOCAL_FILE_ICON){
-                    GlideUtil.load(getContext(),webSiteItem.iconPath,icon_img);
-                }
-                ImageView icon_img_mask = holder.getView(R.id.icon_img_mask);
-                GlideUtil.load(getContext(),R.drawable.navigation_favorite_icon_mask,icon_img_mask);
-                TextView icon_tv = holder.getView(R.id.icon_tv);
-                icon_tv.setText(webSiteItem.name);
-            }
-        };
-        recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                WebSiteItem item = data.get(position);
-                if (null == item)
-                    return;
-                if(item.actionType == WebSiteItem.ACTION_TYPE_OPEN_APP){
-                    try {
-                        if(!SystemUtil.isApkInstalled(getContext(),item.appPkg)){
-                            ToastUtil.show(R.string.activity_not_found);
-                        }else{
-                            try {
-                                if(!NavigationKeepForReflect.processXiaoMi7OpenApp(Intent.parseUri(item.url,0))){
-                                    SystemUtil.startActivitySafely(getContext(),Intent.parseUri(item.url,0));
-                                }
-                            }catch (Throwable t){
-                                t.printStackTrace();
-                                SystemUtil.startActivitySafely(getContext(),Intent.parseUri(item.url,0));
-                            }
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-//                    CvAnalysis.submitClickEvent(mContext,CvAnalysisConstant.NAVIGATION_SCREEN_INTO,
-//                            positionId,resId,CvAnalysisConstant.RESTYPE_LINKS);
-                    if(LauncherBranchController.isNavigationForCustomLauncher()){
-                        NavigationKeepForReflect.eventNavigationApp_V8508(item.appPkg,position);
-                    }
-                }else{
-                    Log.e("clarkzheng","4444444444444444");
-                    if(!TextUtils.isEmpty(item.url)){
-                        LauncherCaller.openUrl(getContext().getApplicationContext(),item.url);
-                    }
-                }
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
-            }
-        });
     }
 
     public void loadData(){
-        final List<WebSiteItem> list = NavigationLoader.getRecommendedSites(getContext(),10);
-        MyOkHttp.mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                hasLoad = true;
-                if(list != null && list.size() >=0){
-                    data.addAll(list);
-                }
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-        });
+
     }
 
     @Override
     public void onLauncherStart() {
         super.onLauncherStart();
-        //从服务端获取数据 配置2
-        final SPUtil spUtil = new SPUtil();
-        int ver = spUtil.getInt(SPConstant.NAVIGATION_SITES_VER,0);
-        MyOkHttp.getInstance().postH().url(ZLauncherUrl.COMMONACTION_2)
-                .addParam("paramname","NavigationRecommendedSites")
-                .addParam("ver",ver+"")
-                .enqueue(new JsonResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, String response) {
-                        try {
-                            if(!MyOKhttpHeler.isEmpty(response)){
-                                JSONObject jsonObject = new JSONObject(response);
-                                String content = jsonObject.getString("content");
-                                spUtil.putString(SPConstant.NAVIGATION_SITES_JSON,content);
-                                spUtil.putInt(SPConstant.NAVIGATION_SITES_VER,jsonObject.getInt("currentversion"+1));
-                                onNetDataSuccess();
-                            }
-                        }catch (Exception e){
-                            onNetDataFail();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, String error_msg) {
-                        onNetDataFail();
-                    }
-                });
     }
 
     public void onNetDataFail(String msg) {
@@ -204,13 +124,98 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
 
     @Override
     public void onPageSelected() {
-        if(!hasLoad){
-            loadData();
+        Log.e("sitesview","1111:"+navigationSitesView.getWidth()+","+navigationSitesView.getHeight());
+        if(!newsPage.hasLoad()){
+            newsPage.loadData();
         }
+        startHotwordSwitch();
+    }
+
+    @Override
+    public void onPageUnSelected() {
+        stopHotwordSwitch();
     }
 
     private void onNetDataFail(){
 
+    }
+
+    private boolean isSwitchering = false;
+
+    public void startHotwordSwitch() {
+        if (!isSwitchering && isHotwordAvailable()) {
+            if (null != search_ts) {
+                if (hotwordGenerator != null) {
+                    HotwordItemInfo current = hotwordGenerator.getCurrentHotword();
+                    if (current != null) {
+                        search_ts.setCurrentText(current.name);
+                        search_ts.setTag(current);
+                    }
+                }
+            }
+            startNextTask(2000);
+            isSwitchering = true;
+        }
+    }
+
+    public void stopHotwordSwitch() {
+        if (isSwitchering) {
+            handler.removeMessages(MSG_NEXT_TEXT_SWITER);
+            isSwitchering = false;
+        }
+    }
+    public static final int MSG_NEXT_TEXT_SWITER = 100;
+
+    public void startNextTask(int next) {
+        handler.removeMessages(MSG_NEXT_TEXT_SWITER);
+        Message nextMsg = new Message();
+        nextMsg.what = MSG_NEXT_TEXT_SWITER;
+        handler.sendMessageDelayed(nextMsg, next);
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (MSG_NEXT_TEXT_SWITER == msg.what) {
+                updateHotwordSwitcher();
+            }
+        }
+    };
+
+    public void updateHotwordSwitcher() {
+        if(hotwordGenerator != null && hotwordGenerator.isCounterHit()){
+            return;
+        }
+        if (null != search_ts) {
+            if (hotwordGenerator != null) {
+                HotwordItemInfo current = hotwordGenerator.popupNextHotword();
+                if (current != null) {
+                    if(hotwordGenerator != null){
+                        hotwordGenerator.increaseCounter();
+                    }
+                    search_ts.setText(current.name);
+                    search_ts.setTag(current);
+//                    PluginUtil.invokeSubmitEvent(BaseNavigationSearchView.activity, AnalyticsConstant.NAVIGATION_DZ_SEARCH_PAGE_SEARCH_INPUT, "zs");
+                }
+            }
+        }
+        startNextTask(4000);
+    }
+
+    public boolean isHotwordAvailable() {
+        if (hotwordGenerator != null) {
+            return hotwordGenerator.isHotwordsAvailable();
+        }
+        return false;
+    }
+
+    @Override
+    public void setHotWordView(List<Object> list) {
+        super.setHotWordView(list);
+        ArrayList<HotwordItemInfo> itemList = NaviWordLoader.convertHotwordList(list);
+        if (hotwordGenerator != null) {
+            hotwordGenerator.appendHotwords(itemList);
+        }
     }
 
     @Override
@@ -226,5 +231,23 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == search_rl){
+            startSearchActivity("");
+        }
+    }
+
+    private void startSearchActivity(CharSequence text) {
+        Intent intent = new Intent();
+        intent.setClassName(getContext(), "com.nd.hilauncherdev.launcher.navigation.SearchActivity");
+        if (!TextUtils.isEmpty(text)) {
+            intent.putExtra("defaultWord", text);
+        }
+        intent.putExtra("from", "open_from_navigation");
+        SystemUtil.startActivityForResultSafely(NavigationView.getLauncher(), intent, SystemUtil.REQUEST_SEARCH_ACTIVITY_POSITION);
+//        PluginUtil.invokeSubmitEvent(BaseNavigationSearchView.activity, AnalyticsConstant.SEARCH_PERCENT_CONVERSION_SEARCH_INLET, "1");
     }
 }

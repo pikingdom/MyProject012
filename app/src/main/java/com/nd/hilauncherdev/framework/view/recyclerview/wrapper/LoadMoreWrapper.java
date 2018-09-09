@@ -27,7 +27,6 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setShowLoadMore(boolean value){
-        Log.e("zhenghonglin","setShowLoadMore:"+value);
         this.showLoadMore = value;
     }
 
@@ -113,7 +112,6 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        Log.e("zhenghonglin","navigation getItemCOunt"+getClass().getClassLoader().toString());
         return mInnerAdapter.getItemCount() + (hasLoadMore() ? 1 : 0);
     }
 

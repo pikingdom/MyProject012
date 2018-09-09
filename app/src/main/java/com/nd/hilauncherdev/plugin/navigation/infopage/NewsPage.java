@@ -8,8 +8,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
@@ -21,6 +23,7 @@ import com.nd.hilauncherdev.plugin.navigation.util.ThreadUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +49,16 @@ public class NewsPage extends BaseRecyclerList {
     public NewsPage(@NonNull Context context,String scenarioType) {
         super(context);
         this.scenarioType = scenarioType;
+    }
+
+    public NewsPage(@NonNull Context context,Builder builder) {
+        super(context);
+        this.scenarioType = builder.scenarioType;
+        if(builder.list != null && builder.list.size()>0){
+            for(View view:builder.list){
+                mHeaderAndFooterWrapper.addHeaderView(view);
+            }
+        }
     }
 
     @Override
@@ -174,4 +187,27 @@ public class NewsPage extends BaseRecyclerList {
         super.onDestroy();
         MyOkHttp.getInstance().cancel(this);
     }
+
+    public static class Builder{
+        private String scenarioType;
+        private List<View> list;
+
+        public Builder setScenarioType(String str){
+            this.scenarioType = str;
+            return this;
+        }
+
+        public Builder addHeadView(View view){
+            if(list == null){
+                list = new ArrayList<View>();
+            }
+            list.add(view);
+            return this;
+        }
+
+        public NewsPage build(Context context){
+            return new NewsPage(context,this);
+        }
+    }
+
 }
