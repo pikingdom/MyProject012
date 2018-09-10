@@ -3,7 +3,4 @@
 
     <string name="activity_not_found">"您的手机上未安装应用程序。"</string>
     <string name="navigation_search_default_key">快捷搜索网页、应用</string>
-
-    <string name="common_error_tips">糟糕！加载失败了,点击任意位置重试</string>
-    <string name="common_progress_title">正在加载...</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
+
 import com.tencent.smtt.sdk.WebView;
 
 import java.lang.reflect.Method;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;

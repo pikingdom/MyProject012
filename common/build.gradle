@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile files('libs/dynamicsdk.jar')
+    provided files('libs/ReflectUtil.jar')
+    debugCompile files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
+    releaseProvided files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile "com.android.support:design:23.0.0"
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.google.code.gson:gson:2.7'
+    debugCompile 'com.github.bumptech.glide:glide:3.7.0'
+    releaseProvided 'com.github.bumptech.glide:glide:3.7.0'
+}

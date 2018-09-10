@@ -2,7 +2,6 @@ package com.nd.hilauncherdev.plugin.navigation.infopage.help;
 
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;

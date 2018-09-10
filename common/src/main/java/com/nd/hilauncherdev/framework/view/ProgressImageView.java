@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.common.R;
+
 
 /**
  * Created by codeest on 16/9/27.

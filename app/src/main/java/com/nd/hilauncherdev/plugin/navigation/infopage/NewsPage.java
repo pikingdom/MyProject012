@@ -8,10 +8,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;

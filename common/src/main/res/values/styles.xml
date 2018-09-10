@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="ScaleImageView">
+        <attr name="adjustRatio" format="float" />
+    </declare-styleable>
+</resources>
