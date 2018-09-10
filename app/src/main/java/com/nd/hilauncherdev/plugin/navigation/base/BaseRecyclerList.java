@@ -38,8 +38,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     protected LoadMoreWrapper mLoadMoreWrapper;
     protected HeaderAndFooterWrapper mHeaderAndFooterWrapper;
 
-    protected ProgressImageView ivLoading;
-    protected View viewLoading;
+    protected ProgressImageView viewLoading;
     protected View viewError;
 
     protected int pageIndex = 1;
@@ -63,12 +62,11 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     public BaseRecyclerList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(getContext()).inflate(R.layout.navigation_list_view,this);
-        View.inflate(getContext(), R.layout.view_progress, this);
-        viewLoading = findViewById(R.id.view_loading);
-        ivLoading = (ProgressImageView) viewLoading.findViewById(R.id.iv_progress);
+        View.inflate(getContext(), R.layout.common_view_progress, this);
+        viewLoading = (ProgressImageView) findViewById(R.id.view_loading);
         viewLoading.setVisibility(View.GONE);
 
-        View.inflate(getContext(), R.layout.view_error,this);
+        View.inflate(getContext(), R.layout.common_loading_error,this);
         viewError = findViewById(R.id.view_error);
         viewError.setVisibility(View.GONE);
 
@@ -87,7 +85,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(getListAdapter());
         addHeaderAndFooter(mHeaderAndFooterWrapper);
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
-        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
+        mLoadMoreWrapper.setLoadMoreView(R.layout.common_list_loading_more_view);
         mLoadMoreWrapper.setShowLoadMore(hasNext);
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
@@ -140,7 +138,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         hideCurrentView();
         currentState = STATE_LOADING;
         viewLoading.setVisibility(View.VISIBLE);
-        ivLoading.start();
+        viewLoading.start();
         return true;
     }
 
@@ -159,7 +157,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
                 mRecyclerView.setVisibility(View.GONE);
                 break;
             case STATE_LOADING:
-                ivLoading.stop();
+                viewLoading.stop();
                 viewLoading.setVisibility(View.GONE);
                 break;
             case STATE_ERROR:
