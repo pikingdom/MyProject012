@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
-import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
+import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 

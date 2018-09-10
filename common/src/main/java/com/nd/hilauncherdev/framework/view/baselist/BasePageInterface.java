@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.base;
+package com.nd.hilauncherdev.framework.view.baselist;
 
 /**
  * Created by Administrator on 2018\9\1 0001.

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.nd.hilauncherdev.plugin.navigation.R;
 
 /**
  * Created by Administrator on 2018/9/4.

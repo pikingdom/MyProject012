@@ -13,7 +13,7 @@
         android:id="@+id/summary"
         android:text="河北3男子吃饭时与临桌起冲突 用凳子暴打女性"
         style="@style/inveno_news_item_summary" />
-    <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+    <com.nd.hilauncherdev.framework.view.ScaleImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

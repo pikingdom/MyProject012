@@ -10,7 +10,7 @@ import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
 import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView;
+import com.nd.hilauncherdev.framework.view.ScaleImageView;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package com.nd.hilauncherdev.plugin.navigation.util.view;
+package com.nd.hilauncherdev.framework.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.common.R;
 
 
 public class ScaleImageView extends ImageView {

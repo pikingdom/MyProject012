@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.nd.hilauncherdev.framework.view.NativeInterface;
 import com.nd.hilauncherdev.framework.view.SafeWebView;
-import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebViewClient;

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
+import com.nd.hilauncherdev.framework.view.baselist.ViewLife;
 
 import java.util.List;
 

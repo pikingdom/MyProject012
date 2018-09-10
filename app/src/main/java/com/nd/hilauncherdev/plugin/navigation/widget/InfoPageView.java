@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
-import com.nd.hilauncherdev.plugin.navigation.base.BaseRecyclerList;
-import com.nd.hilauncherdev.plugin.navigation.base.ViewLife;
+import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baselist.BaseRecyclerList;
+import com.nd.hilauncherdev.framework.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.helper.WebViewUrl;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;

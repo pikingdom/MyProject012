@@ -19,14 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
-        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+        <com.nd.hilauncherdev.framework.view.ScaleImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:layout_marginRight="2dp"
             app:adjustRatio="0.67" />
-        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+        <com.nd.hilauncherdev.framework.view.ScaleImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             app:adjustRatio="0.67" />
-        <com.nd.hilauncherdev.plugin.navigation.util.view.ScaleImageView
+        <com.nd.hilauncherdev.framework.view.ScaleImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

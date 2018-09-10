@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.base;
+package com.nd.hilauncherdev.framework.view.baselist;
 
 import java.util.List;
 

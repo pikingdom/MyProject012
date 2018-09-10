@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.base;
+package com.nd.hilauncherdev.framework.view.baselist;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,7 +17,7 @@ import com.nd.hilauncherdev.framework.view.ProgressImageView;
 import com.nd.hilauncherdev.framework.view.recyclerview.RecycleViewDivider;
 import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.framework.view.recyclerview.wrapper.LoadMoreWrapper;
-import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.common.R;
 import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
@@ -61,7 +61,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
 
     public BaseRecyclerList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(getContext()).inflate(R.layout.navigation_list_view,this);
+        LayoutInflater.from(getContext()).inflate(R.layout.common_list_view,this);
         View.inflate(getContext(), R.layout.common_view_progress, this);
         viewLoading = (ProgressImageView) findViewById(R.id.view_loading);
         viewLoading.setVisibility(View.GONE);
@@ -74,7 +74,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
         linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL,2,getContext().getResources().getColor(R.color.divide_color)));
+        mRecyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL,2,getContext().getResources().getColor(R.color.common_list_divide_color)));
 
         mRecyclerView.setVisibility(View.VISIBLE);
 

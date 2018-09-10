@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.plugin.navigation.bean.HotwordItemInfo;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
-import com.nd.hilauncherdev.plugin.navigation.base.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
