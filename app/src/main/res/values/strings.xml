@@ -3,4 +3,11 @@
 
     <string name="activity_not_found">"您的手机上未安装应用程序。"</string>
     <string name="navigation_search_default_key">快捷搜索网页、应用</string>
+
+    <string name="weather_unkown">未知</string>
+
+    <string name="weather_detail_humidity">湿度</string>
+    <string name="weather_detail_sunrise">日出</string>
+    <string name="weather_detail_sunset">日落</string>
+    <string name="weather_detail_visibility">能见度</string>
 </resources>

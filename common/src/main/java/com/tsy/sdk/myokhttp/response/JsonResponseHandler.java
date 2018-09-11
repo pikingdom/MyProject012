@@ -48,6 +48,7 @@ public abstract class JsonResponseHandler implements IResponseHandler {
                     }
                 });
             } else {
+                onJsonParse(response.code(),finalResponseBodyStr);
                 MyOkHttp.mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -69,4 +70,7 @@ public abstract class JsonResponseHandler implements IResponseHandler {
 
     public abstract void onSuccess(int statusCode, String response);
 
+    public void onJsonParse(int statusCode,String response) throws Exception{
+
+    }
 }

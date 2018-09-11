@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/id_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="410dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="380dp"
+                android:background="@drawable/weather_d_h_green_bg">
+
+                <ImageView
+                    android:id="@+id/iv_mountain_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/weather_mountain_b" />
+
+                <ImageView
+                    android:id="@+id/iv_mountain_foreground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/weather_mountain_f" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:paddingTop="21.0dip">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/forecast_1"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/forecast_1_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="#1f000000"
+                            android:shadowDx="0.0"
+                            android:shadowDy="1.0"
+                            android:shadowRadius="2.0"
+                            android:textColor="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/forecast_1_icon"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:layout_marginBottom="5.0dip"
+                            android:layout_marginTop="5.0dip"
+                            android:src="@drawable/weather_3200" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/forecast_2"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/forecast_2_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="#1f000000"
+                            android:shadowDx="0.0"
+                            android:shadowDy="1.0"
+                            android:shadowRadius="2.0"
+                            android:textColor="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/forecast_2_icon"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:layout_marginBottom="5.0dip"
+                            android:layout_marginTop="5.0dip"
+                            android:src="@drawable/weather_3200" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/forecast_3"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/forecast_3_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="#1f000000"
+                            android:shadowDx="0.0"
+                            android:shadowDy="1.0"
+                            android:shadowRadius="2.0"
+                            android:textColor="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/forecast_3_icon"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:layout_marginBottom="5.0dip"
+                            android:layout_marginTop="5.0dip"
+                            android:src="@drawable/weather_3200" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/forecast_4"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/forecast_4_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="#1f000000"
+                            android:shadowDx="0.0"
+                            android:shadowDy="1.0"
+                            android:shadowRadius="2.0"
+                            android:textColor="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/forecast_4_icon"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:layout_marginBottom="5.0dip"
+                            android:layout_marginTop="5.0dip"
+                            android:src="@drawable/weather_3200" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_header"
+                android:layout_width="fill_parent"
+                android:layout_height="280.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/current_weather_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:shadowColor="#19000000"
+                    android:shadowDx="0.0"
+                    android:shadowDy="2.0"
+                    android:shadowRadius="6.0"
+                    android:text="52"
+                    android:textColor="@android:color/white"
+                    android:textSize="96.0sp" />
+
+                <TextView
+                    android:id="@+id/current_weather_temperature_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-5.0dip"
+                    android:layout_toRightOf="@id/current_weather_temperature"
+                    android:text="°"
+                    android:textColor="@android:color/white"
+                    android:textSize="100.0sp" />
+
+                <TextView
+                    android:id="@+id/current_weather_code_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/current_weather_temperature"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="4.0dip"
+                    android:text="@string/weather_unkown"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/current_weather_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/current_weather_code_text"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/weather_unkown"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <include layout="@layout/weather_detail_hv_view" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
