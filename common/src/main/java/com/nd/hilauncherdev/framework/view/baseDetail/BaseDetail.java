@@ -102,7 +102,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     private void hideCurrentView() {
         switch (currentState) {
             case STATE_MAIN:
-                container.setVisibility(View.GONE);
+//                container.setVisibility(View.GONE);
                 break;
             case STATE_LOADING:
                 viewLoading.stop();

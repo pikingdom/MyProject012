@@ -111,6 +111,7 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     @Override
     public void onLauncherStart() {
         super.onLauncherStart();
+        navigationSitesView.onLauncherStart();
     }
 
     public void onNetDataFail(String msg) {
