@@ -216,7 +216,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void onLauncherStart() {
 		for (int i = 0; i < mViewContainer.size(); i++) {
-			((BasePageView) mViewContainer.get(i)).onLauncherStart();
+			((ViewLife) mViewContainer.get(i)).onLauncherStart();
 		}
 	}
 

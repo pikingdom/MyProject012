@@ -17,7 +17,7 @@ public interface BaseDetailInterface<T> {
     /**
      * 网络数据成功
      */
-    public void onNetDataSuccess(T data);
+    public void onNetDataSuccess();
 
 
     /**

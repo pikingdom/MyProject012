@@ -4,10 +4,11 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 import com.nd.hilauncherdev.framework.view.NativeInterface;
 import com.nd.hilauncherdev.framework.view.SafeWebView;
-import com.nd.hilauncherdev.framework.view.baselist.BasePageInterface;
+import com.nd.hilauncherdev.framework.view.baseDetail.BaseDetail;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -17,7 +18,7 @@ import com.tencent.smtt.sdk.WebViewClient;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationWebView extends BasePageView implements BasePageInterface {
+public class NavigationWebView extends BaseDetail{
     private SafeWebView mWebView;
     private boolean hasLoad = false;
     private String url = "";
@@ -27,16 +28,15 @@ public class NavigationWebView extends BasePageView implements BasePageInterface
     }
     public NavigationWebView(Context context) {
         super(context);
-        findViews();
     }
 
     public NavigationWebView(Context context, AttributeSet attrs) {
         this(context);
     }
 
-    private void findViews() {
+    private View findViews() {
         mWebView = new SafeWebView(getContext());
-        addView(mWebView);
+//        container.addView(mWebView);
         mWebView.disableAccessibility(getContext().getApplicationContext());
         initWebSettings();
         mWebView.setWebViewClient(new WebViewClient());
@@ -46,12 +46,14 @@ public class NavigationWebView extends BasePageView implements BasePageInterface
             public void onProgressChanged(com.tencent.smtt.sdk.WebView webView, int i) {
                 super.onProgressChanged(webView, i);
                 Log.e("zhenghonglin","i:"+i);
-                if(i == 100){
+                if(i >= 50){
                     hasLoad = true;
+                    onNetDataSuccess();
                 }
             }
         });
         mWebView.addJavascriptInterface(new NativeInterface(getContext()), "AndroidNative");
+        return mWebView;
     }
 
     private void initWebSettings() {
@@ -100,6 +102,20 @@ public class NavigationWebView extends BasePageView implements BasePageInterface
     }
 
     @Override
+    protected void netRequest() {
+        if(!hasLoad){
+            mWebView.loadUrl(url);
+        } else {
+            onNetDataSuccess();
+        }
+    }
+
+    @Override
+    protected View getDetailView() {
+        return findViews();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mWebView.onResume();
@@ -132,18 +148,18 @@ public class NavigationWebView extends BasePageView implements BasePageInterface
     }
 
     public void onNetDataFail(String msg) {
-
+        super.onNetDataFail(msg);
     }
 
     public void onNetDataSuccess() {
-
+        super.onNetDataSuccess();
     }
 
     @Override
     public void onPageSelected() {
 //        webView.loadUrl("http://www.jd.com");
         if(!hasLoad){
-            mWebView.loadUrl(url);
+            loadData();
         }
     }
 

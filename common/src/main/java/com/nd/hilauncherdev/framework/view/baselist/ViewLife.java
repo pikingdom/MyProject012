@@ -6,6 +6,8 @@ package com.nd.hilauncherdev.framework.view.baselist;
 
 public interface ViewLife {
 
+    public void onLauncherStart();
+
     public void onResume();
 
     public void onPause();

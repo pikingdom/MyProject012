@@ -17,4 +17,5 @@ public interface BasePageInterface {
      */
     public void onPageUnSelected();
 
+
 }

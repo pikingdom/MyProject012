@@ -21,7 +21,7 @@ import com.tsy.sdk.myokhttp.MyOkHttp;
  * Created by Administrator on 2018/8/29.
  */
 
-public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseDetailInterface<T>,BaseView,ViewLife,BasePageInterface{
+public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener,BaseDetailInterface,BaseView,ViewLife,BasePageInterface{
 
 
     protected ProgressImageView viewLoading;
@@ -58,6 +58,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
         mRefreshLayout.setOnRefreshListener(this);
+        container.addView(getDetailView());
     }
 
 
@@ -67,7 +68,8 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     }
 
     private void onRefreshLoadData() {
-        netRequest();
+        hasLoad = false;
+        loadData();
     }
     @Override
     public void stateMain() {
@@ -130,7 +132,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     }
 
     @Override
-    public void onNetDataSuccess(T t){
+    public void onNetDataSuccess(){
         if(mRefreshLayout.isRefreshing()){
             mRefreshLayout.setRefreshing(false);
         }
@@ -152,6 +154,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     //子类列表实现=======================
     protected abstract void netRequest();
 
+    protected abstract View getDetailView();
 
     //子类列表实现=======================
 
@@ -165,6 +168,11 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
 
     @Override
     public void onPageUnSelected() {
+
+    }
+
+    @Override
+    public void onLauncherStart() {
 
     }
 

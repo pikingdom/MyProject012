@@ -249,6 +249,13 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
 
     }
 
+
+    @Override
+    public void onLauncherStart() {
+
+    }
+
+
     @Override
     public void onResume() {
 
