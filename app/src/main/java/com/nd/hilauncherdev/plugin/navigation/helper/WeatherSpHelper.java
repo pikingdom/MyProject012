@@ -37,10 +37,19 @@ public class WeatherSpHelper {
      */
     public static final String WEATHER_FORCAST_JSON = "weather_forcast_json";
 
+    /**
+     * 上次刷新时间 refresh
+     */
+    public static final String WEATHER_REFRESH_TIME = "weather_refresh_time";
 
     public static String getLonAndLat() {
         SPUtil spUtil = new SPUtil();
         return spUtil.getString(LON_AND_LAT);
+    }
+
+    public static long getRefreshTime() {
+        SPUtil spUtil = new SPUtil();
+        return spUtil.getLong(WEATHER_REFRESH_TIME,System.currentTimeMillis());
     }
 
     public static City getCityFromSp(){
@@ -109,6 +118,7 @@ public class WeatherSpHelper {
         conditions.setRealFeelDegrees(weatherJsonObjec.getJSONObject("now").getInt("fl"));
         conditions.setRelativeHumidity(weatherJsonObjec.getJSONObject("now").getInt("hum"));
         conditions.setWindSpeed(weatherJsonObjec.getJSONObject("now").getInt("wind_spd"));
+        conditions.setWindDir(weatherJsonObjec.getJSONObject("now").getString("wind_dir"));
         conditions.setVisibility(weatherJsonObjec.getJSONObject("now").getInt("vis"));
         conditions.setPressure(weatherJsonObjec.getJSONObject("now").getInt("pres"));
         if (save2sp) {

@@ -44,118 +44,14 @@
                 android:paddingTop="21.0dip">
 
                 <LinearLayout
+                    android:id="@+id/forecast_ll"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:gravity="bottom"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/forecast_1"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/forecast_1_week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:shadowColor="#1f000000"
-                            android:shadowDx="0.0"
-                            android:shadowDy="1.0"
-                            android:shadowRadius="2.0"
-                            android:textColor="@android:color/white" />
-
-                        <ImageView
-                            android:id="@+id/forecast_1_icon"
-                            android:layout_width="40.0dip"
-                            android:layout_height="40.0dip"
-                            android:layout_marginBottom="5.0dip"
-                            android:layout_marginTop="5.0dip"
-                            android:src="@drawable/weather_3200" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/forecast_2"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/forecast_2_week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:shadowColor="#1f000000"
-                            android:shadowDx="0.0"
-                            android:shadowDy="1.0"
-                            android:shadowRadius="2.0"
-                            android:textColor="@android:color/white" />
-
-                        <ImageView
-                            android:id="@+id/forecast_2_icon"
-                            android:layout_width="40.0dip"
-                            android:layout_height="40.0dip"
-                            android:layout_marginBottom="5.0dip"
-                            android:layout_marginTop="5.0dip"
-                            android:src="@drawable/weather_3200" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/forecast_3"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/forecast_3_week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:shadowColor="#1f000000"
-                            android:shadowDx="0.0"
-                            android:shadowDy="1.0"
-                            android:shadowRadius="2.0"
-                            android:textColor="@android:color/white" />
-
-                        <ImageView
-                            android:id="@+id/forecast_3_icon"
-                            android:layout_width="40.0dip"
-                            android:layout_height="40.0dip"
-                            android:layout_marginBottom="5.0dip"
-                            android:layout_marginTop="5.0dip"
-                            android:src="@drawable/weather_3200" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/forecast_4"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/forecast_4_week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:shadowColor="#1f000000"
-                            android:shadowDx="0.0"
-                            android:shadowDy="1.0"
-                            android:shadowRadius="2.0"
-                            android:textColor="@android:color/white" />
-
-                        <ImageView
-                            android:id="@+id/forecast_4_icon"
-                            android:layout_width="40.0dip"
-                            android:layout_height="40.0dip"
-                            android:layout_marginBottom="5.0dip"
-                            android:layout_marginTop="5.0dip"
-                            android:src="@drawable/weather_3200" />
-                    </LinearLayout>
+                    <include layout="@layout/navigation_weather_forcast_item" />
+                    <include layout="@layout/navigation_weather_forcast_item" />
+                    <include layout="@layout/navigation_weather_forcast_item" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -176,7 +72,7 @@
                     android:shadowDx="0.0"
                     android:shadowDy="2.0"
                     android:shadowRadius="6.0"
-                    android:text="52"
+                    android:text="0"
                     android:textColor="@android:color/white"
                     android:textSize="96.0sp" />
 
@@ -213,6 +109,17 @@
             </RelativeLayout>
         </FrameLayout>
 
-        <include layout="@layout/weather_detail_hv_view" />
+        <include layout="@layout/weather_detail_hv_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"/>
+        <TextView
+            android:id="@+id/weather_recent_update_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#8a8a8a"
+            android:text="最近更新：12:05"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

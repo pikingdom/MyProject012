@@ -35,6 +35,14 @@ public class Conditions {
      */
     private float windSpeed ;
 
+
+
+    /**
+     * 风向
+     */
+
+    private String windDir ;
+
     /**
      * 可见度 km
      */
@@ -107,5 +115,13 @@ public class Conditions {
 
     public void setPressure(float pressure) {
         this.pressure = pressure;
+    }
+
+    public String getWindDir() {
+        return windDir;
+    }
+
+    public void setWindDir(String windDir) {
+        this.windDir = windDir;
     }
 }

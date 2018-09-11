@@ -5,10 +5,38 @@
     android:background="#ff0000"
     android:orientation="vertical">
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="头部" />
+        android:layout_height="500dp"
+        android:background="@color/weather_d_h_green_s">
+        <TextView
+            android:id="@+id/city_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:shadowColor="#1f000000"
+            android:shadowDx="0.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="2.0"
+            android:textSize="18sp"
+            android:text="福州"
+            android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/loc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:shadowColor="#1f000000"
+            android:shadowDx="0.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="2.0"
+            android:textSize="14sp"
+            android:text="定位"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
     <com.nd.hilauncherdev.plugin.navigation.weather.NavigationWeatherView
         android:id="@+id/weatherview"
         android:layout_width="match_parent"
