@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="50dp"
         android:background="@color/weather_d_h_green_s">
         <TextView
             android:id="@+id/city_tv"
