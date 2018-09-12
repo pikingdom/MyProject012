@@ -48,9 +48,9 @@
                     android:layout_height="fill_parent"
                     android:gravity="bottom"
                     android:orientation="horizontal">
-                    <include layout="@layout/navigation_weather_forcast_item" />
-                    <include layout="@layout/navigation_weather_forcast_item" />
-                    <include layout="@layout/navigation_weather_forcast_item" />
+                    <include layout="@layout/weather_forcast_item" />
+                    <include layout="@layout/weather_forcast_item" />
+                    <include layout="@layout/weather_forcast_item" />
                 </LinearLayout>
             </LinearLayout>
 

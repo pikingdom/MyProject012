@@ -195,7 +195,7 @@ public class WeatherView extends BaseDetail{
 
     @Override
     protected View getDetailView() {
-        view = LayoutInflater.from(getContext()).inflate(R.layout.navigation_weather_view,null);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.weather_view,null);
         return view;
     }
 

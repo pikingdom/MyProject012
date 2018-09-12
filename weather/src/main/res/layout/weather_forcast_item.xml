@@ -33,5 +33,5 @@
         android:shadowRadius="2.0"
         android:layout_marginBottom="5.0dip"
         android:layout_marginTop="5.0dip"
-        android:textColor="@color/text_dark" />
+        android:textColor="@color/weather_text_dark" />
 </LinearLayout>
