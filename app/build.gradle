@@ -24,5 +24,8 @@ repositories{
 
 dependencies {
     provided files('libs/ReflectUtil.jar')
+    compile files('libs/dynamicsdk.jar')
+    debugCompile files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
+    releaseProvided files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
     compile project(':common')
 }

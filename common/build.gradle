@@ -22,10 +22,6 @@ android {
 }
 
 dependencies {
-    compile files('libs/dynamicsdk.jar')
-    provided files('libs/ReflectUtil.jar')
-    debugCompile files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
-    releaseProvided files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:cardview-v7:23.0.0'
