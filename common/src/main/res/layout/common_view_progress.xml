@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nd.hilauncherdev.framework.view.ProgressImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.nd.hilauncherdev.framework.common.view.ProgressImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,4 +23,4 @@
         android:textColor="#666666"
         android:text="@string/common_progress_title"
         android:textSize="14sp" />
-</com.nd.hilauncherdev.framework.view.ProgressImageView>
+</com.nd.hilauncherdev.framework.common.view.ProgressImageView>

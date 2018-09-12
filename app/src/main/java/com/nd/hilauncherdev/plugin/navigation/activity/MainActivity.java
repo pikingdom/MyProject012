@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
-import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;
+import com.nd.hilauncherdev.framework.common.util.FileUtil;
 import com.nd.hilauncherdev.plugin.navigation.widget.NavigationView;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;

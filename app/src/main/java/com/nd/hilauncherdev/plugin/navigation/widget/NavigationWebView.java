@@ -6,9 +6,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.nd.hilauncherdev.framework.view.NativeInterface;
-import com.nd.hilauncherdev.framework.view.SafeWebView;
-import com.nd.hilauncherdev.framework.view.baseDetail.BaseDetail;
+import com.nd.hilauncherdev.framework.common.view.NativeInterface;
+import com.nd.hilauncherdev.framework.common.view.SafeWebView;
+import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetail;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebViewClient;

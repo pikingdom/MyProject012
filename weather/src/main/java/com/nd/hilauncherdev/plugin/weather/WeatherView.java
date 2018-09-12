@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nd.hilauncherdev.framework.view.baseDetail.BaseDetail;
+import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetail;
 import com.nd.hilauncherdev.plugin.weather.helper.SPUtil;
 import com.nd.hilauncherdev.plugin.weather.helper.WeatherSpHelper;
 import com.nd.hilauncherdev.plugin.weather.helper.ZLauncherUrl;

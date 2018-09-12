@@ -8,12 +8,12 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <com.nd.hilauncherdev.framework.view.ScaleImageView
+        <com.nd.hilauncherdev.framework.common.view.ScaleImageView
             android:id="@+id/icon_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="fitXY" />
-        <com.nd.hilauncherdev.framework.view.ScaleImageView
+        <com.nd.hilauncherdev.framework.common.view.ScaleImageView
             android:id="@+id/icon_img_mask"
             android:layout_width="60dp"
             android:layout_height="60dp"

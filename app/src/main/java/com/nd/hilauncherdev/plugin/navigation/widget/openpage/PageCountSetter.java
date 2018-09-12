@@ -3,7 +3,7 @@ package com.nd.hilauncherdev.plugin.navigation.widget.openpage;
 import android.content.Context;
 import android.util.Log;
 
-import com.nd.hilauncherdev.plugin.navigation.util.reflect.ReflectInvoke;
+import com.nd.hilauncherdev.framework.common.util.reflect.ReflectInvoke;
 
 
 /**

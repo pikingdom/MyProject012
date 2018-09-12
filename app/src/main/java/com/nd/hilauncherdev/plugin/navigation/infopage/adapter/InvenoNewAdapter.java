@@ -4,13 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.LinearLayout;
 
-import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.base.ItemViewDelegate;
-import com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ItemViewDelegate;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
-import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
-import com.nd.hilauncherdev.framework.view.ScaleImageView;
+import com.nd.hilauncherdev.framework.common.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.view.ScaleImageView;
 
 import java.util.List;
 

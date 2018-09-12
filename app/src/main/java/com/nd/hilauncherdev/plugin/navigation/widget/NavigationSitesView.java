@@ -13,14 +13,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nd.hilauncherdev.framework.view.recyclerview.CommonAdapter;
-import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.CommonAdapter;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.kitset.util.reflect.NavigationKeepForReflect;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
-import com.nd.hilauncherdev.plugin.navigation.util.DensityUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.util.DensityUtil;
+import com.nd.hilauncherdev.framework.common.util.GlideUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
@@ -80,7 +81,7 @@ public class NavigationSitesView extends FrameLayout{
         data = new ArrayList<WebSiteItem>();
         CommonAdapter adapter = new CommonAdapter<WebSiteItem>(getContext(), R.layout.navigation_favorite_sites_item,data) {
             @Override
-            protected void convert(com.nd.hilauncherdev.framework.view.recyclerview.base.ViewHolder holder, WebSiteItem webSiteItem, int position) {
+            protected void convert(ViewHolder holder, WebSiteItem webSiteItem, int position) {
                 ImageView icon_img = holder.getView(R.id.icon_img);
                 if(webSiteItem.iconType == WebSiteItem.TYPE_SERVER_ICON){
                     GlideUtil.load(getContext(),webSiteItem.iconURL,icon_img);

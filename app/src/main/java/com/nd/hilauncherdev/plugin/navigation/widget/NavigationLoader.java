@@ -8,11 +8,11 @@ import android.util.Log;
 
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.SpHelper;
-import com.nd.hilauncherdev.plugin.navigation.util.FileUtil;
+import com.nd.hilauncherdev.framework.common.util.FileUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.SystemUtil;
-import com.nd.hilauncherdev.plugin.navigation.util.reflect.ReflectInvoke;
+import com.nd.hilauncherdev.framework.common.util.reflect.ReflectInvoke;
 import com.nd.hilauncherdev.plugin.navigation.widget.model.WebSiteItem;
 
 import org.json.JSONArray;

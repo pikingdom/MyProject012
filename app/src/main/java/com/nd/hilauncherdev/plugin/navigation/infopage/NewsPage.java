@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.nd.hilauncherdev.framework.view.recyclerview.MultiItemTypeAdapter;
-import com.nd.hilauncherdev.framework.view.baselist.BaseRecyclerList;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.common.view.baselist.BaseRecyclerList;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
