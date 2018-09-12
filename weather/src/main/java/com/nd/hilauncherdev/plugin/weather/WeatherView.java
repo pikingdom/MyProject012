@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.weather;
+package com.nd.hilauncherdev.plugin.weather;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,14 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.view.baseDetail.BaseDetail;
-import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.helper.WeatherSpHelper;
-import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
-import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.City;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.Conditions;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.Forecast;
-import com.nd.hilauncherdev.plugin.navigation.weather.tools.WeatherHelper;
+import com.nd.hilauncherdev.plugin.weather.helper.SPUtil;
+import com.nd.hilauncherdev.plugin.weather.helper.WeatherSpHelper;
+import com.nd.hilauncherdev.plugin.weather.helper.ZLauncherUrl;
+import com.nd.hilauncherdev.plugin.weather.model.City;
+import com.nd.hilauncherdev.plugin.weather.model.Conditions;
+import com.nd.hilauncherdev.plugin.weather.model.Forecast;
+import com.nd.hilauncherdev.plugin.weather.tools.WeatherHelper;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
@@ -31,7 +30,7 @@ import java.util.List;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationWeatherView extends BaseDetail{
+public class WeatherView extends BaseDetail{
 
     private View view;
 
@@ -51,11 +50,11 @@ public class NavigationWeatherView extends BaseDetail{
 
     private Conditions conditions;
 
-    public NavigationWeatherView(@NonNull Context context) {
+    public WeatherView(@NonNull Context context) {
         this(context,null);
     }
 
-    public NavigationWeatherView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public WeatherView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -101,9 +100,9 @@ public class NavigationWeatherView extends BaseDetail{
                                 spUtil.putString(WeatherSpHelper.WEATHER_CONDITION_JSON, conditionResponse);
                                 spUtil.putString(WeatherSpHelper.WEATHER_FORCAST_JSON, forecastResponse);
                                 spUtil.putLong(WeatherSpHelper.WEATHER_REFRESH_TIME, System.currentTimeMillis());
-                                NavigationWeatherView.this.city = city;
-                                NavigationWeatherView.this.conditions = conditions;
-                                NavigationWeatherView.this.forecastList = forecastList;
+                                WeatherView.this.city = city;
+                                WeatherView.this.conditions = conditions;
+                                WeatherView.this.forecastList = forecastList;
                             } else {
                                 onFailure(statusCode,"");
                             }

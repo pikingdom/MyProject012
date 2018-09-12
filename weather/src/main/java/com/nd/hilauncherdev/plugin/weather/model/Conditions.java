@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.weather.model;
+package com.nd.hilauncherdev.plugin.weather.model;
 
 /**
  * Created by Administrator on 2018/9/11.

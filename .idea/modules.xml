@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyProject012.iml" filepath="$PROJECT_DIR$/MyProject012.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/dz_navigation.iml" filepath="$PROJECT_DIR$/.idea/dz_navigation.iml" />
+      <module fileurl="file://F:\mygithub\MyProject012\.idea\dz_navigation.iml" filepath="F:\mygithub\MyProject012\.idea\dz_navigation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/weather/weather.iml" filepath="$PROJECT_DIR$/weather/weather.iml" />
     </modules>
   </component>
 </project>

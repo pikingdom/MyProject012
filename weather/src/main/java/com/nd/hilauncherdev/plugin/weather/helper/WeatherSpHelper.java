@@ -1,9 +1,8 @@
-package com.nd.hilauncherdev.plugin.navigation.helper;
+package com.nd.hilauncherdev.plugin.weather.helper;
 
-import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.City;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.Conditions;
-import com.nd.hilauncherdev.plugin.navigation.weather.model.Forecast;
+import com.nd.hilauncherdev.plugin.weather.model.City;
+import com.nd.hilauncherdev.plugin.weather.model.Conditions;
+import com.nd.hilauncherdev.plugin.weather.model.Forecast;
 import com.tsy.sdk.myokhttp.util.MyOKhttpHeler;
 
 import org.json.JSONArray;

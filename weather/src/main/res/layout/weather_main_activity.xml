@@ -37,10 +37,10 @@
             android:text="定位"
             android:textColor="@android:color/white" />
     </RelativeLayout>
-    <com.nd.hilauncherdev.plugin.navigation.weather.NavigationWeatherView
+    <com.nd.hilauncherdev.plugin.weather.WeatherView
         android:id="@+id/weatherview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.nd.hilauncherdev.plugin.navigation.weather.NavigationWeatherView>
+    </com.nd.hilauncherdev.plugin.weather.WeatherView>
 
 </LinearLayout>

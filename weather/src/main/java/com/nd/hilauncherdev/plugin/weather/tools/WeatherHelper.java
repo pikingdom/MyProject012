@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin.navigation.weather.tools;
+package com.nd.hilauncherdev.plugin.weather.tools;
 
 import android.content.Context;
 import android.content.res.AssetManager;

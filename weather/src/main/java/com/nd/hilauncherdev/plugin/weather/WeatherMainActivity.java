@@ -1,10 +1,8 @@
-package com.nd.hilauncherdev.plugin.navigation.activity;
+package com.nd.hilauncherdev.plugin.weather;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
-import com.nd.hilauncherdev.plugin.navigation.weather.NavigationWeatherView;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
 /**
@@ -13,13 +11,13 @@ import com.tsy.sdk.myokhttp.MyOkHttp;
 
 public class WeatherMainActivity extends Activity {
 
-    private NavigationWeatherView webView;
+    private WeatherView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyOkHttp.getInstance().setApplicationConext(getApplicationContext());
         setContentView(R.layout.weather_main_activity);
-        webView = (NavigationWeatherView) findViewById(R.id.weatherview);
+        webView = (WeatherView) findViewById(R.id.weatherview);
         webView.loadData();
     }
 
