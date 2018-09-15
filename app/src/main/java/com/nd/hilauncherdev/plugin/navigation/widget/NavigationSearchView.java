@@ -262,7 +262,12 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     @Override
     public void onClick(View v) {
         if(v == search_rl){
-            startSearchActivity("");
+            HotwordItemInfo hotwordItemInfo = (HotwordItemInfo) search_ts.getTag();
+            if(hotwordItemInfo != null){
+                startSearchActivity(hotwordItemInfo.name);
+            } else{
+                startSearchActivity("");
+            }
         }
     }
 

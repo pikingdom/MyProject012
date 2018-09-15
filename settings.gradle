@@ -1,1 +1,1 @@
-include ':app', ':common', ':weather',':jar'
+include ':app', ':common', ':weather'
