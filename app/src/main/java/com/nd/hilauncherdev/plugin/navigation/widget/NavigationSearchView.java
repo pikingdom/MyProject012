@@ -35,11 +35,6 @@ import com.nd.hilauncherdev.plugin.navigation.widget.search.hotword.ServerHotwor
 import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -119,12 +114,12 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
         if(!TextUtils.isEmpty(hotWordsJson)){
             List<HotwordItemInfo> list = NaviWordLoader.parseSmHotWorlds(hotWordsJson);
             onNetDataSuccess(list);
+        } else {
+            requestHotWords(true);
         }
     }
 
-    @Override
-    public void onLauncherStart() {
-        super.onLauncherStart();
+    private void requestHotWords(final boolean needCallback){
         MyOkHttp.getInstance().get().url(NavigationUrls.SEARCH_HOTWORD_DEFAULT_URL).enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String response) {
@@ -132,17 +127,29 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
                 if(list != null && list.size()>0){
                     SPUtil spUtil = new SPUtil();
                     spUtil.putString(SPConstant.NAVIGATION_HOTWORDS_JSON,response);
-//                    onNetDataSuccess(list);
+                    if(needCallback){
+                         onNetDataSuccess(list);
+                    }
                 } else {
-                    onNetDataFail("");
+                    if(needCallback){
+                        onNetDataFail("");
+                    }
                 }
             }
 
             @Override
             public void onFailure(int statusCode, String error_msg) {
-                onNetDataFail("");
+                if(needCallback){
+                    onNetDataFail("");
+                }
             }
         });
+    }
+
+    @Override
+    public void onLauncherStart() {
+        super.onLauncherStart();
+        requestHotWords(false);
     }
 
     public void onNetDataFail(String msg) {
