@@ -35,7 +35,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     protected static final int STATE_ERROR = 0x02;
     protected int currentState = STATE_MAIN;
     protected SwipeRefreshLayout mRefreshLayout;
-    protected NestedScrollView container;
+    protected FrameLayout container;
     public BaseDetail(@NonNull Context context) {
         this(context,null);
     }
@@ -47,7 +47,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     public BaseDetail(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(getContext()).inflate(R.layout.common_detail_view,this);
-        container = (NestedScrollView) findViewById(R.id.container);
+        container = (FrameLayout) findViewById(R.id.container);
         View.inflate(getContext(), R.layout.common_view_progress, this);
         viewLoading = (ProgressImageView) findViewById(R.id.view_loading);
         viewLoading.setVisibility(View.GONE);

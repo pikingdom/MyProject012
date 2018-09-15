@@ -11,8 +11,24 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("keystore/dzkeystore")
+            storePassword "314159"
+            keyAlias "dzkeystore"
+            keyPassword "314159"
+        }
+        release {
+            storeFile file("keystore/dzkeystore")
+            storePassword "314159"
+            keyAlias "dzkeystore"
+            keyPassword "314159"
         }
     }
 }
@@ -23,6 +39,7 @@ repositories{
 }
 
 dependencies {
+    releaseProvided files('libs/common_util_v1.0.jar')
     provided files('libs/ReflectUtil.jar')
     compile files('libs/dynamicsdk.jar')
     debugCompile files('libs/tbs_sdk_v2.6.0.1045_36900_obfs_20161207_162008.jar')

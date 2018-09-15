@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.framework.common.view.ViewPagerCompat;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
+import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
@@ -25,7 +26,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private static final int NAVI_INDEX = 0;
 	/** 资讯屏位置 **/
 	private static final int INFO_INDEX = 1;
-	private ViewPager mViewPager;
+	private ViewPagerCompat mViewPager;
 
 	private InfoPageView infoPageView;
 	private NavigationSearchView navigationSearchView;
@@ -46,7 +47,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 		initView();
 	}
 	protected void initView() {
-		LayoutInflater.from(getContext()).inflate(R.layout.launcher_navigation_container, this);
+		LayoutInflater.from(getContext()).inflate(R.layout.navigation_view, this);
 		infoPageView = new InfoPageView(getContext());
 		navigationSearchView = new NavigationSearchView(getContext());
 		mViewContainer.add(navigationSearchView);
@@ -56,7 +57,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 
 	private void initViewPager() {
-		mViewPager = (ViewPager) findViewById(R.id.viewpager);
+		mViewPager = (ViewPagerCompat) findViewById(R.id.viewpager);
 		mViewPager.setOffscreenPageLimit(mViewContainer.size());
 		PagerAdapter adapter = new PagerAdapter() {
 			@Override
@@ -159,9 +160,6 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void setHotWordView(List<Object> list) {
-		if(navigationSearchView != null){
-			navigationSearchView.setHotWordView(list);
-		}
 	}
 
 	@Override
@@ -189,6 +187,12 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void handleNavigationWhenLauncherOnPause() {
 		//相当于activity onPause
+		onPause();
+	}
+
+	@Override
+	public void handleNavigationWhenLauncherOnDestroy() {
+		onDestroy();
 	}
 
 	@Override
@@ -200,6 +204,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void handleNavigationWhenLauncherOnResume() {
 		//相当于activity onResume
+		onResume();
 	}
 
 	@Override

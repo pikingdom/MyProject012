@@ -21,14 +21,23 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
+import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.bean.HotwordItemInfo;
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
+import com.nd.hilauncherdev.plugin.navigation.helper.NavigationUrls;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.nd.hilauncherdev.plugin.navigation.loader.NaviWordLoader;
+import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.SystemUtil;
 import com.nd.hilauncherdev.plugin.navigation.widget.search.hotword.ServerHotwordGenerator;
+import com.tsy.sdk.myokhttp.MyOkHttp;
+import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +82,8 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     public NavigationSearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(getContext()).inflate(R.layout.navigation_search_page_view,this);
+        init();
         findViews();
-        initData();
     }
 
     private void findViews() {
@@ -100,27 +109,50 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
         container.addView(newsPage);
     }
 
-    private void initData() {
-
+    private void init() {
+        hotwordGenerator = new ServerHotwordGenerator(getContext());
     }
 
     public void loadData(){
-
+        SPUtil spUtil = new SPUtil();
+        String hotWordsJson = spUtil.getString(SPConstant.NAVIGATION_HOTWORDS_JSON,"");
+        if(!TextUtils.isEmpty(hotWordsJson)){
+            List<HotwordItemInfo> list = NaviWordLoader.parseSmHotWorlds(hotWordsJson);
+            onNetDataSuccess(list);
+        }
     }
 
     @Override
     public void onLauncherStart() {
         super.onLauncherStart();
-        navigationSitesView.onLauncherStart();
+        MyOkHttp.getInstance().get().url(NavigationUrls.SEARCH_HOTWORD_DEFAULT_URL).enqueue(new JsonResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, String response) {
+                List<HotwordItemInfo> list = NaviWordLoader.parseSmHotWorlds(response);
+                if(list != null && list.size()>0){
+                    SPUtil spUtil = new SPUtil();
+                    spUtil.putString(SPConstant.NAVIGATION_HOTWORDS_JSON,response);
+//                    onNetDataSuccess(list);
+                } else {
+                    onNetDataFail("");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+                onNetDataFail("");
+            }
+        });
     }
 
     public void onNetDataFail(String msg) {
 
     }
-    public void onNetDataSuccess(){
+    public void onNetDataSuccess(List<HotwordItemInfo> list){
         //重新刷新
-        hasLoad = false;
-        loadData();
+        hasLoad = true;
+        hotwordGenerator.appendHotwords(list);
+        startHotwordSwitch();
     }
 
     @Override
@@ -129,7 +161,9 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
         if(!newsPage.hasLoad()){
             newsPage.loadData();
         }
-        startHotwordSwitch();
+        if(!hasLoad){
+            loadData();
+        }
     }
 
     @Override
@@ -208,15 +242,6 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
             return hotwordGenerator.isHotwordsAvailable();
         }
         return false;
-    }
-
-    @Override
-    public void setHotWordView(List<Object> list) {
-        super.setHotWordView(list);
-        ArrayList<HotwordItemInfo> itemList = NaviWordLoader.convertHotwordList(list);
-        if (hotwordGenerator != null) {
-            hotwordGenerator.appendHotwords(itemList);
-        }
     }
 
     @Override

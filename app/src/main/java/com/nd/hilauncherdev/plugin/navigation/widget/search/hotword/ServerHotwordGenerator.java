@@ -61,11 +61,9 @@ public class ServerHotwordGenerator implements HotwordInterface {
 
     @Override
     public void appendHotwords(List<HotwordItemInfo> dataList) {
-        if (serverWords.size() >= NaviWordLoader.ONE_BATCH_SIZE && dataList.size() <= NaviWordLoader.ONE_BATCH_SIZE) {
-            serverWords = dataList;
-            serverWordIndex = 0;
-        } else {
+        if(dataList != null && dataList.size()>0){
             serverWords.addAll(dataList);
+            popupNextHotword();
         }
     }
 

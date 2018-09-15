@@ -9,7 +9,7 @@ import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 
 import java.util.List;
 
-public class BasePageView extends RelativeLayout implements NavigationLauncherInterface ,ViewLife{
+public class BasePageView extends RelativeLayout implements ViewLife{
 
 	public BasePageView(Context context) {
 		super(context);
@@ -21,109 +21,11 @@ public class BasePageView extends RelativeLayout implements NavigationLauncherIn
 
 
 	@Override
-	public void init(String channel) {
-
-	}
-
-	@Override
-	public void initSohuFragment() {
-
-	}
-
-	@Override
-	public void setThemeChoose(int position) {
-
-	}
-
-	@Override
-	public void jumpToPage(int which) {
-
-	}
-
-	@Override
-	public void scrollToPage(int which) {
-
-	}
-
-	@Override
-	public void setCUID(String CUID) {
-
-	}
-
-	@Override
-	public void setHotWordView(List<Object> list) {
-
-	}
-
-	@Override
-	public void upgradePlugin(String url, int ver, boolean isWifiAutoDownload) {
-
-	}
-
-	@Override
-	public void onShowingNavigationView() {
-
-	}
-
-	@Override
-	public void onLeavingNavigation() {
-
-	}
-
-	@Override
-	public void setActivity(Activity activity) {
-
-	}
-
-	@Override
-	public void handleNavigationWhenLauncherOnPause() {
-
-	}
-
-	@Override
-	public void handleBackKeyToNavigation() {
-
-	}
-
-	@Override
-	public void handleNavigationWhenLauncherOnResume() {
-
-	}
-
-	@Override
-	public void onBackKeyDown() {
-
-	}
-
-	@Override
-	public void hideVideoView() {
-
-	}
-
-	@Override
 	public void onLauncherStart() {
 
 	}
 
-	@Override
-	public void onShow() {
 
-	}
-
-	@Override
-	public void refreshPaintAndView() {
-
-	}
-
-	@Override
-	public void unregisterReceiver() {
-
-	}
-
-	@Override
-	public void updateAndRefreshSiteDetail() {
-
-	}
 
 	@Override
 	public void onResume() {

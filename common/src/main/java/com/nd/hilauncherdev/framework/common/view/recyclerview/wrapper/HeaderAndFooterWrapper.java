@@ -133,6 +133,10 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);
     }
 
+    public SparseArrayCompat<View> getHeaderViews(){
+        return  mHeaderViews;
+    }
+
     public void addFootView(View view)
     {
         mFootViews.put(mFootViews.size() + BASE_ITEM_TYPE_FOOTER, view);

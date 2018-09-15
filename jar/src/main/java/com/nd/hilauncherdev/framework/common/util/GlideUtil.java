@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.nd.hilauncherdev.common.jar.R;
 
 /**
  * Created by Administrator on 2018/9/4.
@@ -16,7 +17,7 @@ public class GlideUtil {
                             ImageView imageView) {
         Glide.with(context)
                 .load(url)
-//                .placeholder(R.drawable.theme_shop_v6_theme_no_find_small)
+                .placeholder(R.drawable.default_img_bg)
                 .into(imageView);
     }
 
@@ -25,7 +26,7 @@ public class GlideUtil {
                             ImageView imageView) {
         Glide.with(context)
                 .load(resId)
-//                .placeholder(R.drawable.theme_shop_v6_theme_no_find_small)
+                .placeholder(R.drawable.default_img_bg)
                 .into(imageView);
     }
 

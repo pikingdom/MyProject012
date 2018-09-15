@@ -13,15 +13,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
+import com.nd.hilauncherdev.framework.common.util.DensityUtil;
+import com.nd.hilauncherdev.framework.common.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetailInterface;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.CommonAdapter;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.kitset.util.reflect.NavigationKeepForReflect;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
-import com.nd.hilauncherdev.framework.common.util.DensityUtil;
-import com.nd.hilauncherdev.framework.common.util.GlideUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherCaller;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
@@ -41,11 +42,12 @@ import java.util.List;
  * Created by Administrator on 2018\9\8 0008.
  */
 
-public class NavigationSitesView extends FrameLayout{
+public class NavigationSitesView extends FrameLayout implements BaseDetailInterface {
 
     private RecyclerView recyclerView;
     private List<WebSiteItem> data;
     private boolean hasLoad = false;
+    private RecyclerView hostRecyclerView;
 
     public NavigationSitesView(Context context) {
         this(context,null);
@@ -169,6 +171,7 @@ public class NavigationSitesView extends FrameLayout{
         }
     }
 
+    @Override
     public void loadData(){
         final List<WebSiteItem> list = NavigationLoader.getRecommendedSites(getContext(),10);
         if(list == null || list.size() == 0){
@@ -176,6 +179,11 @@ public class NavigationSitesView extends FrameLayout{
         } else {
             onNetDataSuccess(list);
         }
+    }
+
+    @Override
+    public boolean hasLoad() {
+        return hasLoad;
     }
 
     public void onLauncherStart() {
@@ -198,7 +206,7 @@ public class NavigationSitesView extends FrameLayout{
                                 JSONObject jsonObject = new JSONObject(response);
                                 String content = jsonObject.getString("content");
                                 spUtil.putString(SPConstant.NAVIGATION_SITES_JSON,content);
-                                spUtil.putInt(SPConstant.NAVIGATION_SITES_VER,jsonObject.getInt("currentversion"+1));
+                                spUtil.putInt(SPConstant.NAVIGATION_SITES_VER,jsonObject.getInt("currentversion")+1);
                                 final List<WebSiteItem> list = NavigationLoader.getRecommendedSites(getContext(),10);
                                 if(list != null && list.size() >0){
                                     onNetDataSuccess(list);
@@ -220,13 +228,31 @@ public class NavigationSitesView extends FrameLayout{
                 });
     }
 
+    @Override
     public void onNetDataFail(String msg) {
         recyclerView.getAdapter().notifyDataSetChanged();
+        if(hostRecyclerView != null){
+            hostRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
+
+    @Override
+    public void onNetDataSuccess() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+        if(hostRecyclerView != null){
+            hostRecyclerView.getAdapter().notifyDataSetChanged();
+        }
+    }
+
     public void onNetDataSuccess(List<WebSiteItem> list){
         //重新刷新
         hasLoad = true;
+        data.clear();
         data.addAll(list);
-        recyclerView.getAdapter().notifyDataSetChanged();
+        onNetDataSuccess();
+    }
+
+    public void setHostRecyclerView(RecyclerView hostRecyclerView) {
+//        this.hostRecyclerView = hostRecyclerView;
     }
 }

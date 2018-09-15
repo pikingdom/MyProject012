@@ -36,7 +36,11 @@ public class InvenoHelper {
 
 
     public static final String SCENARIO_RECOMMENT = "0x010100"; // 推荐
-    public static final String SCENARIO_GLOBAL = "0x010101"; // 国际
+    public static final String SCENARIO_YDJK = "0x010102"; // 运动健康
+    public static final String SCENARIO_CJ = "0x010103"; // 财经
+    public static final String SCENARIO_YX = "0x010104"; // 游戏
+    public static final String SCENARIO_KJ = "0x010105"; // 科技
+    public static final String SCENARIO_YL = "0x010106"; // 娱乐
 
 
     public static String getUidJsonParams(){
@@ -67,7 +71,7 @@ public class InvenoHelper {
         builder .append("&uid="+uid)
                 .append("&scenario="+scenarioType)
         .append("&content_type=0x00000003")
-        .append("&display=0x0000000f")
+        .append("&display=0x0000008f")
         .append("&link_type=0x00000003")
         .append("&operation="+pageIndex)
         .append("&count="+pageCount)

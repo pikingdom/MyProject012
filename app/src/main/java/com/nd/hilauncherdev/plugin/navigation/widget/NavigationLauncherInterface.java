@@ -62,6 +62,8 @@ public interface NavigationLauncherInterface {
      */
     public void handleNavigationWhenLauncherOnPause();
 
+    public void handleNavigationWhenLauncherOnDestroy();
+
     /**
      * 桌面通过返回键进入零屏，目前主要处理返回键时进入零屏的动作
      */

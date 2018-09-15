@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetailInterface;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.RecycleViewDivider;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.wrapper.LoadMoreWrapper;
@@ -122,6 +124,18 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
 
     private void onRefreshLoadData() {
         netRequest();
+        SparseArrayCompat<View> list = mHeaderAndFooterWrapper.getHeaderViews();
+        if(list != null){
+            for(int i = 0;i < list.size(); i++) {
+                Object obj = list.valueAt(i);
+                if(obj instanceof BaseDetailInterface){
+                    BaseDetailInterface baseDetailInterface = (BaseDetailInterface) obj;
+                    if(baseDetailInterface != null){
+                        baseDetailInterface.loadData();
+                    }
+                }
+            }
+        }
     }
     @Override
     public void stateMain() {
@@ -174,6 +188,18 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     public void loadData() {
         if(stateLoading()){
             netRequest();
+            SparseArrayCompat<View> list = mHeaderAndFooterWrapper.getHeaderViews();
+            if(list != null){
+                for(int i = 0;i < list.size(); i++) {
+                    Object obj = list.valueAt(i);
+                    if(obj instanceof BaseDetailInterface){
+                        BaseDetailInterface baseDetailInterface = (BaseDetailInterface) obj;
+                        if(baseDetailInterface!=null && !baseDetailInterface.hasLoad()){
+                            baseDetailInterface.loadData();
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -271,5 +297,9 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     @Override
     public void onDestroy() {
 
+    }
+
+    public RecyclerView getRecyclerView(){
+        return mRecyclerView;
     }
 }

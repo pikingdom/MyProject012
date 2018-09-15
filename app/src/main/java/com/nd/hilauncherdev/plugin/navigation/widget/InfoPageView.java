@@ -14,7 +14,7 @@ import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.BaseRecyclerList;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
-import com.nd.hilauncherdev.plugin.navigation.helper.WebViewUrl;
+import com.nd.hilauncherdev.plugin.navigation.helper.NavigationUrls;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -45,14 +45,19 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
     }
 
     private void initData() {
+        titles = getContext().getResources().getStringArray(R.array.infopage_tabs);
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_RECOMMENT));
-        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_GLOBAL));
-        mViewContainer.add(new NavigationWebView(getContext(), WebViewUrl.VIP_URL));
-        mViewContainer.add(new NavigationWebView(getContext(), WebViewUrl.iyd_URL));
-
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YL));
+        mViewContainer.add(new NavigationWebView(getContext(), NavigationUrls.VIP_URL));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YX));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YDJK));
+        mViewContainer.add(new NavigationWebView(getContext(), NavigationUrls.iyd_URL));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_CJ));
+        mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_KJ));
         final InfoViewPagerAdapter adapter = new InfoViewPagerAdapter();
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mViewPager.setOffscreenPageLimit(mViewContainer.size());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -84,6 +89,23 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
     private void findViews() {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.e("zhenghonglin","tab:"+tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
