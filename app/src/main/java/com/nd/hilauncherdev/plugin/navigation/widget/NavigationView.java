@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.nd.hilauncherdev.framework.common.view.ViewPagerCompat;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.R;
@@ -26,7 +25,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	private static final int NAVI_INDEX = 0;
 	/** 资讯屏位置 **/
 	private static final int INFO_INDEX = 1;
-	private ViewPagerCompat mViewPager;
+	private ViewPager mViewPager;
 
 	private InfoPageView infoPageView;
 	private NavigationSearchView navigationSearchView;
@@ -57,7 +56,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 
 	private void initViewPager() {
-		mViewPager = (ViewPagerCompat) findViewById(R.id.viewpager);
+		mViewPager = (ViewPager) findViewById(R.id.viewpager);
 		mViewPager.setOffscreenPageLimit(mViewContainer.size());
 		PagerAdapter adapter = new PagerAdapter() {
 			@Override

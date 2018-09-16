@@ -5,13 +5,14 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.nd.hilauncherdev.framework.common.view.NativeInterface;
 import com.nd.hilauncherdev.framework.common.view.SafeWebView;
 import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetail;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebViewClient;
 
 
 /**
@@ -43,7 +44,7 @@ public class NavigationWebView extends BaseDetail{
         mWebView.setWebChromeClient(new WebChromeClient(){
 
             @Override
-            public void onProgressChanged(com.tencent.smtt.sdk.WebView webView, int i) {
+            public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
                 Log.e("zhenghonglin","i:"+i);
                 if(i >= 50){

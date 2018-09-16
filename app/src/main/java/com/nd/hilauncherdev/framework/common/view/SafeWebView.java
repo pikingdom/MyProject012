@@ -5,20 +5,20 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
+import android.webkit.WebView;
 
-import com.tencent.smtt.sdk.WebView;
 
 import java.lang.reflect.Method;
 
 public class SafeWebView extends WebView {
 
-    public SafeWebView(Context context) {
-        super(context);
+    public SafeWebView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         removeSearchBox();
     }
 
-    public SafeWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public SafeWebView(Context context) {
+        super(context);
         removeSearchBox();
     }
 

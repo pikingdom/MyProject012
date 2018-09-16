@@ -83,3 +83,14 @@
 -dontwarn com.android.dynamic.**
 -dontwarn com.nd.hilauncherdev.plugin.navigation.widget.NavigationView
 -dontwarn com.nd.hilauncherdev.launcher.**
+
+ # 保留support下的所有类及其内部类
+ -keep class android.support.** {*;}
+ # 保留继承的
+ -keep public class * extends android.support.v4.**
+ -keep public class * extends android.support.v7.**
+ -keep public class * extends android.support.annotation.**
+ -keep class com.nd.hilauncherdev.framework.common.util.GlideUtil {
+   *;
+ }
+ -keep class  com.tencent.smtt.** {*;}
