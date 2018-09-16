@@ -264,6 +264,7 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeMessages(MSG_NEXT_TEXT_SWITER);
     }
 
     @Override
