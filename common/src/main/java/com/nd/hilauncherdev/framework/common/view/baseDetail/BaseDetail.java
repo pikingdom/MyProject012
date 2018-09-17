@@ -1,6 +1,7 @@
 package com.nd.hilauncherdev.framework.common.view.baseDetail;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,8 +37,24 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     protected int currentState = STATE_MAIN;
     protected SwipeRefreshLayout mRefreshLayout;
     protected FrameLayout container;
-    public BaseDetail(@NonNull Context context) {
-        this(context,null);
+
+    public static final int DETAIL_FULL = 1;  //全屏
+    public static final int DETAIL_SCROLL = 2; //滚动
+
+    private int detailType = DETAIL_FULL;
+    public BaseDetail(@NonNull Context context,int detailType) {
+        super(context,null);
+        this.detailType = detailType;
+        if(detailType == DETAIL_FULL){
+            LayoutInflater.from(getContext()).inflate(R.layout.common_detail_fullview,this);
+            container = (FrameLayout) findViewById(R.id.container);
+        } else if(detailType == DETAIL_SCROLL){
+            LayoutInflater.from(getContext()).inflate(R.layout.common_detail_scrollview,this);
+            container = (FrameLayout) findViewById(R.id.container);
+        } else {
+            throw new IllegalArgumentException("detailType error");
+        }
+        init();
     }
 
     public BaseDetail(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -46,8 +63,21 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
 
     public BaseDetail(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(getContext()).inflate(R.layout.common_detail_view,this);
-        container = (FrameLayout) findViewById(R.id.container);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseDetail);
+        detailType = array.getInteger(R.styleable.BaseDetail_detailType, DETAIL_FULL);
+        if(detailType == DETAIL_FULL){
+            LayoutInflater.from(getContext()).inflate(R.layout.common_detail_fullview,this);
+            container = (NestedScrollView) findViewById(R.id.container);
+        } else if(detailType == DETAIL_SCROLL){
+            LayoutInflater.from(getContext()).inflate(R.layout.common_detail_scrollview,this);
+            container = (NestedScrollView) findViewById(R.id.container);
+        } else {
+            throw new IllegalArgumentException("detailType error");
+        }
+        init();
+    }
+
+    private void init(){
         View.inflate(getContext(), R.layout.common_view_progress, this);
         viewLoading = (ProgressImageView) findViewById(R.id.view_loading);
         viewLoading.setVisibility(View.GONE);

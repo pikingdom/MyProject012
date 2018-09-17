@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff0000"
@@ -40,7 +41,8 @@
     <com.nd.hilauncherdev.plugin.weather.WeatherView
         android:id="@+id/weatherview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:detailType="2">
     </com.nd.hilauncherdev.plugin.weather.WeatherView>
 
 </LinearLayout>

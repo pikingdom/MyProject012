@@ -2,4 +2,8 @@
     <declare-styleable name="ScaleImageView">
         <attr name="adjustRatio" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="BaseDetail">
+        <attr name="detailType" format="integer" />
+    </declare-styleable>
 </resources>

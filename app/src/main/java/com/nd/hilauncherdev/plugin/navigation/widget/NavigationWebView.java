@@ -28,7 +28,7 @@ public class NavigationWebView extends BaseDetail{
         this.url = url;
     }
     public NavigationWebView(Context context) {
-        super(context);
+        super(context,DETAIL_FULL);
     }
 
     public NavigationWebView(Context context, AttributeSet attrs) {
