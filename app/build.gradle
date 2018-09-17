@@ -13,7 +13,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules1.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -39,7 +39,6 @@ repositories{
 }
 
 dependencies {
-    releaseProvided files('libs/common_util_v1.0.jar')
     provided files('libs/ReflectUtil.jar')
     compile files('libs/dynamicsdk.jar')
     compile project(':common')
