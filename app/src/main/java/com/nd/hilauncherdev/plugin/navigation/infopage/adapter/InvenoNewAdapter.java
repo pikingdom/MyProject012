@@ -60,7 +60,8 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
 
         @Override
         public boolean isForViewType(NewsInfo item, int position) {
-            return NewsInfo.TYPE_1.equals(item.display);
+            return NewsInfo.TYPE_1.equals(item.display) || ( !NewsInfo.TYPE_2.equals(item.display) &&
+                    !NewsInfo.TYPE_4.equals(item.display) && !NewsInfo.TYPE_8.equals(item.display ) );
         }
 
         @Override
