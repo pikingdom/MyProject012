@@ -1,6 +1,7 @@
 package com.fastaccess.permission.base.model;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 
+import com.example.testpermission.R;
 
 
 public class PermissionModelBuilder {
@@ -18,11 +20,11 @@ public class PermissionModelBuilder {
     private PermissionModelBuilder(@NonNull Context context) {
         this.context = context;
         this.permissionModel = new PermissionModel(); // Generate sane default values
-//        withTextColor(Color.WHITE);
-//        withTextSize(R.dimen.permissions_text_size);
-//        withRequestIcon(R.drawable.ic_arrow_done);
-//        withPreviousIcon(R.drawable.ic_arrow_left);
-//        withNextIcon(R.drawable.ic_arrow_right);
+        withTextColor(Color.WHITE);
+        withTextSize(R.dimen.permissions_text_size);
+        withRequestIcon(R.drawable.ic_arrow_done);
+        withPreviousIcon(R.drawable.ic_arrow_left);
+        withNextIcon(R.drawable.ic_arrow_right);
     }
 
     public static PermissionModelBuilder withContext(@NonNull Context context) {
