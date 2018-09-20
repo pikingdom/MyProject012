@@ -71,7 +71,7 @@ public class InvenoHelper {
         builder .append("&uid="+uid)
                 .append("&scenario="+scenarioType)
         .append("&content_type=0x00000003")
-        .append("&display=0x0000008f")
+        .append("&display=0x0000000f")
         .append("&link_type=0x00000003")
         .append("&operation="+pageIndex)
         .append("&count="+pageCount)
