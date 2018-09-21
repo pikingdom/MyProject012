@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 
 import com.fastaccess.permission.base.callback.OnActivityPermissionCallback;
 import com.fastaccess.permission.base.callback.OnPermissionCallback;
-import com.fastaccess.permission.base.model.PermissionModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +114,12 @@ public class PermissionHelper implements OnActivityPermissionCallback {
     public PermissionHelper request(@NonNull Object permissionName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (permissionName instanceof String) {
-                handleSingle((String) permissionName);
+                String permissionNameStr = (String) permissionName;
+                if(permissionNameStr.equalsIgnoreCase(Manifest.permission.SYSTEM_ALERT_WINDOW)){
+                    handleSystemAlertWindowPermission();
+                } else {
+                    handleMulti(new String[]{(String) permissionName});
+                }
             } else if (permissionName instanceof String[]) {
                 handleMulti((String[]) permissionName);
             } else {
@@ -138,11 +142,22 @@ public class PermissionHelper implements OnActivityPermissionCallback {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.getPackageName()));
                     context.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
                 } else {
-                    permissionCallback.onPermissionPreGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
+//                    permissionCallback.onPermissionPreGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
+                    permissionCallback.onPermissionGranted(new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW});
+
                 }
             } catch (Exception ignored) {}
         } else {
-            permissionCallback.onPermissionPreGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
+//            permissionCallback.onPermissionPreGranted(Manifest.permission.SYSTEM_ALERT_WINDOW);
+            permissionCallback.onPermissionGranted(new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW});
+        }
+    }
+
+    private void handleSystemAlertWindowPermission(){
+        if(permissionExists(Manifest.permission.SYSTEM_ALERT_WINDOW)){
+            requestSystemAlertPermission();
+        } else {
+            permissionCallback.onPermissionDeclined(new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW});
         }
     }
 
@@ -183,6 +198,10 @@ public class PermissionHelper implements OnActivityPermissionCallback {
         if (hasAlertWindowPermission) {
             int index = permissions.indexOf(Manifest.permission.SYSTEM_ALERT_WINDOW);
             permissions.remove(index);
+        }
+        if (permissions.isEmpty()) {
+            permissionCallback.onPermissionGranted(permissionNames);
+            return;
         }
         ActivityCompat.requestPermissions(context, permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSIONS);
     }
@@ -412,21 +431,6 @@ public class PermissionHelper implements OnActivityPermissionCallback {
         return true;
     }
 
-    public static void removeGrantedPermissions(@NonNull Context context, @NonNull List<PermissionModel> models) {
-        List<PermissionModel> granted = new ArrayList<>();
-        for (PermissionModel permissionModel : models) {
-            if (permissionModel.getPermissionName().equalsIgnoreCase(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                if (isSystemAlertGranted(context)) {
-                    granted.add(permissionModel);
-                }
-            } else if (isPermissionGranted(context, permissionModel.getPermissionName())) {
-                granted.add(permissionModel);
-            }
-        }
-        if (!granted.isEmpty()) {
-            models.removeAll(granted);
-        }
-    }
 
     public void setSkipExplanation(boolean skipExplanation) {
         this.skipExplanation = skipExplanation;
