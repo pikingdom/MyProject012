@@ -97,6 +97,7 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
     @Override
     public void onNoPermissionNeeded() {
         Log.i("onNoPermissionNeeded", "Permission(s) not needed");
+        setContentView(R.layout.activity_sample);
     }
 
     @Override
