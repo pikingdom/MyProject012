@@ -1,1 +1,1 @@
-include ':app', ':common', ':weather', ':testpermission'
+include ':app', ':common', ':weather', ':testpermission', ':testJava'
