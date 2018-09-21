@@ -1,14 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.testpermission">
-    <permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="normal"
-        android:label="@string/permlab_install_shortcut"
-        android:description="@string/permdesc_install_shortcut" />
-    <permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="normal" android:label="@string/permlab_uninstall_shortcut"
-        android:description="@string/permdesc_uninstall_shortcut" />
 
     <!-- 力天定制版 调用新手引导aar -->
     <uses-feature android:name="android.hardware.wifi" />
@@ -29,6 +20,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <!-- 系统开关 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -147,6 +139,9 @@
 
         </activity>
         <activity android:name="com.example.testpermission.TestPermissionActivity">
+        </activity>
+
+        <activity android:name="com.example.testpermission.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

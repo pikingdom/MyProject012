@@ -70,7 +70,9 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
     @Override
     public void onPermissionGranted(@NonNull String[] permissionName) {
         Log.i("onPermissionGranted", "Permission(s) " + Arrays.toString(permissionName) + " Granted");
-        setContentView(R.layout.activity_sample);
+//        setContentView(R.layout.activity_sample);
+        startMain();
+        finish();
     }
 
     @Override
@@ -97,7 +99,9 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
     @Override
     public void onNoPermissionNeeded() {
         Log.i("onNoPermissionNeeded", "Permission(s) not needed");
-        setContentView(R.layout.activity_sample);
+//        setContentView(R.layout.activity_sample);
+        startMain();
+        finish();
     }
 
     @Override
@@ -108,5 +112,11 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void startMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
