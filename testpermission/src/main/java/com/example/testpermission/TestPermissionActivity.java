@@ -56,15 +56,38 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
         super.onCreate(savedInstanceState);
         permissionHelper = PermissionHelper.getInstance(this);
         permissionHelper
-                .setForceAccepting(false) // default is false. its here so you know that it exists.
+                .setForceAccepting(true) // default is false. its here so you know that it exists.
                 .request( MULTI_PERMISSIONS);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if(reCheck) {
+//            openSetting = false;
+//            permissionHelper
+//                    .setForceAccepting(true) // default is false. its here so you know that it exists.
+//                    .request( MULTI_PERMISSIONS);
+//            if (MyAppHelper.hasAllPermissionsAllow(this)) {
+//                startMain();
+//                finish();
+//            }
+            reCheck = false;
+            permissionHelper
+                    .setForceAccepting(true) // default is false. its here so you know that it exists.
+                    .request( MULTI_PERMISSIONS);
+        }
         Log.i("onPermissionGranted", "onResume");
+    }
 
+    private boolean reCheck = false;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(openSetting){
+            openSetting = false;
+            reCheck = true;
+        }
     }
 
     @Override
@@ -94,6 +117,15 @@ public class TestPermissionActivity extends AppCompatActivity implements OnPermi
     @Override
     public void onPermissionReallyDeclined(@NonNull String permissionName) {
         Log.i("ReallyDeclined", "Permission " + permissionName + " can only be granted from settingsScreen");
+    }
+
+    private boolean openSetting = false;
+    @Override
+    public void onPermissionReallyDeclined() {
+        Log.i("ReallyDeclined", "11111111111111");
+        //打开系统权限页面
+        openSetting = true;
+        PermissionHelper.openSettingsScreen(this);
     }
 
     @Override

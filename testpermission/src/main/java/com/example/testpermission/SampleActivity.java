@@ -122,6 +122,11 @@ public class SampleActivity extends AppCompatActivity implements OnPermissionCal
         /** you can call  {@link PermissionHelper#openSettingsScreen(Context)} to open the settings screen */
     }
 
+    @Override
+    public void onPermissionReallyDeclined() {
+
+    }
+
     @Override public void onNoPermissionNeeded() {
         result.setText("Permission(s) not needed");
         Log.i("onNoPermissionNeeded", "Permission(s) not needed");

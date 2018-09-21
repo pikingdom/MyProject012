@@ -14,5 +14,6 @@ public interface OnPermissionCallback {
 
     void onPermissionReallyDeclined(@NonNull String permissionName);//当某个权限拒绝且不再提示的时候 调用 可被调用多次（多个权限多次）
 
+    void onPermissionReallyDeclined();
     void onNoPermissionNeeded();//请求权限 23之前 直接返回这个方法
 }

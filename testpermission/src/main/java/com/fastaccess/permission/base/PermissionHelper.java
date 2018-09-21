@@ -74,6 +74,8 @@ public class PermissionHelper implements OnActivityPermissionCallback {
                         return;
                     }
                     permissionCallback.onPermissionDeclined(declinedPermissions);
+                } else {
+                    permissionCallback.onPermissionReallyDeclined();
                 }
             }
         }
