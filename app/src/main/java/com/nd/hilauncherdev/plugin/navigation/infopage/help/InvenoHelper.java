@@ -30,7 +30,8 @@ public class InvenoHelper {
     public static final String promotion = "openplatform";
 
 
-    public static final String GET_UID_URL = "https://uid.inveno.com/gate/getuid";
+//    public static final String GET_UID_URL = "https://uid.inveno.com/gate/getuid";
+    public static final String GET_UID_URL = "https://opensdk.inveno.com/gate/getuid";
 
     public static final String GET_LIST_URL = "https://opensdk.inveno.com/gate/api/list";
 
