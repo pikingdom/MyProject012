@@ -18,7 +18,9 @@ public class NavigationUrls {
     /**
      * 热词 神马搜索
      */
-    public static final String SEARCH_HOTWORD_DEFAULT_URL = "http://api.m.sm.cn/rest?method=tools.hot&size=0&from=wm752673";
+//    public static final String SEARCH_HOTWORD_DEFAULT_URL = "http://api.m.sm.cn/rest?method=tools.hot&size=0&from=wm752673";
+
+    public static final String SEARCH_HOTWORD_DEFAULT_URL = "http://ts.mobile.sogou.com/query?pid=sogou-sbds-f4f4a06c589ea53e&num=50&length=15&forbid=1,22,33";
 
 
 }

@@ -32,7 +32,7 @@ public class NaviWordLoader {
 			for (int i = 0; i < array.length(); i++) {
 				HotwordItemInfo info = new HotwordItemInfo();
 				JSONObject jsonObj 	= 		(JSONObject) array.opt(i);
-				info.name 			= 		jsonObj.getString("title");
+				info.name 			= 		jsonObj.getString("kwd");
 				info.url = jsonObj.getString("url");
 				list.add(info);
 			}

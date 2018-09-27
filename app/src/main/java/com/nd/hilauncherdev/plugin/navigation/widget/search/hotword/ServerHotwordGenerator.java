@@ -16,7 +16,7 @@ import java.util.List;
 public class ServerHotwordGenerator implements HotwordInterface {
 
 
-    public static final int MAX_COUNTER = 2;
+    public static int MAX_COUNTER = 2;
     /**
      * 播放次数限制
      */
@@ -63,6 +63,7 @@ public class ServerHotwordGenerator implements HotwordInterface {
     public void appendHotwords(List<HotwordItemInfo> dataList) {
         if(dataList != null && dataList.size()>0){
             serverWords.addAll(dataList);
+            MAX_COUNTER = serverWords.size();
             popupNextHotword();
         }
     }
