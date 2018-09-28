@@ -1,9 +1,13 @@
 package com.nd.hilauncherdev.plugin.weather;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,15 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetail;
-import com.nd.hilauncherdev.plugin.weather.helper.SPUtil;
 import com.nd.hilauncherdev.plugin.weather.helper.WeatherSpHelper;
-import com.nd.hilauncherdev.plugin.weather.helper.ZLauncherUrl;
 import com.nd.hilauncherdev.plugin.weather.model.City;
 import com.nd.hilauncherdev.plugin.weather.model.Conditions;
 import com.nd.hilauncherdev.plugin.weather.model.Forecast;
 import com.nd.hilauncherdev.plugin.weather.tools.WeatherHelper;
 import com.tsy.sdk.myokhttp.MyOkHttp;
-import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 
 import java.util.Calendar;
 import java.util.List;
@@ -49,6 +50,9 @@ public class WeatherView extends BaseDetail{
 
     private Conditions conditions;
 
+    private WeatherDataUpdateListener weatherDataUpdateListener;
+    public static final String ACTION_WEATHER_UPDATE_UI = "com.nd.hilauncherdev.weather.provider.weather.updateui";
+
     public WeatherView(@NonNull Context context) {
         this(context,null);
     }
@@ -57,12 +61,50 @@ public class WeatherView extends BaseDetail{
         super(context, attrs);
     }
 
+    public void setWeatherDataUpdateListener(WeatherDataUpdateListener listener){
+        this.weatherDataUpdateListener = listener;
+    }
+
     public String getCityName(){
         if(city != null){
             return city.getCity();
         }
         return "";
     }
+
+    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ACTION_WEATHER_UPDATE_UI)) {
+                initDataFromSp();
+                onNetDataSuccess();
+            }
+        }
+    };
+
+    private void initDataFromSp(){
+        City city = WeatherSpHelper.getCityFromSp();
+        Conditions conditions = WeatherSpHelper.getConditionsFromSp();
+        List<Forecast> forecastList = WeatherSpHelper.getForecastListFromSp();
+        this.city = city;
+        this.conditions = conditions;
+        this.forecastList = forecastList;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_WEATHER_UPDATE_UI);
+        getContext().registerReceiver(mIntentReceiver, filter);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getContext().unregisterReceiver(mIntentReceiver);
+    }
+
     @Override
     protected void netRequest() {
         if(!hasLoad()){
@@ -74,45 +116,7 @@ public class WeatherView extends BaseDetail{
                 this.forecastList = WeatherSpHelper.getForecastListFromSp();
                 onNetDataSuccess();
             } else {
-                MyOkHttp.getInstance().postH().tag(this).url(ZLauncherUrl.WEATHER_101)
-                        .addParam("location", WeatherSpHelper.getLonAndLat()).enqueue(new JsonResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, String response) {
-                        onNetDataSuccess();
-                    }
-
-                    @Override
-                    public void onJsonParse(int statusCode,String response) throws Exception {
-                        //json解析 非ui线程
-                        City city = WeatherSpHelper.parseCity(response,false);
-                        if(city == null){
-                            onFailure(statusCode,"");
-                        } else {
-                            String conditionResponse =MyOkHttp.getInstance().postH().addParam("location",city.getWoeid()).url(ZLauncherUrl.WEATHER_102).executeStr();
-                            Conditions conditions = WeatherSpHelper.parseConditions(conditionResponse,false);
-
-                            String forecastResponse = MyOkHttp.getInstance().postH().addParam("location",city.getWoeid()).url(ZLauncherUrl.WEATHER_103).executeStr();
-                            List<Forecast> forecastList = WeatherSpHelper.parseForecastList(forecastResponse,false);
-                            if(conditions != null && forecastList != null){
-                                SPUtil spUtil = new SPUtil();
-                                spUtil.putString(WeatherSpHelper.CITY_INFO_JSON, response);
-                                spUtil.putString(WeatherSpHelper.WEATHER_CONDITION_JSON, conditionResponse);
-                                spUtil.putString(WeatherSpHelper.WEATHER_FORCAST_JSON, forecastResponse);
-                                spUtil.putLong(WeatherSpHelper.WEATHER_REFRESH_TIME, System.currentTimeMillis());
-                                WeatherView.this.city = city;
-                                WeatherView.this.conditions = conditions;
-                                WeatherView.this.forecastList = forecastList;
-                            } else {
-                                onFailure(statusCode,"");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, String error_msg) {
-
-                    }
-                });
+                WeatherSpHelper.updateWeatherData();
             }
         } else {
             onNetDataSuccess();
@@ -123,10 +127,14 @@ public class WeatherView extends BaseDetail{
     public void onNetDataSuccess() {
         super.onNetDataSuccess();
         //刷新数据
+        Log.e("zhenghonglin","weather success");
         updateUI();
     }
 
     private void updateUI() {
+        if(weatherDataUpdateListener != null && city != null){
+            weatherDataUpdateListener.onCityNameCallback(city.getCity());
+        }
         if (conditions != null) {
             current_weather_temperature.setText(conditions.getDegrees() + "");
             current_weather_code_text.setText(conditions.getWeatherText());
@@ -135,7 +143,6 @@ public class WeatherView extends BaseDetail{
             tv_wind_direction.setText(conditions.getWindDir());
             tv_wind_speed.setText(conditions.getWindSpeed() + "公里/小时");
             tv_visibility.setText(conditions.getVisibility() + "公里");
-
         }
         if (forecastList != null && forecastList.size() > 0) {
             Forecast todayForecast = forecastList.get(0);
@@ -214,5 +221,21 @@ public class WeatherView extends BaseDetail{
         tv_wind_speed = (TextView) findViewById(R.id.tv_wind_speed);
         tv_visibility = (TextView) findViewById(R.id.tv_visibility);
         weather_recent_update_tv = (TextView) findViewById(R.id.weather_recent_update_tv);
+    }
+
+    public void startLoc() {
+        //开始定位 外部调用
+        mRefreshLayout.setRefreshing(true);
+        MyOkHttp.mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+            }
+        },3000);
+        WeatherSpHelper.startLocation(getContext(),true);
+    }
+
+    public interface WeatherDataUpdateListener{
+        public void onCityNameCallback(String name);
     }
 }

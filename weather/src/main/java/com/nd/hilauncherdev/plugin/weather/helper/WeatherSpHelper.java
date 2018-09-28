@@ -1,8 +1,14 @@
 package com.nd.hilauncherdev.plugin.weather.helper;
 
+import android.content.Context;
+import android.content.Intent;
+
+import com.nd.hilauncherdev.framework.common.util.ThreadUtil;
+import com.nd.hilauncherdev.plugin.weather.WeatherView;
 import com.nd.hilauncherdev.plugin.weather.model.City;
 import com.nd.hilauncherdev.plugin.weather.model.Conditions;
 import com.nd.hilauncherdev.plugin.weather.model.Forecast;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.util.MyOKhttpHeler;
 
 import org.json.JSONArray;
@@ -41,6 +47,11 @@ public class WeatherSpHelper {
      */
     public static final String WEATHER_REFRESH_TIME = "weather_refresh_time";
 
+    /**
+     * 上次定位时间 refresh
+     */
+    public static final String WEATHER_LOC_TIME = "weather_loc_time";
+
     public static String getLonAndLat() {
         SPUtil spUtil = new SPUtil();
         return spUtil.getString(LON_AND_LAT);
@@ -48,7 +59,12 @@ public class WeatherSpHelper {
 
     public static long getRefreshTime() {
         SPUtil spUtil = new SPUtil();
-        return spUtil.getLong(WEATHER_REFRESH_TIME,System.currentTimeMillis());
+        return spUtil.getLong(WEATHER_REFRESH_TIME,0);
+    }
+
+    public static long getLocTime() {
+        SPUtil spUtil = new SPUtil();
+        return spUtil.getLong(WEATHER_LOC_TIME,0);
     }
 
     public static City getCityFromSp(){
@@ -147,5 +163,61 @@ public class WeatherSpHelper {
             spUtil.putString(WEATHER_FORCAST_JSON, response);
         }
         return forecasts;
+    }
+
+    /**
+     * 更新天气数据
+     */
+    public static void updateWeatherData(){
+        City city = WeatherSpHelper.getCityFromSp();
+        if(city != null){
+            //上次更新时间 操作4个小时 同时更新
+            long lastRefresh = getRefreshTime();
+            if( (System.currentTimeMillis() - lastRefresh) > 6*60*60*1000 ){
+                updateAll();
+            }
+        } else {
+            updateAll();
+        }
+    }
+
+    private static void updateAll(){
+        ThreadUtil.executeMore(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String cityResponse = MyOkHttp.getInstance().postH().url(ZLauncherUrl.WEATHER_101).addParam("location", WeatherSpHelper.getLonAndLat()).executeStr();
+                    City city = WeatherSpHelper.parseCity(cityResponse,false);
+                    if(city != null) {
+                        String conditionResponse = MyOkHttp.getInstance().postH().addParam("location", city.getWoeid()).url(ZLauncherUrl.WEATHER_102).executeStr();
+                        Conditions conditions = WeatherSpHelper.parseConditions(conditionResponse, false);
+                        String forecastResponse = MyOkHttp.getInstance().postH().addParam("location", city.getWoeid()).url(ZLauncherUrl.WEATHER_103).executeStr();
+                        List<Forecast> forecastList = WeatherSpHelper.parseForecastList(forecastResponse, false);
+                        if (conditions != null && forecastList != null) {
+                            SPUtil spUtil = new SPUtil();
+                            spUtil.putString(WeatherSpHelper.CITY_INFO_JSON, cityResponse);
+                            spUtil.putString(WeatherSpHelper.WEATHER_CONDITION_JSON, conditionResponse);
+                            spUtil.putString(WeatherSpHelper.WEATHER_FORCAST_JSON, forecastResponse);
+                            spUtil.putLong(WeatherSpHelper.WEATHER_REFRESH_TIME, System.currentTimeMillis());
+                            Intent intent = new Intent(WeatherView.ACTION_WEATHER_UPDATE_UI);
+                            MyOkHttp.getInstance().getApplicationConext().sendBroadcast(intent);
+                        }
+                    }
+                }catch (Exception e){
+
+                }
+            }
+        });
+    }
+
+    public static void startLocation(Context mContext,boolean rightNow){
+        if(mContext == null) return;
+        long lastLoc = getLocTime();
+        if(!rightNow && (System.currentTimeMillis() - lastLoc) < 6*60*60*1000){
+            updateWeatherData();
+            return;
+        }
+        new SPUtil().putLong(WeatherSpHelper.WEATHER_LOC_TIME, System.currentTimeMillis());
+        updateAll();
     }
 }
