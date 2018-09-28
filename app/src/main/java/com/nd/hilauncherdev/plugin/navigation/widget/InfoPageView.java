@@ -15,6 +15,7 @@ import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.BaseRecyclerList;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.helper.NavigationUrls;
+import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.NewsPage;
 import com.nd.hilauncherdev.plugin.navigation.infopage.help.InvenoHelper;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -92,7 +93,7 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.e("zhenghonglin","tab:"+tab.getPosition());
+                Log.e(TagHelper.TAG,"tab:"+tab.getPosition());
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -159,7 +160,7 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Log.e("zhenghonglin","infopage onDetachedFromWindow");
+        Log.e(TagHelper.TAG,"infopage onDetachedFromWindow");
     }
 
 

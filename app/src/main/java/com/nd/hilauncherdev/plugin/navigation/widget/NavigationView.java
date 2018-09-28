@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
@@ -196,7 +197,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void handleBackKeyToNavigation() {
-		Log.e("zhenghonglin","handleBackKeyToNavigation:"+mViewPager.getCurrentItem());
+		Log.e(TagHelper.TAG,"handleBackKeyToNavigation:"+mViewPager.getCurrentItem());
 		mViewPager.setCurrentItem(INFO_INDEX);
 	}
 
@@ -209,7 +210,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void onBackKeyDown() {
 //		setToInfoView();
-		Log.e("zhenghonglin","onBackKeyDown:"+mViewPager.getCurrentItem());
+		Log.e(TagHelper.TAG,"onBackKeyDown:"+mViewPager.getCurrentItem());
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import com.nd.hilauncherdev.framework.common.view.NativeInterface;
 import com.nd.hilauncherdev.framework.common.view.SafeWebView;
 import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetail;
+import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 
 
 /**
@@ -46,7 +47,7 @@ public class NavigationWebView extends BaseDetail{
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-                Log.e("zhenghonglin","i:"+i);
+                Log.e(TagHelper.TAG,"i:"+i);
                 if(i >= 50){
                     hasLoad = true;
                     onNetDataSuccess();
@@ -99,7 +100,7 @@ public class NavigationWebView extends BaseDetail{
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Log.e("zhenghonglin","webview onDetachedFromWindow");
+        Log.e(TagHelper.TAG,"webview onDetachedFromWindow");
     }
 
     @Override

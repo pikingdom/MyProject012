@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.widget.NavigationView;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
@@ -28,7 +29,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("zhenghonglin","activity onDestroy");
+        Log.e(TagHelper.TAG,"activity onDestroy");
     }
 
 }
