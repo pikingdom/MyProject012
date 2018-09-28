@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
-import com.nd.hilauncherdev.plugin.navigation.helper.SpHelper;
+import com.nd.hilauncherdev.plugin.navigation.helper.NavSpHelper;
 import com.nd.hilauncherdev.framework.common.util.FileUtil;
 import com.nd.hilauncherdev.plugin.navigation.util.LauncherBranchController;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
@@ -155,7 +155,7 @@ public class NavigationLoader {
 
     public static List<WebSiteItem> getRecommendSitesFroCustomLauncher(Context context){
         List<WebSiteItem> list = new ArrayList<WebSiteItem>();
-        String iconStrings = SpHelper.getRecommendIconForFanyue();
+        String iconStrings = NavSpHelper.getRecommendIconForFanyue();
         Log.i("llbeing","iconStrings:"+iconStrings);
         if(TextUtils.isEmpty(iconStrings)){
             return list;

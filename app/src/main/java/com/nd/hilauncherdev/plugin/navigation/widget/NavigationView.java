@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.helper.NavSpHelper;
 import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
@@ -25,7 +26,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	/** 0屏位置 **/
 	private static final int NAVI_INDEX = 0;
 	/** 资讯屏位置 **/
-	private static final int INFO_INDEX = 1;
+	private static int CURRENT_INDEX = 1;
 	private ViewPager mViewPager;
 
 	private InfoPageView infoPageView;
@@ -48,10 +49,17 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 	protected void initView() {
 		LayoutInflater.from(getContext()).inflate(R.layout.navigation_view, this);
-		infoPageView = new InfoPageView(getContext());
-		navigationSearchView = new NavigationSearchView(getContext());
-		mViewContainer.add(navigationSearchView);
-		mViewContainer.add(infoPageView);
+		if(NavSpHelper.showInfoPageView()){
+			navigationSearchView = new NavigationSearchView(getContext());
+			infoPageView = new InfoPageView(getContext());
+			mViewContainer.add(navigationSearchView);
+			mViewContainer.add(infoPageView);
+			CURRENT_INDEX = 1;
+		} else {
+			navigationSearchView = new NavigationSearchView(getContext());
+			mViewContainer.add(navigationSearchView);
+			CURRENT_INDEX = 0;
+		}
 		initViewPager();
 		setToInfoView();
 	}
@@ -122,8 +130,8 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	 * 定位到资讯屏
 	 */
 	private void setToInfoView() {
-		if (mViewPager.getCurrentItem() != INFO_INDEX) {
-			mViewPager.setCurrentItem(INFO_INDEX);
+		if (mViewPager.getCurrentItem() != CURRENT_INDEX) {
+			mViewPager.setCurrentItem(CURRENT_INDEX);
 		}
 	}
 
@@ -170,6 +178,12 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void onShowingNavigationView() {
 		// 相当于 onSnapToNavigation
+		Log.e(TagHelper.TAG,"onShowingNavigationView");
+		mViewPager.setCurrentItem(CURRENT_INDEX);
+		final BasePageInterface fragment = (BasePageInterface) mViewContainer.get(CURRENT_INDEX);
+		if(fragment != null){
+			fragment.onPageSelected();
+		}
 	}
 
 	@Override
@@ -181,7 +195,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	public void setActivity(Activity activity) {
 		mLauncher = activity;
 		PageCountSetter.getInstance().setPageCount(mLauncher, mViewContainer.size());
-		PageCountSetter.getInstance().setPageIndex(mLauncher, INFO_INDEX);
+		PageCountSetter.getInstance().setPageIndex(mLauncher, CURRENT_INDEX);
 	}
 
 	@Override
@@ -198,7 +212,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	@Override
 	public void handleBackKeyToNavigation() {
 		Log.e(TagHelper.TAG,"handleBackKeyToNavigation:"+mViewPager.getCurrentItem());
-		mViewPager.setCurrentItem(INFO_INDEX);
+		mViewPager.setCurrentItem(CURRENT_INDEX);
 	}
 
 	@Override
@@ -220,6 +234,7 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 
 	@Override
 	public void onLauncherStart() {
+		Log.e(TagHelper.TAG,"onLauncherStart:"+CURRENT_INDEX);
 		for (int i = 0; i < mViewContainer.size(); i++) {
 			((ViewLife) mViewContainer.get(i)).onLauncherStart();
 		}
