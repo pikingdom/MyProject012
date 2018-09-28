@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff0000"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,7 +20,7 @@
             android:shadowDy="1.0"
             android:shadowRadius="2.0"
             android:textSize="18sp"
-            android:text="福州"
+            android:text="北京"
             android:textColor="@android:color/white" />
         <TextView
             android:id="@+id/loc_tv"

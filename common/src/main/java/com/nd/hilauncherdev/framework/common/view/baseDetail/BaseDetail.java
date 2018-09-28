@@ -67,7 +67,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
         detailType = array.getInteger(R.styleable.BaseDetail_detailType, DETAIL_FULL);
         if(detailType == DETAIL_FULL){
             LayoutInflater.from(getContext()).inflate(R.layout.common_detail_fullview,this);
-            container = (NestedScrollView) findViewById(R.id.container);
+            container = (FrameLayout) findViewById(R.id.container);
         } else if(detailType == DETAIL_SCROLL){
             LayoutInflater.from(getContext()).inflate(R.layout.common_detail_scrollview,this);
             container = (NestedScrollView) findViewById(R.id.container);

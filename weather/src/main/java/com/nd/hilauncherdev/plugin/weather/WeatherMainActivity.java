@@ -10,32 +10,31 @@ import com.tsy.sdk.myokhttp.MyOkHttp;
  */
 
 public class WeatherMainActivity extends Activity {
-
-    private WeatherView webView;
+    private WeatherActivityView weatherActivityView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyOkHttp.getInstance().setApplicationConext(getApplicationContext());
-        setContentView(R.layout.weather_main_activity);
-        webView = (WeatherView) findViewById(R.id.weatherview);
-        webView.loadData();
+        weatherActivityView = new WeatherActivityView(this);
+        setContentView(weatherActivityView);
+        weatherActivityView.loadData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        webView.onResume();
+        weatherActivityView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        webView.onPause();
+        weatherActivityView.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        webView.onDestroy();
+        weatherActivityView.onDestroy();
     }
 }
