@@ -50,9 +50,9 @@ public class InfoPageView extends BasePageView implements BasePageInterface {
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_RECOMMENT));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YL));
         mViewContainer.add(new NavigationWebView(getContext(), NavigationUrls.VIP_URL));
+        mViewContainer.add(new NavigationWebView(getContext(), NavigationUrls.iyd_URL));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YX));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_YDJK));
-        mViewContainer.add(new NavigationWebView(getContext(), NavigationUrls.iyd_URL));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_CJ));
         mViewContainer.add(new NewsPage(getContext(), InvenoHelper.SCENARIO_KJ));
         final InfoViewPagerAdapter adapter = new InfoViewPagerAdapter();

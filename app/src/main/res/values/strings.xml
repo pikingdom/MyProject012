@@ -6,11 +6,11 @@
 
     <string-array name="infopage_tabs">
         <item>推荐</item>
-        <item>娱乐</item>
+        <item>热点</item><!--就是娱乐-->
         <item>购物</item>
+        <item>阅读</item>
         <item>游戏</item>
         <item>运动健康</item>
-        <item>阅读</item>
         <item>财经</item>
         <item>科技</item>
     </string-array>
