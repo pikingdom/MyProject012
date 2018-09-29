@@ -15,6 +15,6 @@ public class NavSpHelper {
 
     public static boolean showInfoPageView(){
         SPUtil spUtil = new SPUtil(SpNameConstant.NEW_LAUNCHER_CONFIG_SP_NAME);
-        return spUtil.getBoolean("navigation_show_infopage",false);
+        return spUtil.getBoolean("navigation_show_infopage",true);
     }
 }
