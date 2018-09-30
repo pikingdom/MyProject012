@@ -12,6 +12,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="navigation"
         android:theme="@style/AppTheme"  >
+        <!-- 适配全面屏 -->
+        <meta-data android:name="android.max_aspect" android:value="2.34" />
         <activity
             android:name="com.nd.hilauncherdev.plugin.navigation.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"

@@ -2,12 +2,14 @@ package com.nd.hilauncherdev.plugin.navigation.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
@@ -17,11 +19,12 @@ import com.nd.hilauncherdev.plugin.navigation.helper.NavSpHelper;
 import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
+import com.tsy.sdk.myokhttp.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationView extends RelativeLayout implements NavigationLauncherInterface,ViewLife{
+public class NavigationView extends FrameLayout implements NavigationLauncherInterface,ViewLife{
 
 	/** 0屏位置 **/
 	private static final int NAVI_INDEX = 0;
@@ -49,6 +52,10 @@ public class NavigationView extends RelativeLayout implements NavigationLauncher
 	}
 	protected void initView() {
 		LayoutInflater.from(getContext()).inflate(R.layout.navigation_view, this);
+		View statusBarView = findViewById(R.id.statusBarView);
+		ViewGroup.LayoutParams layoutParams = statusBarView.getLayoutParams();
+		layoutParams.height = ScreenUtil.getStatusBarHeight(getContext());
+		statusBarView.setBackgroundColor(Color.WHITE);
 		if(NavSpHelper.showInfoPageView()){
 			navigationSearchView = new NavigationSearchView(getContext());
 			infoPageView = new InfoPageView(getContext());
