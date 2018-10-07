@@ -94,3 +94,4 @@
    *;
  }
  -keep class  com.tencent.smtt.** {*;}
+ -keep class  com.nd.hilauncherdev.plugin.navigation.analytic.** {*;}

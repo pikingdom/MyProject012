@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
@@ -24,7 +23,7 @@ import com.tsy.sdk.myokhttp.util.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationView extends FrameLayout implements NavigationLauncherInterface,ViewLife{
+public class NavigationView extends FrameLayout implements NavigationLauncherInterface,ViewLife {
 
 	/** 0屏位置 **/
 	private static final int NAVI_INDEX = 0;
@@ -55,7 +54,8 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 		View statusBarView = findViewById(R.id.statusBarView);
 		ViewGroup.LayoutParams layoutParams = statusBarView.getLayoutParams();
 		layoutParams.height = ScreenUtil.getStatusBarHeight(getContext());
-		statusBarView.setBackgroundColor(Color.WHITE);
+		statusBarView.setLayoutParams(layoutParams);
+		statusBarView.setBackgroundColor(Color.TRANSPARENT);
 		if(NavSpHelper.showInfoPageView()){
 			navigationSearchView = new NavigationSearchView(getContext());
 			infoPageView = new InfoPageView(getContext());
@@ -87,7 +87,6 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
-				Log.e("viewpager","instantiateItem:"+position);
 				View pageView =  mViewContainer.get(position);
 				container.addView(pageView);
 				return pageView;
@@ -95,7 +94,6 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 
 			@Override
 			public void destroyItem(ViewGroup container, int position, Object object) {
-				Log.e("viewpager","destroyItem:"+position);
 				container.removeView(mViewContainer.get(position));
 			}
 

@@ -4,13 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.LinearLayout;
 
+import com.nd.hilauncherdev.framework.common.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.view.ScaleImageView;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ItemViewDelegate;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
-import com.nd.hilauncherdev.framework.common.util.GlideUtil;
-import com.nd.hilauncherdev.framework.common.view.ScaleImageView;
 
 import java.util.List;
 
@@ -27,6 +27,11 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         addItemViewDelegate(new NewDelagate002());
         addItemViewDelegate(new NewDelagate004());
         addItemViewDelegate(new NewDelagate008());
+    }
+
+    @Override
+    protected boolean isEnabled(int viewType) {
+        return super.isEnabled(viewType);
     }
 
     private String parsePublish(String publishTime){

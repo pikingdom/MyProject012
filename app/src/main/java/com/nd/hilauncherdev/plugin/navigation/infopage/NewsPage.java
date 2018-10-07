@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.nd.hilauncherdev.framework.common.util.ThreadUtil;
-import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.common.view.baselist.BaseRecyclerList;
+import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
+import com.nd.hilauncherdev.plugin.navigation.analytic.NavAnalytics;
+import com.nd.hilauncherdev.plugin.navigation.analytic.NavUMConstant;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
 import com.nd.hilauncherdev.plugin.navigation.infopage.adapter.InvenoNewAdapter;
@@ -45,12 +47,12 @@ public class NewsPage extends BaseRecyclerList {
         super(context, attrs, defStyleAttr);
     }
 
-    public NewsPage(@NonNull Context context,String scenarioType) {
+    public NewsPage(@NonNull Context context, String scenarioType) {
         super(context);
         this.scenarioType = scenarioType;
     }
 
-    public NewsPage(@NonNull Context context,Builder builder) {
+    public NewsPage(@NonNull Context context, Builder builder) {
         super(context);
         this.scenarioType = builder.scenarioType;
         if(builder.list != null && builder.list.size()>0){
@@ -66,7 +68,7 @@ public class NewsPage extends BaseRecyclerList {
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                NewsInfo newsInfo = adapter.getDatas().get(position);
+                NewsInfo newsInfo = adapter.getDatas().get(position- mHeaderAndFooterWrapper.getHeadersCount());
                 if(newsInfo != null){
                     submitClick(newsInfo);
                     LauncherCaller.openUrl(getContext().getApplicationContext(),newsInfo.origin_url);
@@ -106,6 +108,7 @@ public class NewsPage extends BaseRecyclerList {
                 }
             }
         });
+        NavAnalytics.submitEvent(NavUMConstant.INVENO_NEWS_PV);
     }
 
     private void submitClick(NewsInfo newsInfo){
@@ -120,6 +123,7 @@ public class NewsPage extends BaseRecyclerList {
                 }
             }
         });
+        NavAnalytics.submitEvent(NavUMConstant.INVENO_NEWS_CLICK);
     }
 
     @Override
@@ -137,7 +141,6 @@ public class NewsPage extends BaseRecyclerList {
         MyOkHttp.getInstance().postInveno().url(InvenoHelper.GET_UID_URL).jsonParams(InvenoHelper.getUidJsonParams()).enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String response) {
-                Log.e(TagHelper.TAG,"1response:"+response+","+System.currentTimeMillis());
                 InvenoHelper.parseUid(response);
                 SPUtil spUtil = new SPUtil();
                 String netUid = spUtil.getString(SPConstant.INVENO_UID_KEY);
@@ -150,7 +153,6 @@ public class NewsPage extends BaseRecyclerList {
 
             @Override
             public void onFailure(int statusCode, String error_msg) {
-                Log.e(TagHelper.TAG,"2response:"+error_msg);
                 onNetDataFail("");
             }
         });

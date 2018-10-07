@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -128,7 +127,6 @@ public class NavigationSitesView extends FrameLayout implements BaseDetailInterf
                         NavigationKeepForReflect.eventNavigationApp_V8508(item.appPkg,position);
                     }
                 }else{
-                    Log.e("clarkzheng","4444444444444444");
                     if(!TextUtils.isEmpty(item.url)){
                         LauncherCaller.openUrl(getContext().getApplicationContext(),item.url);
                     }
@@ -188,7 +186,6 @@ public class NavigationSitesView extends FrameLayout implements BaseDetailInterf
 
     public void onLauncherStart() {
         netRequest();
-        Log.e("sitesview","w:"+getWidth()+"h:"+getHeight());
     }
 
     public void netRequest() {

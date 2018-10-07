@@ -42,7 +42,7 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     public static final int DETAIL_SCROLL = 2; //滚动
 
     private int detailType = DETAIL_FULL;
-    public BaseDetail(@NonNull Context context,int detailType) {
+    public BaseDetail(@NonNull Context context, int detailType) {
         super(context,null);
         this.detailType = detailType;
         if(detailType == DETAIL_FULL){
@@ -104,8 +104,12 @@ public abstract class BaseDetail<T> extends FrameLayout implements SwipeRefreshL
     }
     @Override
     public void stateMain() {
-        if (currentState == STATE_MAIN)
+        if (currentState == STATE_MAIN) {
+            if (viewError != null && viewError.getVisibility() == View.VISIBLE) {
+                viewError.setVisibility(View.GONE);
+            }
             return;
+        }
         hideCurrentView();
         currentState = STATE_MAIN;
         container.setVisibility(View.VISIBLE);

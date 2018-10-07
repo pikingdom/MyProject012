@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,7 +41,7 @@ import java.util.List;
  * Created by Administrator on 2018/8/29.
  */
 
-public class NavigationSearchView extends BasePageView implements BasePageInterface ,View.OnClickListener{
+public class NavigationSearchView extends BasePageView implements BasePageInterface,View.OnClickListener{
 
     private RelativeLayout search_rl;
     private ImageView search_img;
@@ -164,13 +163,13 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
 
     @Override
     public void onPageSelected() {
-        Log.e("sitesview","1111:"+navigationSitesView.getWidth()+","+navigationSitesView.getHeight());
         if(!newsPage.hasLoad()){
             newsPage.loadData();
         }
         if(!hasLoad){
             loadData();
         }
+        startHotwordSwitch();
     }
 
     @Override
@@ -225,9 +224,6 @@ public class NavigationSearchView extends BasePageView implements BasePageInterf
     };
 
     public void updateHotwordSwitcher() {
-        if(hotwordGenerator != null && hotwordGenerator.isCounterHit()){
-            return;
-        }
         if (null != search_ts) {
             if (hotwordGenerator != null) {
                 HotwordItemInfo current = hotwordGenerator.popupNextHotword();

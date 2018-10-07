@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.tsy.sdk.myokhttp.builder.DownloadBuilder;
 import com.tsy.sdk.myokhttp.builder.GetBuilder;
 import com.tsy.sdk.myokhttp.builder.PostBuilder;
 
@@ -119,6 +120,10 @@ public class MyOkHttp {
         check();
         PostBuilder postBuilder = new PostBuilder(this,true);
         return postBuilder;
+    }
+
+    public DownloadBuilder download() {
+        return new DownloadBuilder(this);
     }
 
     /**
