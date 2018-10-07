@@ -6,5 +6,5 @@ package com.nd.hilauncherdev.plugin.navigation.helper;
 
 public class TagHelper {
 
-    public static final String TAG = "launcher_nav";
+    public static final String TAG = "mynavigation";
 }

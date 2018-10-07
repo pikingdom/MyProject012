@@ -3,6 +3,7 @@ package com.nd.hilauncherdev.plugin.navigation.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -14,12 +15,16 @@ import android.widget.FrameLayout;
 import com.nd.hilauncherdev.framework.common.view.baselist.BasePageInterface;
 import com.nd.hilauncherdev.framework.common.view.baselist.ViewLife;
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.helper.NavHelper;
 import com.nd.hilauncherdev.plugin.navigation.helper.NavSpHelper;
 import com.nd.hilauncherdev.plugin.navigation.helper.TagHelper;
+import com.nd.hilauncherdev.plugin.navigation.helper.ZLauncherUrl;
 import com.nd.hilauncherdev.plugin.navigation.widget.openpage.PageCountSetter;
 import com.tsy.sdk.myokhttp.MyOkHttp;
+import com.tsy.sdk.myokhttp.response.DownloadResponseHandler;
 import com.tsy.sdk.myokhttp.util.ScreenUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,7 +182,34 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 
 	@Override
 	public void upgradePlugin(String url, int ver, boolean isWifiAutoDownload) {
+		//下载插件
+		Log.e(TagHelper.TAG, "upgradePlugin:");
+		String saveDir = Environment.getExternalStorageDirectory()+"/HWHome/WifiDownload/";
+		String fileName = NavHelper.NAVIGATION_PLUGIN_FILENAME;
+		String downloadUrl= String.format(ZLauncherUrl.DOWNLOADURL,NavHelper.NAVIGATION_PLUGIN_PKG);
+		MyOkHttp.getInstance().download().url(downloadUrl).filePath(saveDir+fileName).tag(this)
+				.enqueue(new DownloadResponseHandler() {
+					@Override
+					public void onFinish(File downloadFile) {
+						Log.e(TagHelper.TAG, "doDownload onFinish:");
+					}
 
+					@Override
+					public void onProgress(long currentBytes, long totalBytes) {
+						Log.e(TagHelper.TAG, "doDownload onProgress:" + currentBytes + "/" + totalBytes);
+					}
+
+					@Override
+					public void onFailure(String error_msg) {
+						Log.e(TagHelper.TAG, "doDownload onFailure:" + error_msg);
+					}
+
+					@Override
+					public void onStart(long totalBytes) {
+						super.onStart(totalBytes);
+						Log.e(TagHelper.TAG, "doDownload onStart:"+totalBytes);
+					}
+				});
 	}
 
 	@Override
