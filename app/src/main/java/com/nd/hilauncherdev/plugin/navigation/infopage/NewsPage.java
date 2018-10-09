@@ -83,9 +83,30 @@ public class NewsPage extends BaseRecyclerList {
         return adapter;
     }
 
+    long lastPageSelect =0;
+    @Override
+    public void onPageSelected() {
+        super.onPageSelected();
+        lastPageSelect = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onPageHasLoad() {
+        super.onPageHasLoad();
+        if(mRecyclerView.getChildCount() >0 && System.currentTimeMillis() - lastPageSelect > 60*1000){
+            //大于一分钟
+            //重新加载数据
+            mRefreshLayout.setRefreshing(true);
+            onRefresh();
+        }
+    }
+
     @Override
     protected void onScrollStateIdle() {
         //上报展示量
+//        submitPvs();
+    }
+    private void submitPvs(){
         int firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
         int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
         for(int i=firstPosition;i<lastPosition;i++){
@@ -95,7 +116,6 @@ public class NewsPage extends BaseRecyclerList {
             }
         }
     }
-
     private void submitPv(NewsInfo newsInfo){
         final List<String> list = newsInfo.pv_url;
         ThreadUtil.executeSubmit(new Runnable() {

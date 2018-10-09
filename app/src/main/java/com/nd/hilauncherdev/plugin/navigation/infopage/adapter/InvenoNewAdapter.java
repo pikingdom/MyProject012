@@ -5,12 +5,16 @@ import android.text.TextUtils;
 import android.widget.LinearLayout;
 
 import com.nd.hilauncherdev.framework.common.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.util.ThreadUtil;
 import com.nd.hilauncherdev.framework.common.view.ScaleImageView;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.MultiItemTypeAdapter;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ItemViewDelegate;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.base.ViewHolder;
 import com.nd.hilauncherdev.plugin.navigation.R;
+import com.nd.hilauncherdev.plugin.navigation.analytic.NavAnalytics;
+import com.nd.hilauncherdev.plugin.navigation.analytic.NavUMConstant;
 import com.nd.hilauncherdev.plugin.navigation.infopage.model.NewsInfo;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.List;
 
@@ -56,6 +60,22 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
         }
     }
 
+    private void submitPv(NewsInfo newsInfo){
+        final List<String> list = newsInfo.pv_url;
+        ThreadUtil.executeSubmit(new Runnable() {
+            @Override
+            public void run() {
+                if(list != null && list.size()>0){
+                    for(int i=0;i<list.size();i++){
+                        MyOkHttp.getInstance().get().url(list.get(i)).execute();
+                    }
+                }
+            }
+        });
+        NavAnalytics.submitEvent(NavUMConstant.INVENO_NEWS_PV);
+    }
+
+
     public class NewDelagate001 implements ItemViewDelegate<NewsInfo> {
 
         @Override
@@ -74,6 +94,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
             holder.setText(R.id.summary, newsInfo.summary);
             holder.setText(R.id.source, newsInfo.source);
             holder.setText(R.id.publish_time,parsePublish(newsInfo.publish_time));
+            submitPv(newsInfo);
         }
     }
 
@@ -99,6 +120,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
             if(!TextUtils.isEmpty(url)){
                 GlideUtil.load(mContext,url,imageView);
             }
+            submitPv(newsInfo);
         }
     }
 
@@ -127,6 +149,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
                     GlideUtil.load(mContext,url,imageView);
                 }
             }
+            submitPv(newsInfo);
         }
     }
 
@@ -152,6 +175,7 @@ public class InvenoNewAdapter extends MultiItemTypeAdapter<NewsInfo> {
             if(!TextUtils.isEmpty(url)){
                 GlideUtil.load(mContext,url,imageView);
             }
+            submitPv(newsInfo);
         }
     }
 }

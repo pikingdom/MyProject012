@@ -273,7 +273,13 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
     public void onPageSelected() {
         if(!hasLoad){
             loadData();
+        } else {
+            onPageHasLoad();
         }
+    }
+
+    protected void onPageHasLoad(){
+
     }
 
     @Override
