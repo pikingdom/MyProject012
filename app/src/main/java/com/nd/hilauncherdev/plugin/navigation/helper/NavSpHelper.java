@@ -1,5 +1,6 @@
 package com.nd.hilauncherdev.plugin.navigation.helper;
 
+import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.constant.SpNameConstant;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 
@@ -16,5 +17,11 @@ public class NavSpHelper {
     public static boolean showInfoPageView(){
         SPUtil spUtil = new SPUtil(SpNameConstant.NEW_LAUNCHER_CONFIG_SP_NAME);
         return spUtil.getBoolean("navigation_show_infopage",true);
+    }
+
+
+    public static long getLastCommonAnalytic(){
+        SPUtil spUtil = new SPUtil();
+        return spUtil.getLong(SPConstant.LAST_COMMON_ANALYTIC,0);
     }
 }

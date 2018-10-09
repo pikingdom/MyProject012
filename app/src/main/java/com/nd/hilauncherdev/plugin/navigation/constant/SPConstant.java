@@ -14,4 +14,6 @@ public class SPConstant {
 
     public static final String NAVIGATION_HOTWORDS_JSON = "navigation_hotwords_json";
 
+    public static final String LAST_COMMON_ANALYTIC = "last_common_analytic";
+
 }

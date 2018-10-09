@@ -13,4 +13,10 @@ public class NavUMConstant {
     public static final String INVENO_NEWS_CLICK = "20181002201";
     //INVENO新闻展示
     public static final String INVENO_NEWS_PV = "20181002202";
+
+    /**
+     * 导航屏版本号
+     */
+    public static final String NAV_VERSION_CODE = "20181002203";
+
 }

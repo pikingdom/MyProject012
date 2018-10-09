@@ -275,6 +275,8 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 		for (int i = 0; i < mViewContainer.size(); i++) {
 			((ViewLife) mViewContainer.get(i)).onLauncherStart();
 		}
+		//统计信息
+		NavHelper.startCommonAnalytic();
 	}
 
 	@Override
