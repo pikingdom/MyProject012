@@ -162,7 +162,11 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
             return;
         hideCurrentView();
         currentState = STATE_ERROR;
-        viewError.setVisibility(View.VISIBLE);
+        if(mRecyclerView.getChildCount()<=0){
+            viewError.setVisibility(View.VISIBLE);
+        } else {
+            viewError.setVisibility(View.GONE);
+        }
     }
 
     private void hideCurrentView() {
