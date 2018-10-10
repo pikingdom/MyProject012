@@ -50,7 +50,7 @@ public class WeatherView extends BaseDetail {
     private Conditions conditions;
 
     private WeatherDataUpdateListener weatherDataUpdateListener;
-    public static final String ACTION_WEATHER_UPDATE_UI = "com.nd.hilauncherdev.weather.provider.weather.updateui";
+    public static final String ACTION_WEATHER_UPDATE_UI = "com.android.newline.weather.updateui";
 
     public WeatherView(@NonNull Context context) {
         this(context,null);
