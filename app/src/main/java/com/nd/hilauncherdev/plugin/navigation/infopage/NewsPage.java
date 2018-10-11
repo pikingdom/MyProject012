@@ -93,8 +93,8 @@ public class NewsPage extends BaseRecyclerList {
     @Override
     protected void onPageHasLoad() {
         super.onPageHasLoad();
-        if(mRecyclerView.getChildCount() >0 && System.currentTimeMillis() - lastPageSelect > 60*1000){
-            //大于一分钟
+        if(mRecyclerView.getChildCount() >0 && System.currentTimeMillis() - lastPageSelect > 2*60*1000){
+            //大于2分钟
             //重新加载数据
             mRefreshLayout.setRefreshing(true);
             onRefresh();
