@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetailInterface;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.RecycleViewDivider;
@@ -166,6 +167,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
             viewError.setVisibility(View.VISIBLE);
         } else {
             viewError.setVisibility(View.GONE);
+            Toast.makeText(getContext(),"网络异常,请稍后再试。",Toast.LENGTH_SHORT).show();
         }
     }
 
