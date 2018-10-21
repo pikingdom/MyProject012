@@ -1,5 +1,6 @@
 package com.nd.hilauncherdev.plugin.navigation.helper;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -9,6 +10,7 @@ import com.nd.hilauncherdev.plugin.navigation.analytic.NavUMConstant;
 import com.nd.hilauncherdev.plugin.navigation.constant.SPConstant;
 import com.nd.hilauncherdev.plugin.navigation.util.SPUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
+import com.tsy.sdk.myokhttp.util.ScreenUtil;
 
 /**
  * Created by Administrator on 2018\10\7 0007.
@@ -53,5 +55,13 @@ public class NavHelper {
         //设置新的值
         SPUtil spUtil = new SPUtil();
         spUtil.putLong(SPConstant.LAST_COMMON_ANALYTIC,System.currentTimeMillis());
+    }
+
+    public static int getNavigationTopMargin(Context context){
+        int height = ScreenUtil.getStatusBarHeight(context);
+        if(ScreenUtil.hasVivoNotchInScreen(context)){
+            height = 0;
+        }
+        return height;
     }
 }

@@ -58,7 +58,7 @@ public class NavigationView extends FrameLayout implements NavigationLauncherInt
 		LayoutInflater.from(getContext()).inflate(R.layout.navigation_view, this);
 		View statusBarView = findViewById(R.id.statusBarView);
 		ViewGroup.LayoutParams layoutParams = statusBarView.getLayoutParams();
-		layoutParams.height = ScreenUtil.getStatusBarHeight(getContext());
+		layoutParams.height = NavHelper.getNavigationTopMargin(getContext());
 		statusBarView.setLayoutParams(layoutParams);
 		statusBarView.setBackgroundColor(Color.TRANSPARENT);
 		if(NavSpHelper.showInfoPageView()){
