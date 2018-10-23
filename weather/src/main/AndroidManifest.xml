@@ -12,10 +12,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="weather"
         android:theme="@style/AppTheme"  >
+        <!-- 适配全面屏 -->
+        <meta-data android:name="android.max_aspect" android:value="2.34" />
         <activity
             android:name="com.nd.hilauncherdev.plugin.weather.WeatherMainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
+            android:process=":newline_v2_process"
+            android:taskAffinity="com.android.newline.v2process.task"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
