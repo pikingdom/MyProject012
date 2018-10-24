@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.nd.hilauncherdev.framework.common.view.CommonPluginView;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 
 /**
  * Created by Administrator on 2018/9/28.
@@ -29,6 +30,7 @@ public class WeatherActivityView extends FrameLayout implements WeatherView.Weat
 
     public WeatherActivityView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        MyOkHttp.getInstance().setApplicationConext(context.getApplicationContext());
         LayoutInflater.from(getContext()).inflate(R.layout.weather_main_activity,this);
         webView = (WeatherView) findViewById(R.id.weatherview);
         webView.setWeatherDataUpdateListener(this);
