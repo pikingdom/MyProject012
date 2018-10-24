@@ -1,15 +1,15 @@
 package com.nd.hilauncherdev.plugin.weather;
 
+import android.app.Activity;
 import android.os.Bundle;
 
-import com.android.dynamic.plugin.PluginActivity;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
 /**
  * Created by Administrator on 2018\8\28 0028.
  */
 
-public class WeatherMainActivity extends PluginActivity {
+public class WeatherMainActivity extends Activity {
     private WeatherActivityView weatherActivityView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

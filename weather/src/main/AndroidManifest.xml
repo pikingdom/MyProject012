@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.nd.hilauncherdev.plugin.weather" >
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,8 +19,6 @@
             android:name="com.nd.hilauncherdev.plugin.weather.WeatherMainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:process=":newline_v2_process"
-            android:taskAffinity="com.android.newline.v2process.task"
             android:windowSoftInputMode="adjustPan"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>

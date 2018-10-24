@@ -2,9 +2,12 @@ package com.nd.hilauncherdev.plugin.weather.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
+import com.baidu.location.BDLocation;
 import com.nd.hilauncherdev.framework.common.util.ThreadUtil;
 import com.nd.hilauncherdev.plugin.weather.WeatherView;
+import com.nd.hilauncherdev.plugin.weather.loc.LocationService;
 import com.nd.hilauncherdev.plugin.weather.model.City;
 import com.nd.hilauncherdev.plugin.weather.model.Conditions;
 import com.nd.hilauncherdev.plugin.weather.model.Forecast;
@@ -218,6 +221,27 @@ public class WeatherSpHelper {
             return;
         }
         new SPUtil().putLong(WeatherSpHelper.WEATHER_LOC_TIME, System.currentTimeMillis());
-        updateAll();
+//        updateAll();
+        LocationService.getInstance(mContext.getApplicationContext()).setCallback(new LocationService.BaiduLocCallback() {
+            @Override
+            public void onSuccess(BDLocation bdLocation) {
+                final double latitude = bdLocation.getLatitude();    //获取纬度信息
+                final double longitude = bdLocation.getLongitude();    //获取经度信息
+                String city = bdLocation.getCity();
+                if(!TextUtils.isEmpty(city)){
+                    SPUtil spUtil = new SPUtil();
+                    spUtil.putString(LON_AND_LAT,longitude+","+latitude);
+                    updateAll();
+                } else {
+                    updateAll();
+                }
+            }
+
+            @Override
+            public void onFail() {
+                updateAll();
+            }
+        });
+        LocationService.getInstance(mContext.getApplicationContext()).start();
     }
 }

@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
-import com.nd.hilauncherdev.plugin.CommonPluginView;
+import com.nd.hilauncherdev.framework.common.view.CommonPluginView;
 import com.nd.hilauncherdev.plugin.navigation.R;
 
 /**

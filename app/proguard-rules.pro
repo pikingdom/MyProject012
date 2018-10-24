@@ -95,4 +95,7 @@
  }
  -keep class  com.tencent.smtt.** {*;}
  -keep class  com.nd.hilauncherdev.plugin.navigation.analytic.** {*;}
+ -keep class com.nd.hilauncherdev.framework.common.view.CommonPluginView {*;}
  -keep class  com.nd.hilauncherdev.plugin.view.** {*;}
+
+ -keep class  com.nd.hilauncherdev.plugin.weather.** {*;}

@@ -1,4 +1,4 @@
-package com.nd.hilauncherdev.plugin;
+package com.nd.hilauncherdev.framework.common.view;
 
 import android.content.Intent;
 import android.view.KeyEvent;

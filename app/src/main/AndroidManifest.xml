@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.nd.hilauncherdev.plugin.navigation">
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,6 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="navigation"
+        tools:replace="android:allowBackup,android:icon,android:label,android:theme"
         android:theme="@style/AppTheme"  >
         <!-- 适配全面屏 -->
         <meta-data android:name="android.max_aspect" android:value="2.34" />

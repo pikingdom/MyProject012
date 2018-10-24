@@ -42,4 +42,5 @@ dependencies {
     provided files('libs/ReflectUtil.jar')
     compile files('libs/dynamicsdk.jar')
     compile project(':common')
+    compile project(':weather')
 }

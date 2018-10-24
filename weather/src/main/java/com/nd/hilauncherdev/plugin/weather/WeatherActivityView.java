@@ -1,6 +1,7 @@
 package com.nd.hilauncherdev.plugin.weather;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -8,11 +9,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.nd.hilauncherdev.framework.common.view.CommonPluginView;
+
 /**
  * Created by Administrator on 2018/9/28.
  */
 
-public class WeatherActivityView extends FrameLayout implements WeatherView.WeatherDataUpdateListener{
+public class WeatherActivityView extends FrameLayout implements WeatherView.WeatherDataUpdateListener,CommonPluginView {
     private WeatherView webView;
     private TextView city_tv;
     private TextView loc_tv;
@@ -42,15 +45,35 @@ public class WeatherActivityView extends FrameLayout implements WeatherView.Weat
     public void loadData(){
         webView.loadData();
     }
-
+    @Override
     public void onResume() {
         webView.onResume();
     }
-
+    @Override
     public void onPause() {
         webView.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+
+    }
+    @Override
     public void onDestroy() {
         webView.onDestroy();
     }

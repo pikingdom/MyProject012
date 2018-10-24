@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
 
 
     defaultConfig {
-        applicationId "com.nd.hilauncherdev.plugin.weather"
+//        applicationId "com.nd.hilauncherdev.plugin.weather"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
@@ -24,5 +24,5 @@ android {
 
 dependencies {
     compile project(':common')
-    compile files('libs/dynamicsdk.jar')
+    provided files('libs/BaiduLBS_Android.jar')
 }
