@@ -13,15 +13,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import com.nd.hilauncherdev.framework.common.util.GlideUtil;
+import com.nd.hilauncherdev.framework.common.view.ProgressImageView;
 import com.nd.hilauncherdev.framework.common.view.baseDetail.BaseDetailInterface;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.RecycleViewDivider;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.nd.hilauncherdev.framework.common.view.recyclerview.wrapper.LoadMoreWrapper;
-import com.nd.hilauncherdev.framework.common.view.ProgressImageView;
 import com.nd.hilauncherdev.plugin.common.R;
-import com.nd.hilauncherdev.framework.common.util.GlideUtil;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
 import java.util.ArrayList;
@@ -167,7 +166,7 @@ public abstract class BaseRecyclerList<T> extends FrameLayout implements SwipeRe
             viewError.setVisibility(View.VISIBLE);
         } else {
             viewError.setVisibility(View.GONE);
-            Toast.makeText(getContext(),"网络异常,请稍后再试。",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),"网络异常,请稍后再试。",Toast.LENGTH_SHORT).show();
         }
     }
 
